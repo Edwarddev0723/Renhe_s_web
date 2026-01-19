@@ -1,0 +1,522 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { useTranslations, getTranslationArray, defaultLang } from '../i18n';
+import profile from '../data/profile.json';
+import projects from '../data/projects.json';
+import models from '../data/models.json';
+import awards from '../data/awards.json';
+import articles from '../data/articles.json';
+
+const lang = defaultLang;
+const t = useTranslations(lang);
+const summaryArray = getTranslationArray(lang, 'about.summary');
+const rawBase = import.meta.env.BASE_URL;
+const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
+
+const featuredProjects = projects.filter(p => p.featured).slice(0, 4);
+const featuredModels = models.slice(0, 6);
+const recentArticles = articles.slice(0, 3);
+const recentAwards = awards.slice(0, 4);
+---
+
+<Layout title={t('site.title')} description={t('site.description')} lang={lang}>
+  <!-- Hero Section -->
+  <Hero lang={lang} />
+  
+  <!-- About Section -->
+  <section class="section" id="about">
+    <div class="container">
+      <h2 class="section-title">{t('about.title')}</h2>
+      <div class="about-content">
+        <div class="about-text">
+          {summaryArray.map((paragraph) => (
+            <p>{paragraph}</p>
+          ))}
+        </div>
+        <div class="about-stats">
+          <div class="stat-item">
+            <span class="stat-number">{profile.stats.githubRepos}+</span>
+            <span class="stat-label">GitHub Repos</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">{profile.stats.huggingfaceModels}</span>
+            <span class="stat-label">AI Models</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">{profile.stats.huggingfaceDatasets}</span>
+            <span class="stat-label">Datasets</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">{profile.stats.certifications}</span>
+            <span class="stat-label">{lang === 'zh' ? '專業證照' : 'Certifications'}</span>
+          </div>
+        </div>
+        <div class="about-skills">
+          <h4>{t('skills.title')}</h4>
+          <div class="skill-tags">
+            {profile.skills.core.map((skill) => (
+              <span class="tag">{skill}</span>
+            ))}
+            {profile.skills.frameworks.map((skill) => (
+              <span class="tag tag-accent">{skill}</span>
+            ))}
+          </div>
+        </div>
+        <a href={`${base}about`} class="btn btn-secondary">{t('about.readMore')} →</a>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Featured Projects Section -->
+  <section class="section section-alt" id="projects">
+    <div class="container">
+      <h2 class="section-title">{t('projects.title')}</h2>
+      <div class="grid grid-2">
+        {featuredProjects.map((project) => (
+          <ProjectCard
+            title={project.title}
+            summary={project.summary}
+            tags={project.tags}
+            date={project.date}
+            link={project.huggingface || project.github}
+            github={project.github}
+            image={project.image}
+            metrics={project.metrics}
+            lang={lang}
+          />
+        ))}
+      </div>
+      <div class="section-action">
+        <a href={`${base}projects`} class="btn btn-primary">{t('projects.viewAll')} →</a>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Models & Datasets Section -->
+  <section class="section" id="models">
+    <div class="container">
+      <h2 class="section-title">{t('models.title')}</h2>
+      <div class="models-grid">
+        {featuredModels.map((model) => (
+          <a href={model.link} target="_blank" rel="noopener noreferrer" class="model-card">
+            <div class="model-icon">
+              {model.type === 'model' ? '🤖' : '📊'}
+            </div>
+            <div class="model-content">
+              <h4 class="model-name">{model.name}</h4>
+              {model.task && <span class="model-task">{model.task}</span>}
+              <div class="model-meta">
+                {model.size && <span>{model.size}</span>}
+                {model.rows && <span>{model.rows} rows</span>}
+                <span>📥 {model.downloads}</span>
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+      <div class="section-action">
+        <a href={`${base}models`} class="btn btn-primary">{t('models.viewAll')} →</a>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Articles Section -->
+  <section class="section section-alt" id="writing">
+    <div class="container">
+      <h2 class="section-title">{t('articles.title')}</h2>
+      <div class="articles-list">
+        {recentArticles.map((article) => (
+          <a href={article.link} target="_blank" rel="noopener noreferrer" class="article-item">
+            <div class="article-date">{article.date}</div>
+            <div class="article-content">
+              <h3 class="article-title">{typeof article.title === 'string' ? article.title : article.title[lang]}</h3>
+              <p class="article-summary">{typeof article.summary === 'string' ? article.summary : article.summary[lang]}</p>
+              <div class="article-tags">
+                {article.tags.map((tag) => (
+                  <span class="tag">{tag}</span>
+                ))}
+                <span class="article-time">{article.readingTime} {t('articles.minRead')}</span>
+              </div>
+            </div>
+            <div class="article-arrow">→</div>
+          </a>
+        ))}
+      </div>
+      <div class="section-action">
+        <a href={`${base}writing`} class="btn btn-primary">{t('articles.viewAll')} →</a>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Awards Section -->
+  <section class="section" id="awards">
+    <div class="container">
+      <h2 class="section-title">{t('awards.title')}</h2>
+      <div class="awards-timeline">
+        {recentAwards.map((award) => (
+          <div class="award-item">
+            <div class="award-dot"></div>
+            <div class="award-content">
+              <span class="award-date">{award.date}</span>
+              <h4 class="award-title">{typeof award.title === 'string' ? award.title : award.title[lang]}</h4>
+              <span class="award-org">{typeof award.organization === 'string' ? award.organization : award.organization[lang]}</span>
+              {award.description && (
+                <p class="award-desc">{typeof award.description === 'string' ? award.description : award.description[lang]}</p>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+  
+  <!-- Contact CTA -->
+  <section class="section section-cta">
+    <div class="container">
+      <div class="cta-content">
+        <h2>{t('contact.description')}</h2>
+        <div class="cta-actions">
+          <a href={`${base}contact`} class="btn btn-primary">{t('nav.contact')} →</a>
+          <a href={`mailto:${profile.email}`} class="btn btn-secondary">
+            ✉️ {profile.email}
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  /* Section Alt Background */
+  .section-alt {
+    background: var(--bg-secondary);
+  }
+  
+  /* About Section */
+  .about-content {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  .about-text p {
+    font-size: var(--text-lg);
+    margin-bottom: var(--space-4);
+  }
+  
+  .about-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-6);
+    margin: var(--space-10) 0;
+    padding: var(--space-8);
+    background: var(--bg-secondary);
+    border-radius: var(--radius-xl);
+  }
+  
+  [data-theme="dark"] .about-stats {
+    background: var(--bg-tertiary);
+  }
+  
+  .stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .stat-number {
+    font-size: var(--text-3xl);
+    font-weight: 700;
+    color: var(--color-primary-500);
+  }
+  
+  .stat-label {
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+  }
+  
+  .about-skills {
+    margin-bottom: var(--space-8);
+  }
+  
+  .about-skills h4 {
+    font-size: var(--text-lg);
+    margin-bottom: var(--space-4);
+  }
+  
+  .skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-2);
+  }
+  
+  /* Section Action */
+  .section-action {
+    margin-top: var(--space-10);
+    text-align: center;
+  }
+  
+  /* Models Grid */
+  .models-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-4);
+  }
+  
+  .model-card {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-4);
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+  }
+  
+  .model-card:hover {
+    border-color: var(--color-primary-300);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+  
+  .model-icon {
+    font-size: var(--text-2xl);
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-md);
+  }
+  
+  .model-content {
+    flex: 1;
+    min-width: 0;
+  }
+  
+  .model-name {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: var(--space-1);
+  }
+  
+  .model-task {
+    font-size: var(--text-xs);
+    color: var(--color-primary-500);
+  }
+  
+  .model-meta {
+    display: flex;
+    gap: var(--space-3);
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    margin-top: var(--space-2);
+  }
+  
+  /* Articles List */
+  .articles-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .article-item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-6);
+    padding: var(--space-6);
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+  }
+  
+  .article-item:hover {
+    border-color: var(--color-primary-300);
+    box-shadow: var(--shadow-md);
+  }
+  
+  .article-date {
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+  
+  .article-content {
+    flex: 1;
+  }
+  
+  .article-title {
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: var(--space-2);
+  }
+  
+  .article-summary {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    margin-bottom: var(--space-3);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .article-tags {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    flex-wrap: wrap;
+  }
+  
+  .article-time {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    margin-left: auto;
+  }
+  
+  .article-arrow {
+    font-size: var(--text-xl);
+    color: var(--color-primary-500);
+    align-self: center;
+  }
+  
+  /* Awards Timeline */
+  .awards-timeline {
+    max-width: 700px;
+    margin: 0 auto;
+    position: relative;
+    padding-left: var(--space-8);
+  }
+  
+  .awards-timeline::before {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg, var(--color-primary-500), var(--color-accent-500));
+  }
+  
+  .award-item {
+    position: relative;
+    padding-bottom: var(--space-8);
+  }
+  
+  .award-dot {
+    position: absolute;
+    left: calc(-1 * var(--space-8) + 2px);
+    top: 4px;
+    width: 12px;
+    height: 12px;
+    background: var(--color-primary-500);
+    border-radius: 50%;
+    border: 3px solid var(--bg-primary);
+  }
+  
+  .award-content {
+    background: var(--bg-secondary);
+    padding: var(--space-5);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-color);
+  }
+  
+  .award-date {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+  }
+  
+  .award-title {
+    font-size: var(--text-base);
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: var(--space-1) 0;
+  }
+  
+  .award-org {
+    font-size: var(--text-sm);
+    color: var(--color-primary-500);
+  }
+  
+  .award-desc {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    margin-top: var(--space-2);
+  }
+  
+  /* CTA Section */
+  .section-cta {
+    background: linear-gradient(135deg, var(--color-primary-600), var(--color-primary-800));
+    color: white;
+  }
+  
+  .cta-content {
+    text-align: center;
+    padding: var(--space-10) 0;
+  }
+  
+  .cta-content h2 {
+    color: white;
+    font-size: var(--text-3xl);
+    margin-bottom: var(--space-8);
+  }
+  
+  .cta-actions {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+  }
+  
+  .cta-actions .btn-primary {
+    background: white;
+    color: var(--color-primary-600);
+  }
+  
+  .cta-actions .btn-secondary {
+    background: transparent;
+    border-color: white;
+    color: white;
+  }
+  
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .models-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .about-stats {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .models-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .article-item {
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+    
+    .article-arrow {
+      display: none;
+    }
+  }
+</style>

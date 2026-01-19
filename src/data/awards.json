@@ -1,0 +1,93 @@
+[
+    {
+        "id": "twm-2025",
+        "title": {
+            "zh": "2025 台灣大哥大數據競賽 資料科學組 - 亞軍",
+            "en": "2025 TWM Data Competition - 2nd Place"
+        },
+        "organization": {
+            "zh": "台灣大哥大",
+            "en": "Taiwan Mobile"
+        },
+        "date": "2025-09",
+        "category": "competition"
+    },
+    {
+        "id": "twm-2024",
+        "title": {
+            "zh": "2024 台灣大哥大數據競賽 資料科學組 - 冠軍",
+            "en": "2024 TWM Data Competition - Champion"
+        },
+        "organization": {
+            "zh": "台灣大哥大",
+            "en": "Taiwan Mobile"
+        },
+        "date": "2024-09",
+        "category": "competition",
+        "description": {
+            "zh": "利用數百萬筆客戶資料預測潛在流失客戶，負責資料探勘、清洗以及模型建立。",
+            "en": "Predicted customer churn using millions of records, responsible for data mining, cleaning, and model building."
+        }
+    },
+    {
+        "id": "tanet-2024",
+        "title": {
+            "zh": "2024 TANet 最佳論文獎",
+            "en": "2024 TANet Best Paper Award"
+        },
+        "organization": "TANet",
+        "date": "2024-09",
+        "category": "academic",
+        "description": {
+            "zh": "論文：基於多代理人系統的股票交易架構。使用台積電一年約 1700 萬筆逐筆交易資料，系統月報酬幾何平均數達 4.63%。",
+            "en": "Paper: Multi-Agent Stock Trading System. Used 17M TSMC trade records, achieving 4.63% geometric mean monthly return."
+        }
+    },
+    {
+        "id": "genai-stars-2024",
+        "title": {
+            "zh": "2024 GenAI Stars 生成式 AI 應用選拔 - 優選",
+            "en": "2024 GenAI Stars - Selected Project"
+        },
+        "organization": {
+            "zh": "國科會",
+            "en": "National Science and Technology Council"
+        },
+        "date": "2024-09",
+        "category": "competition",
+        "description": {
+            "zh": "專案：AI 旅遊行程生成助手。從全國 3000 組專案中入選前 100 強，並於 TIE 台灣創新技術博覽會展出。",
+            "en": "Project: AI Trip Planner. Selected from 3000+ teams to top 100, exhibited at TIE Taiwan Innovation Expo."
+        }
+    },
+    {
+        "id": "ntut-star-2024",
+        "title": {
+            "zh": "2025 台北科技大學 資財之星專題競賽 - 第三名",
+            "en": "2025 NTUT Project Competition - 3rd Place"
+        },
+        "organization": {
+            "zh": "國立臺北科技大學",
+            "en": "National Taipei University of Technology"
+        },
+        "date": "2024-12",
+        "category": "academic"
+    },
+    {
+        "id": "hackathon-2023",
+        "title": {
+            "zh": "2023 Science and AI Hackathon - 第二名",
+            "en": "2023 Science and AI Hackathon - 2nd Prize"
+        },
+        "organization": {
+            "zh": "鴻海集團 & 城市科學實驗室",
+            "en": "Foxconn & City Science Lab"
+        },
+        "date": "2023-09",
+        "category": "competition",
+        "description": {
+            "zh": "36 小時內開發考量資安之 AI 影像系統，可自動偵測車禍並通報警務系統。",
+            "en": "Developed an AI image system with security considerations in 36 hours, capable of detecting accidents and alerting authorities."
+        }
+    }
+]

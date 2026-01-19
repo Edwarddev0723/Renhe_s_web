@@ -1,0 +1,241 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { useTranslations, defaultLang } from '../i18n';
+import profile from '../data/profile.json';
+import models from '../data/models.json';
+
+const lang = defaultLang;
+const t = useTranslations(lang);
+
+const modelsList = models.filter(m => m.type === 'model');
+const datasetsList = models.filter(m => m.type === 'dataset');
+---
+
+<Layout title={`${t('models.title')} | ${profile.name[lang]}`} lang={lang}>
+  <section class="page-header">
+    <div class="container">
+      <h1>{t('models.title')}</h1>
+      <p class="page-desc">
+        {lang === 'zh' 
+          ? '我在 Hugging Face 上發布的 AI 模型與資料集。' 
+          : 'AI models and datasets I\'ve published on Hugging Face.'}
+      </p>
+      <div class="page-stats">
+        <div class="stat">🤖 {modelsList.length} Models</div>
+        <div class="stat">📊 {datasetsList.length} Datasets</div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Models Section -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section-subtitle">🤖 Models</h2>
+      <div class="models-grid">
+        {modelsList.map((model) => (
+          <a href={model.link} target="_blank" rel="noopener noreferrer" class="model-card">
+            <div class="model-header">
+              <span class="model-icon">🤖</span>
+              <span class="model-type">{model.task}</span>
+            </div>
+            <h3 class="model-name">{model.name}</h3>
+            <div class="model-meta">
+              {model.size && <span class="model-size">{model.size}</span>}
+              <span class="model-downloads">📥 {model.downloads}</span>
+              {model.likes && <span class="model-likes">❤️ {model.likes}</span>}
+            </div>
+            <div class="model-updated">
+              {t('models.updated')}: {model.lastUpdated}
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+  
+  <!-- Datasets Section -->
+  <section class="section section-alt">
+    <div class="container">
+      <h2 class="section-subtitle">📊 Datasets</h2>
+      <div class="models-grid">
+        {datasetsList.map((dataset) => (
+          <a href={dataset.link} target="_blank" rel="noopener noreferrer" class="model-card">
+            <div class="model-header">
+              <span class="model-icon">📊</span>
+              {dataset.rows && <span class="model-type">{dataset.rows} rows</span>}
+            </div>
+            <h3 class="model-name">{dataset.name}</h3>
+            <div class="model-meta">
+              <span class="model-downloads">📥 {dataset.downloads}</span>
+            </div>
+            <div class="model-updated">
+              {t('models.updated')}: {dataset.lastUpdated}
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+  
+  <!-- Hugging Face CTA -->
+  <section class="section">
+    <div class="container">
+      <div class="hf-cta">
+        <div class="hf-icon">🤗</div>
+        <h3>{lang === 'zh' ? '探索更多' : 'Explore More'}</h3>
+        <p>{lang === 'zh' ? '在 Hugging Face 上查看我所有的模型與資料集' : 'View all my models and datasets on Hugging Face'}</p>
+        <a href={profile.social.huggingface} target="_blank" rel="noopener" class="btn btn-primary">
+          Hugging Face Profile →
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .page-header {
+    padding: calc(64px + var(--space-16)) 0 var(--space-12);
+    background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+    text-align: center;
+  }
+  
+  .page-header h1 {
+    font-size: var(--text-4xl);
+    margin-bottom: var(--space-4);
+  }
+  
+  .page-desc {
+    font-size: var(--text-lg);
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto var(--space-6);
+  }
+  
+  .page-stats {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-6);
+  }
+  
+  .stat {
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--color-primary-500);
+  }
+  
+  .section-alt {
+    background: var(--bg-secondary);
+  }
+  
+  .section-subtitle {
+    font-size: var(--text-2xl);
+    margin-bottom: var(--space-8);
+  }
+  
+  .models-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-4);
+  }
+  
+  .model-card {
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-5);
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+  }
+  
+  .model-card:hover {
+    border-color: var(--color-primary-300);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+  
+  .model-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-3);
+  }
+  
+  .model-icon {
+    font-size: var(--text-xl);
+  }
+  
+  .model-type {
+    font-size: var(--text-xs);
+    color: var(--color-primary-500);
+    background: var(--color-primary-50);
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius-sm);
+  }
+  
+  [data-theme="dark"] .model-type {
+    background: rgba(37, 99, 235, 0.2);
+  }
+  
+  .model-name {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: var(--space-3);
+    word-break: break-all;
+  }
+  
+  .model-meta {
+    display: flex;
+    gap: var(--space-3);
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    margin-bottom: var(--space-2);
+  }
+  
+  .model-size {
+    background: var(--bg-tertiary);
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius-sm);
+  }
+  
+  .model-updated {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    margin-top: auto;
+  }
+  
+  .hf-cta {
+    text-align: center;
+    padding: var(--space-12);
+    background: var(--bg-secondary);
+    border-radius: var(--radius-xl);
+  }
+  
+  .hf-icon {
+    font-size: var(--text-5xl);
+    margin-bottom: var(--space-4);
+  }
+  
+  .hf-cta h3 {
+    font-size: var(--text-2xl);
+    margin-bottom: var(--space-3);
+  }
+  
+  .hf-cta p {
+    margin-bottom: var(--space-6);
+  }
+  
+  @media (max-width: 1024px) {
+    .models-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (max-width: 640px) {
+    .models-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

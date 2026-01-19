@@ -1,0 +1,147 @@
+[
+    {
+        "id": "bert-traditional-classifier",
+        "title": {
+            "zh": "BERT 繁簡中文分類器",
+            "en": "BERT Traditional/Simplified Chinese Classifier"
+        },
+        "summary": {
+            "zh": "基於 BERT 的繁體中文變體分類器（台灣 vs 大陸），達 87.71% 準確率，支援長文本、Focal Loss 與 MC Dropout 投票機制。",
+            "en": "BERT-based classifier for Traditional Chinese variants (Taiwan vs Mainland). Achieves 87.71% accuracy with long-text support, Focal Loss, and MC Dropout voting."
+        },
+        "tags": [
+            "Python",
+            "BERT",
+            "NLP",
+            "Text Classification"
+        ],
+        "date": "2025-11",
+        "github": "https://github.com/Edwarddev0723/BERT-TraditionalSimplified-Classifier",
+        "huggingface": "https://huggingface.co/renhehuang/bert-traditional-chinese-classifier",
+        "image": "/images/projects/bert-classifier.png",
+        "featured": true,
+        "metrics": {
+            "accuracy": "87.71%"
+        }
+    },
+    {
+        "id": "formosa-vision",
+        "title": {
+            "zh": "Formosa Vision: 台灣開源影像資料集",
+            "en": "Formosa Vision: Open-Source Taiwanese Image Dataset"
+        },
+        "summary": {
+            "zh": "使用國家文化記憶庫 2.0 影像建立「Formosa Vision 對話語料庫」，增強 VLM 對台灣地標、歷史與文化的理解。",
+            "en": "Established the 'Formosa Vision Dialogue Corpus' using images from National Cultural Memory Bank 2.0 to enhance VLM's understanding of Taiwan's landmarks, history, and culture."
+        },
+        "tags": [
+            "VLM",
+            "Dataset",
+            "Taiwan",
+            "Cultural AI"
+        ],
+        "date": "2025-09",
+        "huggingface": "https://huggingface.co/datasets/twinkle-ai/Formosa-Vision",
+        "medium": "https://www.ithome.com.tw/pr/172192",
+        "image": "/images/projects/formosa-vision.png",
+        "featured": true
+    },
+    {
+        "id": "fair-resume-matcher",
+        "title": {
+            "zh": "深度學習公平履歷篩選系統",
+            "en": "Fair Resume Matching System with XAI"
+        },
+        "summary": {
+            "zh": "兼顧「效能」與「公平性」的履歷匹配系統，結合 LoRA 微調、對抗去偏與可解釋性 AI (XAI) 實現決策透明化。",
+            "en": "A resume matching system balancing performance and fairness, combining LoRA fine-tuning, adversarial debiasing, and XAI for transparent decision-making."
+        },
+        "tags": [
+            "Python",
+            "LoRA",
+            "Fairness",
+            "XAI",
+            "NLP"
+        ],
+        "date": "2025-11",
+        "github": "https://github.com/Edwarddev0723/bge-lora-fairness-finetuning",
+        "huggingface": "https://huggingface.co/renhehuang/fair-resume-job-matcher-lora",
+        "medium": "https://medium.com/@renhehuang0723/如何做到深度學習公平自動化篩選履歷-並透過-llm-xai-做到決策透明-3eea623e78f7",
+        "image": "/images/projects/fair-resume.png",
+        "featured": true
+    },
+    {
+        "id": "sms-clustering",
+        "title": {
+            "zh": "中文簡訊對比學習分群系統",
+            "en": "Chinese SMS Contrastive Clustering"
+        },
+        "summary": {
+            "zh": "基於多階段分群與對比學習的中文簡訊分類系統，採用 SimCSE 風格方法微調 Sentence Encoder。",
+            "en": "A Chinese SMS classification system based on multi-stage clustering and contrastive learning, using SimCSE-style methods to fine-tune Sentence Encoder."
+        },
+        "tags": [
+            "Python",
+            "Contrastive Learning",
+            "Clustering",
+            "NLP"
+        ],
+        "date": "2025-08",
+        "github": "https://github.com/Edwarddev0723/sms-contrastive-clustering",
+        "medium": "https://medium.com/@renhehuang0723/透過對比學習與多階段分群進行中文簡訊無間都分類-side-project-系列-87714620c5c6",
+        "image": "/images/projects/sms-clustering.png",
+        "featured": true,
+        "metrics": {
+            "stars": 2
+        }
+    },
+    {
+        "id": "ollaforge",
+        "title": {
+            "zh": "OllaForge: LLM 資料集生成工具",
+            "en": "OllaForge: LLM Dataset Generator"
+        },
+        "summary": {
+            "zh": "高效能 CLI 工具，利用本地 Ollama 模型生成與擴增 LLM 微調訓練資料集，支援結構化 JSON 輸出與並行批次處理。",
+            "en": "High-performance CLI tool leveraging local Ollama models to generate and augment training datasets for LLM fine-tuning with structured JSON output and concurrent batch processing."
+        },
+        "tags": [
+            "Python",
+            "CLI",
+            "LLM",
+            "Data Generation"
+        ],
+        "date": "2025-10",
+        "github": "https://github.com/Edwarddev0723/OllaForge",
+        "image": "/images/projects/ollaforge.png",
+        "featured": false,
+        "metrics": {
+            "stars": 1
+        }
+    },
+    {
+        "id": "gentrip",
+        "title": {
+            "zh": "GenTrip: AI 旅遊行程生成助手",
+            "en": "GenTrip: AI Trip Planner"
+        },
+        "summary": {
+            "zh": "結合 Pandas AI 與 GPT-4o RAG 檢索的智慧旅遊行程規劃系統，支援多模態輸入與客製化需求。",
+            "en": "Smart travel planning system combining Pandas AI and GPT-4o RAG retrieval, supporting multimodal input and customizable requirements."
+        },
+        "tags": [
+            "Python",
+            "RAG",
+            "GPT-4",
+            "GenAI"
+        ],
+        "date": "2024-09",
+        "github": "https://github.com/Edwarddev0723/GenTrip_ai_Tripplanner",
+        "image": "/images/projects/gentrip.png",
+        "featured": false,
+        "metrics": {
+            "stars": 2,
+            "forks": 1
+        }
+    }
+]

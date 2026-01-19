@@ -1,0 +1,284 @@
+---
+import { useTranslations, getTranslationArray, type Lang } from '../i18n';
+import profile from '../data/profile.json';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const rawBase = import.meta.env.BASE_URL;
+const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
+---
+
+<section class="hero">
+  <div class="container">
+    <div class="hero-content">
+      <!-- Avatar -->
+      <div class="hero-avatar">
+        <div class="avatar-glow"></div>
+        <img src={`${base}${profile.avatar.replace(/^\//, '')}`} alt={profile.name[lang]} class="avatar-image" />
+      </div>
+      
+      <!-- Text Content -->
+      <div class="hero-text">
+        <p class="hero-greeting">{t('hero.greeting')}</p>
+        <h1 class="hero-name">{t('hero.name')}</h1>
+        <p class="hero-tagline">{t('hero.tagline')}</p>
+        <p class="hero-description">{t('hero.description')}</p>
+        
+        <!-- Trust Signals -->
+        <div class="hero-badges">
+          <span class="badge">🏆 TANet {lang === 'zh' ? '最佳論文' : 'Best Paper'}</span>
+          <span class="badge">🥇 TWM {lang === 'zh' ? '競賽冠軍' : 'Champion'}</span>
+          <span class="badge">📊 {profile.stats.huggingfaceDatasets}+ Datasets</span>
+        </div>
+        
+        <!-- CTA Buttons -->
+        <div class="hero-actions">
+          <a href={lang === 'zh' ? `${base}projects` : `${base}${lang}/projects`} class="btn btn-primary">
+            {t('hero.cta.projects')}
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+          <a href={lang === 'zh' ? `${base}contact` : `${base}${lang}/contact`} class="btn btn-secondary">
+            {t('hero.cta.contact')}
+          </a>
+          <a href={`${base}resume.pdf`} class="btn btn-ghost" download>
+            {t('hero.cta.resume')}
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Scroll Indicator -->
+    <div class="scroll-indicator">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="6 9 12 15 18 9"></polyline>
+      </svg>
+    </div>
+  </div>
+  
+  <!-- Background Elements -->
+  <div class="hero-bg">
+    <div class="gradient-orb gradient-orb-1"></div>
+    <div class="gradient-orb gradient-orb-2"></div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding-top: 64px;
+    overflow: hidden;
+  }
+  
+  .hero-content {
+    display: flex;
+    align-items: center;
+    gap: var(--space-16);
+    position: relative;
+    z-index: 1;
+  }
+  
+  .hero-avatar {
+    position: relative;
+    flex-shrink: 0;
+  }
+  
+  .avatar-glow {
+    position: absolute;
+    inset: -8px;
+    background: linear-gradient(135deg, var(--color-primary-500), var(--color-accent-500));
+    border-radius: 50%;
+    opacity: 0.6;
+    filter: blur(20px);
+    animation: pulse 3s ease-in-out infinite;
+  }
+  
+  @keyframes pulse {
+    0%, 100% { opacity: 0.6; transform: scale(1); }
+    50% { opacity: 0.8; transform: scale(1.05); }
+  }
+  
+  .avatar-image {
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid var(--bg-primary);
+    position: relative;
+    z-index: 1;
+    box-shadow: var(--shadow-xl);
+  }
+  
+  .hero-text {
+    flex: 1;
+  }
+  
+  .hero-greeting {
+    font-size: var(--text-lg);
+    color: var(--color-primary-500);
+    font-weight: 500;
+    margin-bottom: var(--space-2);
+  }
+  
+  .hero-name {
+    font-size: var(--text-6xl);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: var(--space-4);
+    background: linear-gradient(135deg, var(--text-primary) 0%, var(--color-primary-500) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .hero-tagline {
+    font-family: var(--font-mono);
+    font-size: var(--text-lg);
+    color: var(--text-muted);
+    margin-bottom: var(--space-4);
+  }
+  
+  .hero-description {
+    font-size: var(--text-xl);
+    color: var(--text-secondary);
+    max-width: 500px;
+    margin-bottom: var(--space-6);
+  }
+  
+  .hero-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-bottom: var(--space-8);
+  }
+  
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--space-2) var(--space-4);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-full);
+    color: var(--text-secondary);
+  }
+  
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+  }
+  
+  .scroll-indicator {
+    position: absolute;
+    bottom: var(--space-8);
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--text-muted);
+    animation: bounce 2s infinite;
+  }
+  
+  @keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+    40% { transform: translateX(-50%) translateY(-10px); }
+    60% { transform: translateX(-50%) translateY(-5px); }
+  }
+  
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  
+  .gradient-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.3;
+  }
+  
+  .gradient-orb-1 {
+    width: 600px;
+    height: 600px;
+    background: var(--color-primary-400);
+    top: -200px;
+    right: -100px;
+  }
+  
+  .gradient-orb-2 {
+    width: 400px;
+    height: 400px;
+    background: var(--color-accent-400);
+    bottom: -100px;
+    left: -100px;
+  }
+  
+  [data-theme="dark"] .gradient-orb {
+    opacity: 0.15;
+  }
+  
+  @media (max-width: 1024px) {
+    .hero-content {
+      flex-direction: column;
+      text-align: center;
+    }
+    
+    .hero-name {
+      font-size: var(--text-5xl);
+    }
+    
+    .avatar-image {
+      width: 200px;
+      height: 200px;
+    }
+    
+    .hero-description {
+      max-width: 100%;
+    }
+    
+    .hero-badges,
+    .hero-actions {
+      justify-content: center;
+    }
+  }
+  
+  @media (max-width: 640px) {
+    .hero-name {
+      font-size: var(--text-4xl);
+    }
+    
+    .hero-tagline {
+      font-size: var(--text-base);
+    }
+    
+    .hero-description {
+      font-size: var(--text-lg);
+    }
+    
+    .avatar-image {
+      width: 160px;
+      height: 160px;
+    }
+    
+    .hero-actions {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  }
+</style>

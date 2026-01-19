@@ -1,0 +1,88 @@
+{
+  "site": {
+    "title": "黃仁和 | AI 工程師 & 研究者",
+    "description": "用 AI 連結學術與產業，讓資料創造價值。"
+  },
+  "nav": {
+    "home": "首頁",
+    "about": "關於我",
+    "projects": "專案作品",
+    "writing": "技術文章",
+    "models": "AI 模型",
+    "contact": "聯絡方式"
+  },
+  "hero": {
+    "greeting": "你好，我是",
+    "name": "黃仁和",
+    "tagline": "AI Engineer ∙ Researcher ∙ Open Source Contributor",
+    "description": "用 AI 連結學術與產業，讓資料創造價值。",
+    "cta": {
+      "projects": "看作品",
+      "contact": "聯絡我",
+      "resume": "下載履歷"
+    }
+  },
+  "about": {
+    "title": "關於我",
+    "summary": [
+      "現任台灣大哥大 AI 工程師實習生，同時於國立中央大學資訊管理研究所攻讀碩士學位。",
+      "專精於自然語言處理、深度學習及繁體中文 AI 模型開發，曾獲 TANet 最佳論文獎與國科會 GenAI Stars 優選。",
+      "致力於將學術研究轉化為可落地的商業應用，積極推動台灣 AI 開源生態發展。"
+    ],
+    "readMore": "了解更多"
+  },
+  "projects": {
+    "title": "精選專案",
+    "viewAll": "探索更多",
+    "viewProject": "查看專案"
+  },
+  "articles": {
+    "title": "技術文章",
+    "viewAll": "閱讀更多",
+    "readArticle": "閱讀文章",
+    "minRead": "分鐘閱讀"
+  },
+  "models": {
+    "title": "AI 模型與資料集",
+    "viewAll": "探索 Hugging Face",
+    "downloads": "下載次數",
+    "updated": "更新於"
+  },
+  "awards": {
+    "title": "榮譽與肯定"
+  },
+  "contact": {
+    "title": "聯絡方式",
+    "description": "有合作機會？歡迎聯繫！",
+    "name": "姓名",
+    "email": "電子郵件",
+    "message": "訊息內容",
+    "submit": "送出訊息",
+    "success": "訊息已送出！我會盡快回覆您。",
+    "error": "送出失敗，請稍後再試。"
+  },
+  "footer": {
+    "description": "用 AI 連結學術與產業，讓資料創造價值。",
+    "quickLinks": "快速連結",
+    "social": "社群媒體",
+    "copyright": "版權所有"
+  },
+  "skills": {
+    "title": "專業技能"
+  },
+  "education": {
+    "title": "教育背景"
+  },
+  "experience": {
+    "title": "工作經歷"
+  },
+  "certifications": {
+    "title": "資格認證"
+  },
+  "common": {
+    "loading": "載入中...",
+    "error": "發生錯誤",
+    "viewMore": "查看更多",
+    "backToTop": "回到頂部"
+  }
+}

@@ -1,0 +1,75 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { useTranslations, defaultLang } from '../i18n';
+import profile from '../data/profile.json';
+import projects from '../data/projects.json';
+
+const lang = defaultLang;
+const t = useTranslations(lang);
+---
+
+<Layout title={`${t('projects.title')} | ${profile.name[lang]}`} lang={lang}>
+  <section class="page-header">
+    <div class="container">
+      <h1>{t('projects.title')}</h1>
+      <p class="page-desc">
+        {lang === 'zh' 
+          ? '這裡展示我過去的專案作品，涵蓋 NLP、深度學習與 AI 應用開發。' 
+          : 'Showcasing my past projects spanning NLP, Deep Learning, and AI applications.'}
+      </p>
+    </div>
+  </section>
+  
+  <section class="section">
+    <div class="container">
+      <div class="projects-grid">
+        {projects.map((project) => (
+          <ProjectCard
+            title={project.title}
+            summary={project.summary}
+            tags={project.tags}
+            date={project.date}
+            link={project.huggingface || project.github || project.medium}
+            github={project.github}
+            image={project.image}
+            metrics={project.metrics}
+            lang={lang}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .page-header {
+    padding: calc(64px + var(--space-16)) 0 var(--space-12);
+    background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+    text-align: center;
+  }
+  
+  .page-header h1 {
+    font-size: var(--text-4xl);
+    margin-bottom: var(--space-4);
+  }
+  
+  .page-desc {
+    font-size: var(--text-lg);
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-6);
+  }
+  
+  @media (max-width: 768px) {
+    .projects-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

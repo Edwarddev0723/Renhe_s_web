@@ -1,0 +1,58 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { useTranslations } from '../../i18n';
+import profile from '../../data/profile.json';
+import articles from '../../data/articles.json';
+
+const lang = 'en';
+const t = useTranslations(lang);
+---
+
+<Layout title={`${t('articles.title')} | ${profile.name[lang]}`} lang={lang}>
+  <section class="page-header">
+    <div class="container">
+      <h1>{t('articles.title')}</h1>
+      <p class="page-desc">Sharing my technical insights and hands-on experience in AI, NLP, and Deep Learning.</p>
+    </div>
+  </section>
+  
+  <section class="section">
+    <div class="container">
+      <div class="articles-list">
+        {articles.map((article) => (
+          <a href={article.link} target="_blank" rel="noopener noreferrer" class="article-card">
+            <div class="article-meta">
+              <span class="article-date">{article.date}</span>
+              <span class="article-time">{article.readingTime} {t('articles.minRead')}</span>
+            </div>
+            <h2 class="article-title">{typeof article.title === 'string' ? article.title : article.title[lang]}</h2>
+            <p class="article-summary">{typeof article.summary === 'string' ? article.summary : article.summary[lang]}</p>
+            <div class="article-tags">{article.tags.map((tag) => (<span class="tag">{tag}</span>))}</div>
+            <span class="article-link">{t('articles.readArticle')} →</span>
+          </a>
+        ))}
+      </div>
+      <div class="more-articles">
+        <p>More articles on Medium</p>
+        <a href={profile.social.medium} target="_blank" rel="noopener" class="btn btn-primary">Medium →</a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .page-header { padding: calc(64px + var(--space-16)) 0 var(--space-12); background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary)); text-align: center; }
+  .page-header h1 { font-size: var(--text-4xl); margin-bottom: var(--space-4); }
+  .page-desc { font-size: var(--text-lg); color: var(--text-secondary); max-width: 600px; margin: 0 auto; }
+  .articles-list { display: flex; flex-direction: column; gap: var(--space-6); max-width: 800px; margin: 0 auto; }
+  .article-card { display: block; padding: var(--space-8); background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--radius-xl); text-decoration: none; transition: all var(--transition-normal); }
+  .article-card:hover { border-color: var(--color-primary-300); box-shadow: var(--shadow-lg); transform: translateY(-4px); }
+  .article-meta { display: flex; gap: var(--space-4); margin-bottom: var(--space-3); }
+  .article-date, .article-time { font-size: var(--text-sm); color: var(--text-muted); }
+  .article-title { font-size: var(--text-xl); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-3); }
+  .article-summary { font-size: var(--text-base); color: var(--text-secondary); line-height: 1.6; margin-bottom: var(--space-4); }
+  .article-tags { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-bottom: var(--space-4); }
+  .article-link { font-size: var(--text-sm); font-weight: 600; color: var(--color-primary-500); }
+  .more-articles { text-align: center; margin-top: var(--space-12); padding: var(--space-8); background: var(--bg-secondary); border-radius: var(--radius-xl); }
+  .more-articles p { margin-bottom: var(--space-4); }
+</style>

@@ -1,0 +1,177 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { useTranslations, getTranslationArray } from '../../i18n';
+import profile from '../../data/profile.json';
+
+const lang = 'en';
+const t = useTranslations(lang);
+const summaryArray = getTranslationArray(lang, 'about.summary');
+const rawBase = import.meta.env.BASE_URL;
+const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
+---
+
+<Layout title={`${t('about.title')} | ${profile.name[lang]}`} description={summaryArray[0]} lang={lang}>
+  <section class="page-header">
+    <div class="container">
+      <h1>{t('about.title')}</h1>
+    </div>
+  </section>
+  
+  <section class="section">
+    <div class="container">
+      <div class="about-intro">
+        <div class="intro-image">
+          <img src={`${base}${profile.avatar.replace(/^\//, '')}`} alt={profile.name[lang]} />
+        </div>
+        <div class="intro-text">
+          <h2>{profile.name[lang]}</h2>
+          <p class="intro-title">{profile.position[lang]} @ {profile.company[lang]}</p>
+          <p class="intro-school">{profile.degree[lang]} @ {profile.school[lang]}</p>
+          <div class="intro-summary">
+            {summaryArray.map((p) => <p>{p}</p>)}
+          </div>
+          <div class="intro-links">
+            <a href={profile.social.github} target="_blank" rel="noopener" class="btn btn-secondary">GitHub</a>
+            <a href={profile.social.linkedin} target="_blank" rel="noopener" class="btn btn-secondary">LinkedIn</a>
+            <a href={profile.social.huggingface} target="_blank" rel="noopener" class="btn btn-secondary">🤗 Hugging Face</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section class="section section-alt">
+    <div class="container">
+      <h2 class="section-title">{t('experience.title')}</h2>
+      <div class="timeline">
+        {profile.experience.map((exp) => (
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-header">
+                <div>
+                  <h3>{exp.position[lang]}</h3>
+                  <p class="timeline-company">{exp.company[lang]}</p>
+                </div>
+                <span class="timeline-period">{exp.period}</span>
+              </div>
+              <p class="timeline-location">📍 {exp.location[lang]}</p>
+              <ul class="timeline-list">
+                {exp.highlights[lang].map((h) => <li>{h}</li>)}
+              </ul>
+              {exp.achievements && (
+                <div class="timeline-achievements">
+                  <h4>🏆 Achievements</h4>
+                  <ul>
+                    {exp.achievements[lang].map((a) => <li>{a}</li>)}
+                  </ul>
+                </div>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+  
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">{t('education.title')}</h2>
+      <div class="education-grid">
+        {profile.education.map((edu) => (
+          <div class="education-card">
+            <div class="edu-icon">🎓</div>
+            <div class="edu-content">
+              <h3>{edu.school[lang]}</h3>
+              <p class="edu-degree">{edu.degree[lang]}</p>
+              <p class="edu-period">{edu.period} {edu.current && '(Current)'}</p>
+              {edu.gpa && (
+                <div class="edu-badge">
+                  <span>GPA: {edu.gpa}</span>
+                  {edu.rank && <span>{edu.rank[lang]}</span>}
+                </div>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+  
+  <section class="section section-alt">
+    <div class="container">
+      <h2 class="section-title">{t('skills.title')}</h2>
+      <div class="skills-container">
+        <div class="skill-group"><h4>Core Skills</h4><div class="skill-tags">{profile.skills.core.map((s) => <span class="tag">{s}</span>)}</div></div>
+        <div class="skill-group"><h4>Languages</h4><div class="skill-tags">{profile.skills.languages.map((s) => <span class="tag">{s}</span>)}</div></div>
+        <div class="skill-group"><h4>Frameworks/Tools</h4><div class="skill-tags">{profile.skills.frameworks.map((s) => <span class="tag tag-accent">{s}</span>)}</div></div>
+      </div>
+    </div>
+  </section>
+  
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">{t('certifications.title')}</h2>
+      <div class="cert-grid">
+        {profile.certifications.map((cert) => (
+          <div class="cert-card">
+            <span class="cert-icon">📜</span>
+            <div class="cert-content">
+              <h4>{typeof cert.name === 'string' ? cert.name : cert.name[lang]}</h4>
+              <p>{typeof cert.issuer === 'string' ? cert.issuer : cert.issuer[lang]}</p>
+              <span class="cert-date">{cert.date}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .page-header { padding: calc(64px + var(--space-16)) 0 var(--space-12); background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary)); text-align: center; }
+  .page-header h1 { font-size: var(--text-4xl); }
+  .section-alt { background: var(--bg-secondary); }
+  .about-intro { display: flex; gap: var(--space-12); align-items: flex-start; max-width: 900px; margin: 0 auto; }
+  .intro-image img { width: 200px; height: 200px; border-radius: var(--radius-xl); object-fit: cover; box-shadow: var(--shadow-lg); }
+  .intro-text h2 { font-size: var(--text-3xl); margin-bottom: var(--space-2); }
+  .intro-title { font-size: var(--text-lg); color: var(--color-primary-500); font-weight: 500; }
+  .intro-school { color: var(--text-muted); margin-bottom: var(--space-6); }
+  .intro-summary p { margin-bottom: var(--space-3); }
+  .intro-links { display: flex; gap: var(--space-3); margin-top: var(--space-6); flex-wrap: wrap; }
+  .timeline { max-width: 700px; margin: 0 auto; padding-left: var(--space-8); position: relative; }
+  .timeline::before { content: ''; position: absolute; left: 6px; top: 0; bottom: 0; width: 2px; background: var(--border-color); }
+  .timeline-item { position: relative; padding-bottom: var(--space-10); }
+  .timeline-dot { position: absolute; left: calc(-1 * var(--space-8) + 2px); top: 4px; width: 12px; height: 12px; background: var(--color-primary-500); border-radius: 50%; border: 3px solid var(--bg-secondary); }
+  .timeline-content { background: var(--bg-primary); padding: var(--space-6); border-radius: var(--radius-lg); border: 1px solid var(--border-color); }
+  .timeline-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: var(--space-3); }
+  .timeline-header h3 { font-size: var(--text-lg); }
+  .timeline-company { color: var(--color-primary-500); font-weight: 500; }
+  .timeline-period { font-size: var(--text-sm); color: var(--text-muted); white-space: nowrap; }
+  .timeline-location { font-size: var(--text-sm); color: var(--text-muted); margin-bottom: var(--space-4); }
+  .timeline-list { padding-left: var(--space-5); margin-bottom: var(--space-4); }
+  .timeline-list li { font-size: var(--text-sm); color: var(--text-secondary); margin-bottom: var(--space-2); }
+  .timeline-achievements { background: var(--bg-secondary); padding: var(--space-4); border-radius: var(--radius-md); margin-top: var(--space-4); }
+  .timeline-achievements h4 { font-size: var(--text-sm); margin-bottom: var(--space-2); }
+  .timeline-achievements ul { padding-left: var(--space-5); }
+  .timeline-achievements li { font-size: var(--text-sm); color: var(--text-secondary); }
+  .education-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-6); max-width: 800px; margin: 0 auto; }
+  .education-card { display: flex; gap: var(--space-4); padding: var(--space-6); background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--radius-lg); }
+  .edu-icon { font-size: var(--text-2xl); }
+  .edu-content h3 { font-size: var(--text-lg); margin-bottom: var(--space-1); }
+  .edu-degree { color: var(--text-secondary); font-size: var(--text-sm); }
+  .edu-period { color: var(--text-muted); font-size: var(--text-xs); margin-top: var(--space-2); }
+  .edu-badge { display: flex; gap: var(--space-3); margin-top: var(--space-3); }
+  .edu-badge span { font-size: var(--text-xs); padding: var(--space-1) var(--space-2); background: var(--color-primary-100); color: var(--color-primary-700); border-radius: var(--radius-sm); }
+  [data-theme="dark"] .edu-badge span { background: rgba(37, 99, 235, 0.2); color: var(--color-primary-300); }
+  .skills-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-8); max-width: 800px; margin: 0 auto; }
+  .skill-group h4 { font-size: var(--text-sm); margin-bottom: var(--space-4); text-align: center; }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: var(--space-2); justify-content: center; }
+  .cert-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4); max-width: 900px; margin: 0 auto; }
+  .cert-card { display: flex; gap: var(--space-3); padding: var(--space-4); background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--radius-lg); }
+  .cert-icon { font-size: var(--text-xl); }
+  .cert-content h4 { font-size: var(--text-sm); font-weight: 600; margin-bottom: var(--space-1); }
+  .cert-content p { font-size: var(--text-xs); color: var(--text-secondary); margin-bottom: var(--space-1); }
+  .cert-date { font-size: var(--text-xs); color: var(--text-muted); }
+  @media (max-width: 768px) { .about-intro { flex-direction: column; align-items: center; text-align: center; } .intro-links { justify-content: center; } .education-grid, .skills-container, .cert-grid { grid-template-columns: 1fr; } .timeline-header { flex-direction: column; gap: var(--space-2); } }
+</style>

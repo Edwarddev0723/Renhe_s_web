@@ -1,0 +1,14 @@
+{
+  "name": "satellite-shepherd",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "node scripts/update-articles.js && astro dev",
+    "build": "node scripts/update-articles.js && astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^5.16.11"
+  }
+}

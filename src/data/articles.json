@@ -1,0 +1,138 @@
+[
+    {
+        "id": null,
+        "title": "MMICL: EMPOWERING VISION-LANGUAGE MODEL\nWITH MULTI-MODAL IN-CONTEXT LEARNING",
+        "summary": "透過設計一個包含圖像聲明的獨特上下文方案。近一步構建專屬的 MIC 數據集以成功賦予視覺語言模型（VLM）處理多圖像輸入、理解複雜圖文指代關係以及進行高效多模態上下文學習的能力。「圖文指代關係」（Text-to-Image Reference）指的是在包含多張圖像和大量文字的複雜情境中，文字描述與特...",
+        "link": "https://medium.com/@renhehuang0723/mmicl-empowering-vision-language-model-with-multi-modal-in-context-learning-2d9e80a16039?source=rss-5747bd060919------2",
+        "date": "2026-01-13",
+        "tags": [
+            "ai",
+            "vlm",
+            "vision",
+            "llm",
+            "deep-learning"
+        ],
+        "image": "https://cdn-images-1.medium.com/max/480/1*wTYpSvinHH39E2p0nhLRTQ.png",
+        "readingTime": "5"
+    },
+    {
+        "id": null,
+        "title": "Language-Guided Adaptive Vision TokenPruning for Efficient Multimodal LargeLanguage Models",
+        "summary": "動機視覺語言模型在推進的同時，不斷提高的解析度與細節更增進了模型在推論時產出的視覺編碼（Vision Token）數量。以 LLaVA-1.5 為例，模型需處理高達 576 個 Vision Token 這將會帶來大量的運算負擔，因此巨大的運算成將會是 VLM 的發展頻頸。為提高效率作者本次提出一份...",
+        "link": "https://medium.com/@renhehuang0723/language-guided-adaptive-vision-tokenpruning-for-efficient-multimodal-largelanguage-models-5f40f00b0810?source=rss-5747bd060919------2",
+        "date": "2025-12-08",
+        "tags": [
+            "mllm",
+            "data-science",
+            "vlm",
+            "llm",
+            "ai"
+        ],
+        "image": "https://cdn-images-1.medium.com/max/1024/1*MPcS4hw5Qt7yoMT8Eyjb-A.png",
+        "readingTime": "5"
+    },
+    {
+        "id": null,
+        "title": "ALIGN: Scaling Visual-Language Models with Noisy Data",
+        "summary": "該研究為 Google 研究團隊所推出的論文，發表於 ICML 2021 上。最主要目的是透過大規模、未經過度篩選的網路圖片與文字描述（alt-text）資料集，來提升視覺和視覺-語言表徵學習的效率與規模。WHY? 動機是？該研究的動機來自於在視覺應用中的表徵學習 Representation Le...",
+        "link": "https://medium.com/@renhehuang0723/align-scaling-visual-language-models-with-noisy-data-14d5830a49f9?source=rss-5747bd060919------2",
+        "date": "2025-11-26",
+        "tags": [
+            "vlm",
+            "ai",
+            "data-science"
+        ],
+        "image": "https://cdn-images-1.medium.com/max/870/1*pRlPVToDRmbmEY99KZ-yJw.png",
+        "readingTime": "5"
+    },
+    {
+        "id": null,
+        "title": "如何做到深度學習公平自動化篩選履歷？並透過 LLM XAI 做到決策透明",
+        "summary": "這篇文章分享一條實作路線：以 BAAI/bge-large-en-v1.5 為底，結合 LoRA 高效微調 + 對抗去偏 + 多任務學習 + 文字層敏感屬性遮蔽，再用 排序與反事實公平評估 做檢查，打造一個兼顧效能與公平的履歷匹配系統。Github連結：Edwarddev0723/bge-lora-...",
+        "link": "https://medium.com/@renhehuang0723/%E5%A6%82%E4%BD%95%E5%81%9A%E5%88%B0%E6%B7%B1%E5%BA%A6%E5%AD%B8%E7%BF%92%E5%85%AC%E5%B9%B3%E8%87%AA%E5%8B%95%E5%8C%96%E7%AF%A9%E9%81%B8%E5%B1%A5%E6%AD%B7-%E4%B8%A6%E9%80%8F%E9%81%8E-llm-xai-%E5%81%9A%E5%88%B0%E6%B1%BA%E7%AD%96%E9%80%8F%E6%98%8E-3eea623e78f7?source=rss-5747bd060919------2",
+        "date": "2025-11-18",
+        "tags": [
+            "ai",
+            "xai",
+            "deep-learning",
+            "ai-fairness",
+            "nlp"
+        ],
+        "image": "https://cdn-images-1.medium.com/max/1024/1*zftV6Mma_D2OQC_K4CjXUg.png",
+        "readingTime": "5"
+    },
+    {
+        "id": null,
+        "title": "FLAIR: Fine-grained Language-informed Image Representations",
+        "summary": "本文將以 FLAIR 模型論文為主軸，深入解析其如何突破 CLIP 等傳統多模態架構在語意對齊上的侷限，並說明精細語義對齊機制在提升 AI 圖像理解層次方面的關鍵作用。透過逐步拆解 FLAIR 的高品質多樣描述生成、文字條件化注意力池化設計，以及多正樣本損失函數，本文將說明這些技術創新如何使模型在局...",
+        "link": "https://medium.com/@renhehuang0723/flair-fine-grained-language-informed-image-representations-35202ff07b01?source=rss-5747bd060919------2",
+        "date": "2025-11-01",
+        "tags": [
+            "vlm",
+            "ai",
+            "clip"
+        ],
+        "image": "https://cdn-images-1.medium.com/max/1024/1*H2HSHjkqo5tBwgyaQUbnPQ.png",
+        "readingTime": "5"
+    },
+    {
+        "id": null,
+        "title": "Spec-Kit 教學：Vive Coding 時代你一定要會的 Coding Agent 工具",
+        "summary": "Speckit 是一款規格驅動的任務執行工具，這篇文章將教你如何安裝、建立 workflow 並分享實際使用心得與踩雷解法。Speckit 專案位置：https://github.com/github/spec-kit目錄▶ 為什麼選擇 Speckit？▶ 怎麼使用 ＆ 安裝？▶ Speckit 指...",
+        "link": "https://medium.com/@renhehuang0723/spec-kit-%E6%95%99%E5%AD%B8-vive-coding-%E6%99%82%E4%BB%A3%E4%BD%A0%E4%B8%80%E5%AE%9A%E8%A6%81%E6%9C%83%E7%9A%84-coding-agent-%E5%B7%A5%E5%85%B7-9b1f6f12d950?source=rss-5747bd060919------2",
+        "date": "2025-10-29",
+        "tags": [
+            "vibe-coding",
+            "ai"
+        ],
+        "image": "https://cdn-images-1.medium.com/max/1024/1*0yxIiHg0_A4fCix4FGmjLw.png",
+        "readingTime": "5"
+    },
+    {
+        "id": null,
+        "title": "FastVLM : Efficient Vision Encoding for Vision Language Models",
+        "summary": "深度學習論文筆記 — FastVLM 一款能在 Iphone 上推論的視覺語言模型介紹：該模型解決了什麼？在 VLM 領域中，高解析度的圖片是最重要的課題之一，尤其是像是包含許多文字的圖像。該篇論文提出了一個混合視覺編碼器 FastVITHD ，該編碼器在設計上能夠生成更少的 visual toke...",
+        "link": "https://medium.com/@renhehuang0723/fastvlm-efficient-vision-encoding-for-vision-language-models-725d8ab85745?source=rss-5747bd060919------2",
+        "date": "2025-10-05",
+        "tags": [
+            "data",
+            "ai",
+            "llm",
+            "vlm"
+        ],
+        "image": "https://cdn-images-1.medium.com/max/1024/1*T0rxlBBGvgY911Cw83iy0w.png",
+        "readingTime": "5"
+    },
+    {
+        "id": null,
+        "title": "透過 RNN 實作類張愛玲廢文生成器 — Side Project",
+        "summary": "Side Project —透過 RNN 實作類張愛玲廢文生成器本篇文章將會透過 RNN 將張愛玲之資料集進行訓練，資料內容為張愛玲散文集《傳奇》我們先來針對資料做點簡單的分析認識此次資料集。資料清洗可以看到這邊資料內包含了 3000 多個獨一無二的字詞，因此我們可以先做點資料清洗去除小於 8 次次...",
+        "link": "https://medium.com/@renhehuang0723/%E9%80%8F%E9%81%8E-rnn-%E5%AF%A6%E4%BD%9C%E9%A1%9E%E5%BC%B5%E6%84%9B%E7%8E%B2%E5%BB%A2%E6%96%87%E7%94%9F%E6%88%90%E5%99%A8-side-project-a6c4731b0c1f?source=rss-5747bd060919------2",
+        "date": "2025-09-01",
+        "tags": [
+            "deep-learning"
+        ],
+        "image": "https://cdn-images-1.medium.com/max/978/1*-MwNOMCryiOci53tBfqIXg.png",
+        "readingTime": "5"
+    },
+    {
+        "id": null,
+        "title": "透過對比學習與多階段分群進行中文簡訊無間都分類 — Side Project 系列",
+        "summary": "Side Project — 透過對比學習與多階段分群進行中文簡訊無監督分類1. 簡介提出了一個基於多階段分群和對比學習的中文簡訊文本分類系統。該系統採用SimCSE（Simple Contrastive Learning of Sentence Embeddings）風格的對比學習方法對預訓練的S...",
+        "link": "https://medium.com/@renhehuang0723/%E9%80%8F%E9%81%8E%E5%B0%8D%E6%AF%94%E5%AD%B8%E7%BF%92%E8%88%87%E5%A4%9A%E9%9A%8E%E6%AE%B5%E5%88%86%E7%BE%A4%E9%80%B2%E8%A1%8C%E4%B8%AD%E6%96%87%E7%B0%A1%E8%A8%8A%E7%84%A1%E9%96%93%E9%83%BD%E5%88%86%E9%A1%9E-side-project-%E7%B3%BB%E5%88%97-87714620c5c6?source=rss-5747bd060919------2",
+        "date": "2025-08-30",
+        "tags": [],
+        "image": "https://cdn-images-1.medium.com/max/910/1*rDIeGKLPe016sNwEihw7xw.png",
+        "readingTime": "5"
+    },
+    {
+        "id": null,
+        "title": "Bert 情緒分析與對比學習之應用（下）對比學習優化實驗",
+        "summary": "上篇文中我們透過使用 IMDB 資料集進行 fine tune Bert 模型，在測試集上獲得了 85 % 的準確度。接下來我們來介紹一個概念，也就是對比學習。什麼是對比學習？對比學習的核心在於透過損失函數（如 SupCon Loss）讓相同情緒的句子在向量空間中聚集，不同情緒的句子則保持距離。舉例...",
+        "link": "https://medium.com/@renhehuang0723/bert-%E6%83%85%E7%B7%92%E5%88%86%E6%9E%90%E8%88%87%E5%B0%8D%E6%AF%94%E5%AD%B8%E7%BF%92%E4%B9%8B%E6%87%89%E7%94%A8-%E4%B8%8B-%E5%B0%8D%E6%AF%94%E5%AD%B8%E7%BF%92%E5%84%AA%E5%8C%96%E5%AF%A6%E9%A9%97-d4dbb7415d33?source=rss-5747bd060919------2",
+        "date": "2025-08-27",
+        "tags": [],
+        "image": "https://cdn-images-1.medium.com/max/524/1*Oi0mdoaBviCh5XlWFd9K_A.png",
+        "readingTime": "5"
+    }
+]

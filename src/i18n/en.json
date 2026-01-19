@@ -1,0 +1,88 @@
+{
+    "site": {
+        "title": "Edward Huang | AI Engineer & Researcher",
+        "description": "Bridging Academia and Industry through AI-Powered Data Solutions."
+    },
+    "nav": {
+        "home": "Home",
+        "about": "About",
+        "projects": "Projects",
+        "writing": "Writing",
+        "models": "Models",
+        "contact": "Contact"
+    },
+    "hero": {
+        "greeting": "Hi, I'm",
+        "name": "Edward Huang",
+        "tagline": "AI Engineer ∙ Researcher ∙ Open Source Contributor",
+        "description": "Bridging Academia and Industry through AI-Powered Data Solutions.",
+        "cta": {
+            "projects": "View Projects",
+            "contact": "Contact Me",
+            "resume": "Download Resume"
+        }
+    },
+    "about": {
+        "title": "About Me",
+        "summary": [
+            "AI Engineering Intern at Taiwan Mobile and Master's student in Information Management at National Central University.",
+            "Specialized in NLP, Deep Learning, and Traditional Chinese AI models, awarded TANet Best Paper and GenAI Stars.",
+            "Passionate about transforming academic research into practical business solutions and advancing Taiwan's AI open-source ecosystem."
+        ],
+        "readMore": "Learn More"
+    },
+    "projects": {
+        "title": "Featured Projects",
+        "viewAll": "Explore More",
+        "viewProject": "View Project"
+    },
+    "articles": {
+        "title": "Technical Articles",
+        "viewAll": "Read More",
+        "readArticle": "Read Article",
+        "minRead": "min read"
+    },
+    "models": {
+        "title": "AI Models & Datasets",
+        "viewAll": "Explore Hugging Face",
+        "downloads": "Downloads",
+        "updated": "Updated"
+    },
+    "awards": {
+        "title": "Awards & Recognition"
+    },
+    "contact": {
+        "title": "Contact",
+        "description": "Have a collaboration opportunity? Let's connect!",
+        "name": "Name",
+        "email": "Email",
+        "message": "Message",
+        "submit": "Send Message",
+        "success": "Message sent! I'll get back to you soon.",
+        "error": "Failed to send. Please try again later."
+    },
+    "footer": {
+        "description": "Bridging Academia and Industry through AI-Powered Data Solutions.",
+        "quickLinks": "Quick Links",
+        "social": "Social",
+        "copyright": "All rights reserved"
+    },
+    "skills": {
+        "title": "Skills"
+    },
+    "education": {
+        "title": "Education"
+    },
+    "experience": {
+        "title": "Experience"
+    },
+    "certifications": {
+        "title": "Certifications"
+    },
+    "common": {
+        "loading": "Loading...",
+        "error": "An error occurred",
+        "viewMore": "View More",
+        "backToTop": "Back to Top"
+    }
+}

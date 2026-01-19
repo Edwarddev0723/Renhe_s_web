@@ -1,0 +1,167 @@
+{
+    "name": {
+        "zh": "黃仁和",
+        "en": "Edward Huang"
+    },
+    "title": {
+        "zh": "AI 工程師 & 研究者",
+        "en": "AI Engineer & Researcher"
+    },
+    "company": {
+        "zh": "台灣大哥大",
+        "en": "Taiwan Mobile"
+    },
+    "position": {
+        "zh": "AI 工程師實習生",
+        "en": "AI Engineering Intern"
+    },
+    "school": {
+        "zh": "國立中央大學",
+        "en": "National Central University"
+    },
+    "degree": {
+        "zh": "資訊管理碩士生",
+        "en": "M.S. in Information Management"
+    },
+    "location": {
+        "zh": "台灣 台北",
+        "en": "Taipei, Taiwan"
+    },
+    "email": "renhehuang0723@gmail.com",
+    "avatar": "/images/avatar.jpg",
+    "resume": "/resume.pdf",
+    "social": {
+        "github": "https://github.com/Edwarddev0723",
+        "linkedin": "https://www.linkedin.com/in/edwarddata/",
+        "medium": "https://medium.com/@renhehuang0723",
+        "huggingface": "https://huggingface.co/renhehuang"
+    },
+    "skills": {
+        "core": [
+            "Artificial Intelligence",
+            "Machine Learning",
+            "Deep Learning",
+            "NLP"
+        ],
+        "languages": [
+            "Python"
+        ],
+        "frameworks": [
+            "PyTorch",
+            "Hugging Face",
+            "Pandas",
+            "Scikit-learn",
+            "LoRA"
+        ]
+    },
+    "stats": {
+        "githubRepos": 33,
+        "huggingfaceModels": 4,
+        "huggingfaceDatasets": 12,
+        "certifications": 9
+    },
+    "education": [
+        {
+            "school": {
+                "zh": "國立中央大學",
+                "en": "National Central University"
+            },
+            "degree": {
+                "zh": "資訊管理學系 碩士",
+                "en": "Master's in Information Management"
+            },
+            "period": "2025/07 - 2027/06",
+            "current": true
+        },
+        {
+            "school": {
+                "zh": "國立臺北科技大學",
+                "en": "National Taipei University of Technology"
+            },
+            "degree": {
+                "zh": "資訊與財金管理系 學士",
+                "en": "Bachelor's in Information and Finance Management"
+            },
+            "period": "2021/09 - 2025/06",
+            "gpa": "4.0/4.0",
+            "rank": {
+                "zh": "班級排名第一",
+                "en": "Ranked 1st in class"
+            }
+        }
+    ],
+    "experience": [
+        {
+            "company": {
+                "zh": "台灣大哥大",
+                "en": "Taiwan Mobile"
+            },
+            "position": {
+                "zh": "AI 工程師實習生",
+                "en": "AI Engineering Intern"
+            },
+            "period": "2024/05 - Present",
+            "location": {
+                "zh": "台北（遠端）",
+                "en": "Taipei (Remote)"
+            },
+            "highlights": {
+                "zh": [
+                    "主導 AI 影像 Diffusion 模型 POC 測試與驗證",
+                    "參與 LLM 應用開發，執行 SFT 模型蒸餾與測試",
+                    "協助優化公司內部資料科學教材",
+                    "參與 Twinkle AI 繁中開源資料集計畫",
+                    "開發 CTR 點擊率預測模型"
+                ],
+                "en": [
+                    "Led POC testing for AI Diffusion models",
+                    "Developed LLM applications with SFT model distillation",
+                    "Optimized internal data science curriculum",
+                    "Contributed to Twinkle AI Traditional Chinese dataset project",
+                    "Built CTR prediction models"
+                ]
+            },
+            "achievements": {
+                "zh": [
+                    "2025 台灣大哥大數據競賽 資料科學組 亞軍",
+                    "2024 台灣大哥大數據競賽 資料科學組 冠軍",
+                    "2025 4月 攻城精英月度榮耀獎"
+                ],
+                "en": [
+                    "2nd Place - 2025 TWM Data Competition",
+                    "1st Place - 2024 TWM Data Competition",
+                    "April 2025 Elite Monthly Honor Award"
+                ]
+            }
+        }
+    ],
+    "certifications": [
+        {
+            "name": {
+                "zh": "iPAS AI應用規劃師 - 機器學習組 (中級)",
+                "en": "iPAS AI Application Planner - ML (Intermediate)"
+            },
+            "issuer": {
+                "zh": "經濟部產業人才能力鑑定",
+                "en": "Ministry of Economic Affairs"
+            },
+            "date": "2025/11"
+        },
+        {
+            "name": {
+                "zh": "Google Data Analytics Professional Certificate",
+                "en": "Google Data Analytics Professional Certificate"
+            },
+            "issuer": "Google",
+            "date": "2022/02"
+        },
+        {
+            "name": {
+                "zh": "100 Days of Code: Python Pro Bootcamp",
+                "en": "100 Days of Code: Python Pro Bootcamp"
+            },
+            "issuer": "Udemy",
+            "date": "2021/06"
+        }
+    ]
+}
