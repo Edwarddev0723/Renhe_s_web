@@ -15,7 +15,7 @@ const summaryArray = getTranslationArray(lang, 'about.summary');
 const rawBase = import.meta.env.BASE_URL;
 const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
 
-const featuredProjects = projects.filter(p => p.featured).slice(0, 4);
+const featuredProjects = projects.projects.filter(p => p.featured).slice(0, 4);
 const featuredModels = models.slice(0, 6);
 const recentArticles = articles.slice(0, 3);
 const recentAwards = awards.slice(0, 4);

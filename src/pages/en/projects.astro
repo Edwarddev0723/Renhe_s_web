@@ -20,7 +20,7 @@ const t = useTranslations(lang);
   <section class="section">
     <div class="container">
       <div class="projects-grid">
-        {projects.map((project) => (
+        {projects.projects.map((project) => (
           <ProjectCard title={project.title} summary={project.summary} tags={project.tags} date={project.date} link={project.huggingface || project.github || project.medium} github={project.github} image={project.image} metrics={project.metrics} lang={lang} />
         ))}
       </div>

@@ -24,7 +24,7 @@ const t = useTranslations(lang);
   <section class="section">
     <div class="container">
       <div class="projects-grid">
-        {projects.map((project) => (
+        {projects.projects.map((project) => (
           <ProjectCard
             title={project.title}
             summary={project.summary}

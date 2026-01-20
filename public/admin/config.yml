@@ -1,0 +1,48 @@
+backend:
+  name: git-gateway
+  branch: main
+local_backend: true
+
+media_folder: "public/images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "projects"
+    label: "Projects"
+    files:
+      - name: "projects"
+        label: "Projects List"
+        file: "src/data/projects.json"
+        fields:
+          - name: "projects"
+            label: "Projects"
+            widget: "list"
+            fields:
+              - {label: "ID", name: "id", widget: "string"}
+              - label: "Title"
+                name: "title"
+                widget: "object"
+                fields:
+                  - {label: "English", name: "en", widget: "string"}
+                  - {label: "Chinese", name: "zh", widget: "string"}
+              - label: "Summary"
+                name: "summary"
+                widget: "object"
+                fields:
+                  - {label: "English", name: "en", widget: "text"}
+                  - {label: "Chinese", name: "zh", widget: "text"}
+              - {label: "Tags", name: "tags", widget: "list"}
+              - {label: "Date", name: "date", widget: "string"}
+              - {label: "GitHub URL", name: "github", widget: "string", required: false}
+              - {label: "HuggingFace URL", name: "huggingface", widget: "string", required: false}
+              - {label: "Medium URL", name: "medium", widget: "string", required: false}
+              - {label: "Image", name: "image", widget: "image"}
+              - {label: "Featured", name: "featured", widget: "boolean", default: false}
+              - label: "Metrics"
+                name: "metrics"
+                widget: "object"
+                required: false
+                fields:
+                  - {label: "Accuracy", name: "accuracy", widget: "string", required: false}
+                  - {label: "Stars", name: "stars", widget: "number", value_type: "int", required: false}
+                  - {label: "Forks", name: "forks", widget: "number", value_type: "int", required: false}

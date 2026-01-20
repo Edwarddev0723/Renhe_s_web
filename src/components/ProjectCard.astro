@@ -22,14 +22,7 @@ const { title, summary, tags = [], date, link, github, image, metrics, lang } = 
 const displayTitle = typeof title === 'string' ? title : title[lang];
 const displaySummary = typeof summary === 'string' ? summary : summary[lang];
 
-const rawBase = import.meta.env.BASE_URL;
-const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
----
-
-<article class="project-card">
-  {image && (
-    <div class="card-image">
-      <img src={`${base}${image.replace(/^\//, '')}`} alt={displayTitle} loading="lazy" />
+      <img src={`${base}${image.startsWith('/') ? image.slice(1) : image}`} alt={displayTitle} loading="lazy" />
     </div>
   )}
   

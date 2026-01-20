@@ -3,9 +3,10 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "node scripts/update-articles.js && astro dev",
-    "build": "node scripts/update-articles.js && astro build",
+    "dev": "node scripts/update-articles.js && node scripts/update-models.js && astro dev",
+    "build": "node scripts/update-articles.js && node scripts/update-models.js && astro build",
     "preview": "astro preview",
+    "proxy": "npx decap-server",
     "astro": "astro"
   },
   "dependencies": {
