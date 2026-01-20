@@ -3,7 +3,7 @@ import { defineConfig } from 'astro/config';
 // https://astro.build/config
 export default defineConfig({
     site: 'https://edwarddev0723.github.io',
-    base: '/Renhe_web',
+    base: '/Renhe_s_web',
     build: {
         assets: 'assets'
     },
