@@ -1,6 +1,22 @@
 [
     {
         "id": null,
+        "title": "Long-CLIP: Unlocking the Long-Text\nCapability of CLIP",
+        "summary": "傳統 CLIP 在處理超過 77 個 token 的描述時表現不佳，甚至有效長度不足 20 個字，限制了其在細節檢索與精準圖像生成的應用。作者提出了知識保存延伸（Knowledge-preserved Stretching）與主成分匹配（Primary Component Matching）兩大策略...",
+        "link": "https://medium.com/@renhehuang0723/long-clip-unlocking-the-long-text-capability-of-clip-de3230754f0c?source=rss-5747bd060919------2",
+        "date": "2026-01-21",
+        "tags": [
+            "vlm",
+            "llm",
+            "clip",
+            "ai",
+            "deep-learning"
+        ],
+        "image": "https://cdn-images-1.medium.com/max/641/1*5YM8RpIEpXG4gmjOif5QjQ.png",
+        "readingTime": "5"
+    },
+    {
+        "id": null,
         "title": "MMICL: EMPOWERING VISION-LANGUAGE MODEL\nWITH MULTI-MODAL IN-CONTEXT LEARNING",
         "summary": "透過設計一個包含圖像聲明的獨特上下文方案。近一步構建專屬的 MIC 數據集以成功賦予視覺語言模型（VLM）處理多圖像輸入、理解複雜圖文指代關係以及進行高效多模態上下文學習的能力。「圖文指代關係」（Text-to-Image Reference）指的是在包含多張圖像和大量文字的複雜情境中，文字描述與特...",
         "link": "https://medium.com/@renhehuang0723/mmicl-empowering-vision-language-model-with-multi-modal-in-context-learning-2d9e80a16039?source=rss-5747bd060919------2",
@@ -123,16 +139,6 @@
         "date": "2025-08-30",
         "tags": [],
         "image": "https://cdn-images-1.medium.com/max/910/1*rDIeGKLPe016sNwEihw7xw.png",
-        "readingTime": "5"
-    },
-    {
-        "id": null,
-        "title": "Bert 情緒分析與對比學習之應用（下）對比學習優化實驗",
-        "summary": "上篇文中我們透過使用 IMDB 資料集進行 fine tune Bert 模型，在測試集上獲得了 85 % 的準確度。接下來我們來介紹一個概念，也就是對比學習。什麼是對比學習？對比學習的核心在於透過損失函數（如 SupCon Loss）讓相同情緒的句子在向量空間中聚集，不同情緒的句子則保持距離。舉例...",
-        "link": "https://medium.com/@renhehuang0723/bert-%E6%83%85%E7%B7%92%E5%88%86%E6%9E%90%E8%88%87%E5%B0%8D%E6%AF%94%E5%AD%B8%E7%BF%92%E4%B9%8B%E6%87%89%E7%94%A8-%E4%B8%8B-%E5%B0%8D%E6%AF%94%E5%AD%B8%E7%BF%92%E5%84%AA%E5%8C%96%E5%AF%A6%E9%A9%97-d4dbb7415d33?source=rss-5747bd060919------2",
-        "date": "2025-08-27",
-        "tags": [],
-        "image": "https://cdn-images-1.medium.com/max/524/1*Oi0mdoaBviCh5XlWFd9K_A.png",
         "readingTime": "5"
     }
 ]
