@@ -22,6 +22,41 @@ const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
 const image = Astro.props.image ? Astro.props.image : `${base}images/og-image.png`;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const siteURL = 'https://edwarddev0723.github.io/Renhe_s_web/';
+
+// Structured Data — Person
+const personJsonLd = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "黃仁和",
+  "alternateName": ["Edward Huang", "Renhe Huang"],
+  "url": siteURL,
+  "image": `${siteURL}images/avatar.jpg`,
+  "email": "mailto:renhehuang0723@gmail.com",
+  "jobTitle": "AI Engineer / Researcher",
+  "affiliation": [
+    { "@type": "Organization", "name": "Taiwan Mobile" },
+    { "@type": "Organization", "name": "National Central University" }
+  ],
+  "sameAs": [
+    "https://www.linkedin.com/in/edwarddata/",
+    "https://github.com/Edwarddev0723",
+    "https://huggingface.co/renhehuang",
+    "https://medium.com/@renhehuang0723"
+  ],
+  "knowsAbout": [
+    "NLP", "Deep Learning", "Traditional Chinese AI",
+    "Vision-Language Models", "CTR Prediction"
+  ]
+});
+
+// Structured Data — WebSite
+const websiteJsonLd = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "黃仁和｜Edward Huang",
+  "url": siteURL
+});
 ---
 
 <!DOCTYPE html>
@@ -37,6 +72,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
   
   <!-- Canonical -->
   <link rel="canonical" href={canonicalURL} />
+  
+  <!-- Sitemap -->
+  <link rel="sitemap" type="application/xml" href={`${base}sitemap.xml`} />
   
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
@@ -56,6 +94,13 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  
+  <!-- Structured Data: Person -->
+  <script type="application/ld+json" set:html={personJsonLd} />
+  <!-- Structured Data: WebSite -->
+  <script type="application/ld+json" set:html={websiteJsonLd} />
+  <!-- Page-specific structured data slot -->
+  <slot name="head" />
   
   <title>{title}</title>
   

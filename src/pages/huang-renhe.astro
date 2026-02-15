@@ -1,0 +1,386 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { useTranslations, defaultLang } from '../i18n';
+import profile from '../data/profile.json';
+import projects from '../data/projects.json';
+
+const lang = defaultLang;
+const t = useTranslations(lang);
+const rawBase = import.meta.env.BASE_URL;
+const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
+const siteURL = 'https://edwarddev0723.github.io/Renhe_s_web/';
+
+const featuredProjects = projects.projects.filter(p => p.featured).slice(0, 6);
+
+// FAQPage JSON-LD
+const faqJsonLd = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "黃仁和是誰？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "黃仁和（Edward Huang）是一名 AI 工程師與研究者，目前任職於台灣大哥大擔任 AI 工程師實習生，同時於國立中央大學資訊管理研究所攻讀碩士學位。專精於自然語言處理（NLP）、深度學習、繁體中文 AI 模型開發，以及視覺語言模型（Vision-Language Models）。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "黃仁和做過哪些專案？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "黃仁和曾主導多項 AI 專案，包括：繁體中文 Vision-Language 資料集建構、AI Diffusion 模型 POC 驗證、LLM 應用開發與 SFT 模型蒸餾、CTR 點擊率預測模型開發，以及 Twinkle AI 繁中開源資料集計畫。他在 Hugging Face 上發布了多個開源模型與資料集。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "黃仁和的研究方向是什麼？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "黃仁和的研究方向聚焦於：自然語言處理（NLP）、深度學習、繁體中文 AI 模型、Vision-Language Models（視覺語言模型）、以及 CTR 預測模型。他致力於將學術研究轉化為可落地的商業應用，並積極推動台灣 AI 開源生態發展。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "如何聯絡黃仁和？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "您可以透過電子郵件 renhehuang0723@gmail.com 聯絡黃仁和，也可以透過他的 LinkedIn（linkedin.com/in/edwarddata）、GitHub（github.com/Edwarddev0723）或 Hugging Face（huggingface.co/renhehuang）與他聯繫。"
+      }
+    }
+  ]
+});
+---
+
+<Layout 
+  title="黃仁和（Edward Huang）｜AI 工程師｜官方個人網站" 
+  description="黃仁和（Edward Huang），AI 工程師與研究者，專精 NLP、深度學習與繁體中文 AI。台灣大哥大 AI 工程師實習生、國立中央大學資訊管理碩士生。"
+  lang={lang}
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={faqJsonLd} />
+  </Fragment>
+
+  <!-- Hero Header -->
+  <section class="faq-hero">
+    <div class="container">
+      <div class="faq-hero-inner">
+        <div class="faq-avatar">
+          <img src={`${base}images/avatar.jpg`} alt="黃仁和 Edward Huang" />
+        </div>
+        <div class="faq-hero-text">
+          <h1>黃仁和（Edward Huang）｜AI 工程師｜官方個人網站</h1>
+          <p class="faq-intro">
+            現任<strong>台灣大哥大 AI 工程師實習生</strong>，國立中央大學資訊管理碩士生。
+            專精 NLP、深度學習與繁體中文 AI 模型，曾獲 TANet 最佳論文獎與國科會 GenAI Stars 優選。
+            探索我的
+            <a href={`${base}projects`}>專案作品</a>、
+            <a href={`${base}writing`}>技術文章</a> 與
+            <a href={`${base}models`}>開源 AI 模型</a>。
+          </p>
+          <div class="faq-hero-links">
+            <a href={`${base}about`} class="btn btn-primary">關於我 →</a>
+            <a href={`${base}contact`} class="btn btn-secondary">聯絡我 →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="section" id="faq">
+    <div class="container">
+      <h2 class="section-title">常見問題</h2>
+      <div class="faq-list">
+
+        <div class="faq-item">
+          <h3 class="faq-question">黃仁和是誰？</h3>
+          <div class="faq-answer">
+            <p>
+              黃仁和（Edward Huang）是一名 AI 工程師與研究者，目前任職於<strong>台灣大哥大</strong>擔任 AI 工程師實習生，
+              同時於<strong>國立中央大學</strong>資訊管理研究所攻讀碩士學位。
+            </p>
+            <p>
+              專精於自然語言處理（NLP）、深度學習、繁體中文 AI 模型開發，以及視覺語言模型（Vision-Language Models）。
+              他致力於將學術研究轉化為可落地的商業應用，積極推動台灣 AI 開源生態發展。
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <h3 class="faq-question">黃仁和做過哪些專案？</h3>
+          <div class="faq-answer">
+            <p>黃仁和曾主導與參與多項 AI 專案，其中代表作品包括：</p>
+            <ul>
+              {featuredProjects.map((project) => (
+                <li>
+                  <strong>{project.title}</strong>
+                  {project.summary && ` — ${typeof project.summary === 'string' ? project.summary : project.summary.zh || project.summary}`}
+                </li>
+              ))}
+            </ul>
+            <p>
+              更多專案詳情請見 <a href={`${base}projects`}>專案作品頁</a>，
+              開源模型與資料集請見 <a href={`${base}models`}>AI 模型頁</a>。
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <h3 class="faq-question">黃仁和的研究方向是什麼？</h3>
+          <div class="faq-answer">
+            <p>黃仁和的核心研究方向包含：</p>
+            <ul>
+              <li><strong>自然語言處理（NLP）</strong> — 文本分類、語意理解、語言模型微調</li>
+              <li><strong>深度學習</strong> — 模型架構設計、訓練優化、LoRA 微調技術</li>
+              <li><strong>繁體中文 AI</strong> — 專注於繁體中文語料與模型的開發與開源</li>
+              <li><strong>Vision-Language Models</strong> — 視覺與語言的多模態模型研究</li>
+              <li><strong>CTR 預測</strong> — 點擊率預測模型在廣告推薦系統的應用</li>
+            </ul>
+            <p>
+              相關技術文章請見 <a href={`${base}writing`}>技術文章頁</a>。
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <h3 class="faq-question">如何聯絡黃仁和？</h3>
+          <div class="faq-answer">
+            <p>您可以透過以下方式與黃仁和聯繫：</p>
+            <ul class="contact-list">
+              <li>📧 <strong>Email</strong>：<a href={`mailto:${profile.email}`}>{profile.email}</a></li>
+              <li>💼 <strong>LinkedIn</strong>：<a href={profile.social.linkedin} target="_blank" rel="noopener">linkedin.com/in/edwarddata</a></li>
+              <li>🐙 <strong>GitHub</strong>：<a href={profile.social.github} target="_blank" rel="noopener">github.com/Edwarddev0723</a></li>
+              <li>🤗 <strong>Hugging Face</strong>：<a href={profile.social.huggingface} target="_blank" rel="noopener">huggingface.co/renhehuang</a></li>
+              <li>✍️ <strong>Medium</strong>：<a href={profile.social.medium} target="_blank" rel="noopener">medium.com/@renhehuang0723</a></li>
+            </ul>
+            <p>
+              或直接前往 <a href={`${base}contact`}>聯絡頁面</a> 留言。
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick Stats -->
+  <section class="section section-alt">
+    <div class="container">
+      <h2 class="section-title">數字一覽</h2>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <span class="stat-number">{profile.stats.githubRepos}+</span>
+          <span class="stat-label">GitHub Repos</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">{profile.stats.huggingfaceModels}</span>
+          <span class="stat-label">AI Models</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">{profile.stats.huggingfaceDatasets}</span>
+          <span class="stat-label">Datasets</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">{profile.stats.certifications}</span>
+          <span class="stat-label">專業證照</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  /* FAQ Hero */
+  .faq-hero {
+    padding: calc(64px + var(--space-16)) 0 var(--space-12);
+    background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+  }
+
+  .faq-hero-inner {
+    display: flex;
+    gap: var(--space-10);
+    align-items: center;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .faq-avatar img {
+    width: 160px;
+    height: 160px;
+    border-radius: var(--radius-xl);
+    object-fit: cover;
+    box-shadow: var(--shadow-lg);
+    flex-shrink: 0;
+  }
+
+  .faq-hero-text h1 {
+    font-size: var(--text-2xl);
+    line-height: 1.3;
+    margin-bottom: var(--space-4);
+  }
+
+  .faq-intro {
+    font-size: var(--text-base);
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin-bottom: var(--space-6);
+  }
+
+  .faq-intro a {
+    color: var(--color-primary-500);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .faq-hero-links {
+    display: flex;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+  }
+
+  /* FAQ List */
+  .faq-list {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .faq-item {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-xl);
+    padding: var(--space-8);
+    transition: all var(--transition-fast);
+  }
+
+  .faq-item:hover {
+    border-color: var(--color-primary-300);
+    box-shadow: var(--shadow-md);
+  }
+
+  .faq-question {
+    font-size: var(--text-xl);
+    font-weight: 700;
+    color: var(--color-primary-600);
+    margin-bottom: var(--space-4);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .faq-question::before {
+    content: 'Q';
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: var(--color-primary-500);
+    color: white;
+    border-radius: var(--radius-md);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  [data-theme="dark"] .faq-question {
+    color: var(--color-primary-300);
+  }
+
+  .faq-answer {
+    padding-left: calc(32px + var(--space-2));
+  }
+
+  .faq-answer p {
+    font-size: var(--text-base);
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin-bottom: var(--space-3);
+  }
+
+  .faq-answer ul {
+    padding-left: var(--space-5);
+    margin-bottom: var(--space-3);
+  }
+
+  .faq-answer li {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    margin-bottom: var(--space-2);
+    line-height: 1.6;
+  }
+
+  .faq-answer a {
+    color: var(--color-primary-500);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .contact-list {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  .contact-list li {
+    padding: var(--space-2) 0;
+  }
+
+  /* Stats Grid */
+  .section-alt {
+    background: var(--bg-secondary);
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-6);
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .stat-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--space-6);
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+  }
+
+  .stat-number {
+    font-size: var(--text-3xl);
+    font-weight: 700;
+    color: var(--color-primary-500);
+  }
+
+  .stat-label {
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    margin-top: var(--space-1);
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .faq-hero-inner {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .faq-hero-links {
+      justify-content: center;
+    }
+
+    .faq-answer {
+      padding-left: 0;
+    }
+
+    .stats-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

@@ -5,111 +5,100 @@
         "type": "model",
         "task": "Text Generation",
         "size": "Unknown",
-        "downloads": 58,
+        "downloads": 105,
         "likes": 1,
         "link": "https://huggingface.co/renhehuang/functiongemma-270m-it-coffee-robot-mcp",
-        "lastUpdated": "2026-01-07"
-    },
-    {
-        "id": "resume-job-fairness-eval",
-        "name": "resume-job-fairness-eval",
-        "type": "dataset",
-        "rows": "Unknown",
-        "downloads": 27,
-        "likes": 0,
-        "link": "https://huggingface.co/datasets/renhehuang/resume-job-fairness-eval",
-        "lastUpdated": "2025-11-18"
+        "lastUpdated": "2026-02-10"
     },
     {
         "id": "coffee-order-zhtw",
         "name": "coffee-order-zhtw",
         "type": "dataset",
         "rows": "Unknown",
-        "downloads": 25,
+        "downloads": 39,
         "likes": 0,
         "link": "https://huggingface.co/datasets/renhehuang/coffee-order-zhtw",
         "lastUpdated": "2025-12-16"
-    },
-    {
-        "id": "TaiwanGovQA-CN-Responses",
-        "name": "TaiwanGovQA-CN-Responses",
-        "type": "dataset",
-        "rows": "Unknown",
-        "downloads": 24,
-        "likes": 0,
-        "link": "https://huggingface.co/datasets/renhehuang/TaiwanGovQA-CN-Responses",
-        "lastUpdated": "2025-12-29"
     },
     {
         "id": "formosa-vision-finegrained",
         "name": "formosa-vision-finegrained",
         "type": "dataset",
         "rows": "Unknown",
-        "downloads": 23,
+        "downloads": 34,
         "likes": 0,
         "link": "https://huggingface.co/datasets/renhehuang/formosa-vision-finegrained",
         "lastUpdated": "2026-01-15"
     },
     {
-        "id": "qwen3-1.7b-coffee-sft",
-        "name": "qwen3-1.7b-coffee-sft",
-        "type": "model",
-        "task": "Text Generation",
-        "size": "Unknown",
-        "downloads": 20,
-        "likes": 0,
-        "link": "https://huggingface.co/renhehuang/qwen3-1.7b-coffee-sft",
-        "lastUpdated": "2026-01-07"
-    },
-    {
-        "id": "CTR",
-        "name": "CTR",
+        "id": "resume-job-fairness-eval",
+        "name": "resume-job-fairness-eval",
         "type": "dataset",
         "rows": "Unknown",
-        "downloads": 19,
+        "downloads": 33,
         "likes": 0,
-        "link": "https://huggingface.co/datasets/renhehuang/CTR",
-        "lastUpdated": "2025-12-17"
-    },
-    {
-        "id": "traditional-chinese-classification",
-        "name": "traditional-chinese-classification",
-        "type": "dataset",
-        "rows": "Unknown",
-        "downloads": 18,
-        "likes": 0,
-        "link": "https://huggingface.co/datasets/renhehuang/traditional-chinese-classification",
-        "lastUpdated": "2025-11-03"
-    },
-    {
-        "id": "govQA-database-zhtw",
-        "name": "govQA-database-zhtw",
-        "type": "dataset",
-        "rows": "Unknown",
-        "downloads": 10,
-        "likes": 0,
-        "link": "https://huggingface.co/datasets/renhehuang/govQA-database-zhtw",
-        "lastUpdated": "2025-07-11"
+        "link": "https://huggingface.co/datasets/renhehuang/resume-job-fairness-eval",
+        "lastUpdated": "2025-11-18"
     },
     {
         "id": "zhtw-preview",
         "name": "zhtw-preview",
         "type": "dataset",
         "rows": "Unknown",
-        "downloads": 10,
+        "downloads": 25,
         "likes": 0,
         "link": "https://huggingface.co/datasets/renhehuang/zhtw-preview",
         "lastUpdated": "2026-01-20"
+    },
+    {
+        "id": "traditional-chinese-classification",
+        "name": "traditional-chinese-classification",
+        "type": "dataset",
+        "rows": "Unknown",
+        "downloads": 21,
+        "likes": 0,
+        "link": "https://huggingface.co/datasets/renhehuang/traditional-chinese-classification",
+        "lastUpdated": "2025-11-03"
+    },
+    {
+        "id": "TaiwanGovQA-CN-Responses",
+        "name": "TaiwanGovQA-CN-Responses",
+        "type": "dataset",
+        "rows": "Unknown",
+        "downloads": 20,
+        "likes": 0,
+        "link": "https://huggingface.co/datasets/renhehuang/TaiwanGovQA-CN-Responses",
+        "lastUpdated": "2025-12-29"
+    },
+    {
+        "id": "CTR",
+        "name": "CTR",
+        "type": "dataset",
+        "rows": "Unknown",
+        "downloads": 16,
+        "likes": 0,
+        "link": "https://huggingface.co/datasets/renhehuang/CTR",
+        "lastUpdated": "2026-02-13"
     },
     {
         "id": "vcsum-meeting-summary",
         "name": "vcsum-meeting-summary",
         "type": "dataset",
         "rows": "Unknown",
-        "downloads": 8,
+        "downloads": 11,
         "likes": 0,
         "link": "https://huggingface.co/datasets/renhehuang/vcsum-meeting-summary",
         "lastUpdated": "2025-04-22"
+    },
+    {
+        "id": "formosa-vlm-pilot-v1",
+        "name": "formosa-vlm-pilot-v1",
+        "type": "dataset",
+        "rows": "Unknown",
+        "downloads": 9,
+        "likes": 0,
+        "link": "https://huggingface.co/datasets/renhehuang/formosa-vlm-pilot-v1",
+        "lastUpdated": "2026-02-13"
     },
     {
         "id": "traditional-chinese-classification-evaldataset",
@@ -122,26 +111,46 @@
         "lastUpdated": "2025-10-03"
     },
     {
-        "id": "fair-resume-job-matcher-lora",
-        "name": "fair-resume-job-matcher-lora",
-        "type": "model",
-        "task": "Other",
-        "size": "Unknown",
-        "downloads": 6,
-        "likes": 0,
-        "link": "https://huggingface.co/renhehuang/fair-resume-job-matcher-lora",
-        "lastUpdated": "2025-11-18"
-    },
-    {
         "id": "bert-traditional-chinese-classifier",
         "name": "bert-traditional-chinese-classifier",
         "type": "model",
         "task": "Text Classification",
         "size": "Unknown",
-        "downloads": 5,
+        "downloads": 6,
         "likes": 2,
         "link": "https://huggingface.co/renhehuang/bert-traditional-chinese-classifier",
         "lastUpdated": "2025-11-03"
+    },
+    {
+        "id": "qwen3-1.7b-coffee-sft",
+        "name": "qwen3-1.7b-coffee-sft",
+        "type": "model",
+        "task": "Text Generation",
+        "size": "Unknown",
+        "downloads": 6,
+        "likes": 0,
+        "link": "https://huggingface.co/renhehuang/qwen3-1.7b-coffee-sft",
+        "lastUpdated": "2026-01-07"
+    },
+    {
+        "id": "govQA-database-zhtw",
+        "name": "govQA-database-zhtw",
+        "type": "dataset",
+        "rows": "Unknown",
+        "downloads": 5,
+        "likes": 0,
+        "link": "https://huggingface.co/datasets/renhehuang/govQA-database-zhtw",
+        "lastUpdated": "2025-07-11"
+    },
+    {
+        "id": "fineweb-edu-zhtw-zhtw-classifier-inference-2025-11-14",
+        "name": "fineweb-edu-zhtw-zhtw-classifier-inference-2025-11-14",
+        "type": "dataset",
+        "rows": "Unknown",
+        "downloads": 5,
+        "likes": 1,
+        "link": "https://huggingface.co/datasets/renhehuang/fineweb-edu-zhtw-zhtw-classifier-inference-2025-11-14",
+        "lastUpdated": "2025-11-14"
     },
     {
         "id": "govnews-database-zhtw",
@@ -154,21 +163,22 @@
         "lastUpdated": "2025-07-10"
     },
     {
-        "id": "fineweb-edu-zhtw-zhtw-classifier-inference-2025-11-14",
-        "name": "fineweb-edu-zhtw-zhtw-classifier-inference-2025-11-14",
-        "type": "dataset",
-        "rows": "Unknown",
+        "id": "fair-resume-job-matcher-lora",
+        "name": "fair-resume-job-matcher-lora",
+        "type": "model",
+        "task": "Other",
+        "size": "Unknown",
         "downloads": 2,
-        "likes": 1,
-        "link": "https://huggingface.co/datasets/renhehuang/fineweb-edu-zhtw-zhtw-classifier-inference-2025-11-14",
-        "lastUpdated": "2025-11-14"
+        "likes": 0,
+        "link": "https://huggingface.co/renhehuang/fair-resume-job-matcher-lora",
+        "lastUpdated": "2025-11-18"
     },
     {
         "id": "ocw_shorts",
         "name": "ocw_shorts",
         "type": "dataset",
         "rows": "Unknown",
-        "downloads": 0,
+        "downloads": 2,
         "likes": 0,
         "link": "https://huggingface.co/datasets/renhehuang/ocw_shorts",
         "lastUpdated": "2025-05-13"

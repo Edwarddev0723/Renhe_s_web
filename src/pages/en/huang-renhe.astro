@@ -1,0 +1,388 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { useTranslations } from '../../i18n';
+import profile from '../../data/profile.json';
+import projects from '../../data/projects.json';
+
+const lang = 'en';
+const t = useTranslations(lang);
+const rawBase = import.meta.env.BASE_URL;
+const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
+const siteURL = 'https://edwarddev0723.github.io/Renhe_s_web/';
+
+const featuredProjects = projects.projects.filter(p => p.featured).slice(0, 6);
+
+// FAQPage JSON-LD
+const faqJsonLd = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Who is Renhe Huang (Edward Huang)?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Renhe Huang, also known as Edward Huang (黃仁和), is an AI Engineer and Researcher. He currently works as an AI Engineering Intern at Taiwan Mobile and is pursuing a Master's degree in Information Management at National Central University. He specializes in NLP, Deep Learning, Traditional Chinese AI models, and Vision-Language Models."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What projects has Renhe Huang worked on?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Renhe Huang has led multiple AI projects including: Traditional Chinese Vision-Language dataset construction, AI Diffusion model POC validation, LLM application development with SFT model distillation, CTR prediction model development, and the Twinkle AI Traditional Chinese open-source dataset project. He has published multiple open-source models and datasets on Hugging Face."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What are Renhe Huang's research interests?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Renhe Huang's research focuses on: Natural Language Processing (NLP), Deep Learning, Traditional Chinese AI models, Vision-Language Models (VLMs), and CTR (Click-Through Rate) prediction. He is dedicated to bridging academic research with real-world business applications and actively contributes to Taiwan's AI open-source ecosystem."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How can I contact Renhe Huang?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You can reach Renhe Huang via email at renhehuang0723@gmail.com, or connect with him on LinkedIn (linkedin.com/in/edwarddata), GitHub (github.com/Edwarddev0723), Hugging Face (huggingface.co/renhehuang), and Medium (medium.com/@renhehuang0723)."
+      }
+    }
+  ]
+});
+---
+
+<Layout 
+  title="Renhe Huang (Edward Huang) | AI Engineer | Official Website" 
+  description="Renhe Huang (Edward Huang, 黃仁和) — AI Engineer & Researcher specializing in NLP, Deep Learning, and Traditional Chinese AI. AI Engineering Intern at Taiwan Mobile, M.S. student at National Central University."
+  lang={lang}
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={faqJsonLd} />
+  </Fragment>
+
+  <!-- Hero Header -->
+  <section class="faq-hero">
+    <div class="container">
+      <div class="faq-hero-inner">
+        <div class="faq-avatar">
+          <img src={`${base}images/avatar.jpg`} alt="Renhe Huang Edward Huang" />
+        </div>
+        <div class="faq-hero-text">
+          <h1>Renhe Huang (Edward Huang) | AI Engineer | Official Website</h1>
+          <p class="faq-intro">
+            <strong>AI Engineering Intern at Taiwan Mobile</strong>, M.S. student in Information Management at National Central University.
+            Specializing in NLP, Deep Learning, and Traditional Chinese AI models. TANet Best Paper Award & NSTC GenAI Stars winner.
+            Explore my
+            <a href={`${base}en/projects`}>projects</a>,
+            <a href={`${base}en/writing`}>articles</a>, and
+            <a href={`${base}en/models`}>open-source AI models</a>.
+          </p>
+          <div class="faq-hero-links">
+            <a href={`${base}en/about`} class="btn btn-primary">About Me →</a>
+            <a href={`${base}en/contact`} class="btn btn-secondary">Contact →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="section" id="faq">
+    <div class="container">
+      <h2 class="section-title">Frequently Asked Questions</h2>
+      <div class="faq-list">
+
+        <div class="faq-item">
+          <h3 class="faq-question">Who is Renhe Huang (Edward Huang)?</h3>
+          <div class="faq-answer">
+            <p>
+              Renhe Huang (黃仁和), also known as Edward Huang, is an AI Engineer and Researcher.
+              He currently works as an <strong>AI Engineering Intern at Taiwan Mobile</strong> and is pursuing a
+              <strong>Master's degree at National Central University</strong> in Information Management.
+            </p>
+            <p>
+              He specializes in Natural Language Processing (NLP), Deep Learning, Traditional Chinese AI model development,
+              and Vision-Language Models (VLMs). He is passionate about turning academic research into real-world applications
+              and actively contributes to Taiwan's AI open-source ecosystem.
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <h3 class="faq-question">What projects has Renhe Huang worked on?</h3>
+          <div class="faq-answer">
+            <p>Renhe Huang has led and contributed to numerous AI projects, including:</p>
+            <ul>
+              {featuredProjects.map((project) => (
+                <li>
+                  <strong>{project.title}</strong>
+                  {project.summary && ` — ${typeof project.summary === 'string' ? project.summary : project.summary.en || project.summary}`}
+                </li>
+              ))}
+            </ul>
+            <p>
+              See more on the <a href={`${base}en/projects`}>projects page</a>.
+              Open-source models and datasets are available on the <a href={`${base}en/models`}>AI models page</a>.
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <h3 class="faq-question">What are Renhe Huang's research interests?</h3>
+          <div class="faq-answer">
+            <p>His core research interests include:</p>
+            <ul>
+              <li><strong>Natural Language Processing (NLP)</strong> — Text classification, semantic understanding, language model fine-tuning</li>
+              <li><strong>Deep Learning</strong> — Model architecture design, training optimization, LoRA fine-tuning</li>
+              <li><strong>Traditional Chinese AI</strong> — Development and open-sourcing of Traditional Chinese corpora and models</li>
+              <li><strong>Vision-Language Models</strong> — Multimodal research combining vision and language</li>
+              <li><strong>CTR Prediction</strong> — Click-through rate prediction for ad recommendation systems</li>
+            </ul>
+            <p>
+              Read his technical insights on the <a href={`${base}en/writing`}>articles page</a>.
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <h3 class="faq-question">How can I contact Renhe Huang?</h3>
+          <div class="faq-answer">
+            <p>You can reach out to Renhe Huang through the following channels:</p>
+            <ul class="contact-list">
+              <li>📧 <strong>Email</strong>: <a href={`mailto:${profile.email}`}>{profile.email}</a></li>
+              <li>💼 <strong>LinkedIn</strong>: <a href={profile.social.linkedin} target="_blank" rel="noopener">linkedin.com/in/edwarddata</a></li>
+              <li>🐙 <strong>GitHub</strong>: <a href={profile.social.github} target="_blank" rel="noopener">github.com/Edwarddev0723</a></li>
+              <li>🤗 <strong>Hugging Face</strong>: <a href={profile.social.huggingface} target="_blank" rel="noopener">huggingface.co/renhehuang</a></li>
+              <li>✍️ <strong>Medium</strong>: <a href={profile.social.medium} target="_blank" rel="noopener">medium.com/@renhehuang0723</a></li>
+            </ul>
+            <p>
+              Or visit the <a href={`${base}en/contact`}>contact page</a> to send a message directly.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick Stats -->
+  <section class="section section-alt">
+    <div class="container">
+      <h2 class="section-title">At a Glance</h2>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <span class="stat-number">{profile.stats.githubRepos}+</span>
+          <span class="stat-label">GitHub Repos</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">{profile.stats.huggingfaceModels}</span>
+          <span class="stat-label">AI Models</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">{profile.stats.huggingfaceDatasets}</span>
+          <span class="stat-label">Datasets</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">{profile.stats.certifications}</span>
+          <span class="stat-label">Certifications</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  /* FAQ Hero */
+  .faq-hero {
+    padding: calc(64px + var(--space-16)) 0 var(--space-12);
+    background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+  }
+
+  .faq-hero-inner {
+    display: flex;
+    gap: var(--space-10);
+    align-items: center;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .faq-avatar img {
+    width: 160px;
+    height: 160px;
+    border-radius: var(--radius-xl);
+    object-fit: cover;
+    box-shadow: var(--shadow-lg);
+    flex-shrink: 0;
+  }
+
+  .faq-hero-text h1 {
+    font-size: var(--text-2xl);
+    line-height: 1.3;
+    margin-bottom: var(--space-4);
+  }
+
+  .faq-intro {
+    font-size: var(--text-base);
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin-bottom: var(--space-6);
+  }
+
+  .faq-intro a {
+    color: var(--color-primary-500);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .faq-hero-links {
+    display: flex;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+  }
+
+  /* FAQ List */
+  .faq-list {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .faq-item {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-xl);
+    padding: var(--space-8);
+    transition: all var(--transition-fast);
+  }
+
+  .faq-item:hover {
+    border-color: var(--color-primary-300);
+    box-shadow: var(--shadow-md);
+  }
+
+  .faq-question {
+    font-size: var(--text-xl);
+    font-weight: 700;
+    color: var(--color-primary-600);
+    margin-bottom: var(--space-4);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .faq-question::before {
+    content: 'Q';
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: var(--color-primary-500);
+    color: white;
+    border-radius: var(--radius-md);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  [data-theme="dark"] .faq-question {
+    color: var(--color-primary-300);
+  }
+
+  .faq-answer {
+    padding-left: calc(32px + var(--space-2));
+  }
+
+  .faq-answer p {
+    font-size: var(--text-base);
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin-bottom: var(--space-3);
+  }
+
+  .faq-answer ul {
+    padding-left: var(--space-5);
+    margin-bottom: var(--space-3);
+  }
+
+  .faq-answer li {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    margin-bottom: var(--space-2);
+    line-height: 1.6;
+  }
+
+  .faq-answer a {
+    color: var(--color-primary-500);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .contact-list {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  .contact-list li {
+    padding: var(--space-2) 0;
+  }
+
+  /* Stats Grid */
+  .section-alt {
+    background: var(--bg-secondary);
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-6);
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .stat-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--space-6);
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+  }
+
+  .stat-number {
+    font-size: var(--text-3xl);
+    font-weight: 700;
+    color: var(--color-primary-500);
+  }
+
+  .stat-label {
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    margin-top: var(--space-1);
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .faq-hero-inner {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .faq-hero-links {
+      justify-content: center;
+    }
+
+    .faq-answer {
+      padding-left: 0;
+    }
+
+    .stats-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

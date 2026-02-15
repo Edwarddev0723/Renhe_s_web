@@ -1,7 +1,23 @@
 [
     {
         "id": null,
-        "title": "Long-CLIP: Unlocking the Long-Text\nCapability of CLIP",
+        "title": "Claude Code 新手必讀：Everything Claude Code 的 Agents、Skills、Hooks、MCP 一次搞懂（含常見踩坑與解法）",
+        "summary": "從零開始上手 Everything Claude Code！這套 GitHub 近 2 萬星的配置庫，由 Anthropic 黑客松冠軍開源，包含 Agents、Skills、Hooks 等完整工具鏈。本文提供詳細安裝步驟、第一個工作流實作、8 個常見錯誤排查，適合 Claude Code 新手與想...",
+        "link": "https://medium.com/@renhehuang0723/claude-code-%E6%96%B0%E6%89%8B%E5%BF%85%E8%AE%80-everything-claude-code-%E7%9A%84-agents-skills-hooks-mcp-%E4%B8%80%E6%AC%A1%E6%90%9E%E6%87%82-%E5%90%AB%E5%B8%B8%E8%A6%8B%E8%B8%A9%E5%9D%91%E8%88%87%E8%A7%A3%E6%B3%95-b117ba6de783?source=rss-5747bd060919------2",
+        "date": "2026-01-23",
+        "tags": [
+            "coding",
+            "claude-code",
+            "ai-agent",
+            "claude",
+            "vibe-coding"
+        ],
+        "image": "https://cdn-images-1.medium.com/max/587/1*N6pK0NGXHZUtGKnQaT2Cxw.png",
+        "readingTime": "5"
+    },
+    {
+        "id": null,
+        "title": "Long-CLIP：突破 CLIP 77 個 token 的長文本模型",
         "summary": "傳統 CLIP 在處理超過 77 個 token 的描述時表現不佳，甚至有效長度不足 20 個字，限制了其在細節檢索與精準圖像生成的應用。作者提出了知識保存延伸（Knowledge-preserved Stretching）與主成分匹配（Primary Component Matching）兩大策略...",
         "link": "https://medium.com/@renhehuang0723/long-clip-unlocking-the-long-text-capability-of-clip-de3230754f0c?source=rss-5747bd060919------2",
         "date": "2026-01-21",
@@ -129,16 +145,6 @@
             "deep-learning"
         ],
         "image": "https://cdn-images-1.medium.com/max/978/1*-MwNOMCryiOci53tBfqIXg.png",
-        "readingTime": "5"
-    },
-    {
-        "id": null,
-        "title": "透過對比學習與多階段分群進行中文簡訊無間都分類 — Side Project 系列",
-        "summary": "Side Project — 透過對比學習與多階段分群進行中文簡訊無監督分類1. 簡介提出了一個基於多階段分群和對比學習的中文簡訊文本分類系統。該系統採用SimCSE（Simple Contrastive Learning of Sentence Embeddings）風格的對比學習方法對預訓練的S...",
-        "link": "https://medium.com/@renhehuang0723/%E9%80%8F%E9%81%8E%E5%B0%8D%E6%AF%94%E5%AD%B8%E7%BF%92%E8%88%87%E5%A4%9A%E9%9A%8E%E6%AE%B5%E5%88%86%E7%BE%A4%E9%80%B2%E8%A1%8C%E4%B8%AD%E6%96%87%E7%B0%A1%E8%A8%8A%E7%84%A1%E9%96%93%E9%83%BD%E5%88%86%E9%A1%9E-side-project-%E7%B3%BB%E5%88%97-87714620c5c6?source=rss-5747bd060919------2",
-        "date": "2025-08-30",
-        "tags": [],
-        "image": "https://cdn-images-1.medium.com/max/910/1*rDIeGKLPe016sNwEihw7xw.png",
         "readingTime": "5"
     }
 ]

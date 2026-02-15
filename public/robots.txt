@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://edwarddev0723.github.io/Renhe_s_web/sitemap.xml
