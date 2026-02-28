@@ -1,6 +1,34 @@
 [
     {
         "id": null,
+        "title": "Anomaly-OV：讓 AI 不只「看到」異常，更能「解釋」為什麼",
+        "summary": "這份研究由 Johns Hopkins University 與 Honda Research Institute USA 的研究團隊發佈於 CVPR’25 上。針對多模態大型語言模型（MLLMs）在零樣本異常檢測與推理上的不足，提出了名為 Anomaly-OneVision 的專用視覺助理模型及 ...",
+        "link": "https://medium.com/@renhehuang0723/towards-zero-shot-anomaly-detection-and-reasoning-with-multimodal-large-language-models-fed8b23a0993?source=rss-5747bd060919------2",
+        "date": "2026-02-28",
+        "tags": [
+            "computer-vision",
+            "cvpr",
+            "ai",
+            "llm",
+            "vlm"
+        ],
+        "image": "https://cdn-images-1.medium.com/max/1024/1*YryFZnBO4E7K19LDjdULPA.png",
+        "readingTime": "5"
+    },
+    {
+        "id": null,
+        "title": "CEG（Constellation Energy）個股研究：核能 × AI 資料中心用電，市場在重估什麼？",
+        "summary": "全球數據中心的電力需求正以前所未有的速度爆炸 ，美國能源部估計 2028 年可能到 325–580 TWh。而 AI 訓練與推論正是這股浪潮的核心驅動力。然而，傳統電力基礎設施早已面臨瓶頸。此時美國最大核電運營商的 Constellation Energy，以及其 2026 年初剛吞併 Calpin...",
+        "link": "https://medium.com/@renhehuang0723/ceg-constellation-energy-%E5%80%8B%E8%82%A1%E7%A0%94%E7%A9%B6-%E6%A0%B8%E8%83%BD-ai-%E8%B3%87%E6%96%99%E4%B8%AD%E5%BF%83%E7%94%A8%E9%9B%BB-%E5%B8%82%E5%A0%B4%E5%9C%A8%E9%87%8D%E4%BC%B0%E4%BB%80%E9%BA%BC-9bd2da821b4e?source=rss-5747bd060919------2",
+        "date": "2026-02-22",
+        "tags": [
+            "stock-market"
+        ],
+        "image": "https://cdn-images-1.medium.com/max/1024/1*IpaZIlTXyLjGliRerk1WZw.png",
+        "readingTime": "5"
+    },
+    {
+        "id": null,
         "title": "Claude Code 新手必讀：Everything Claude Code 的 Agents、Skills、Hooks、MCP 一次搞懂（含常見踩坑與解法）",
         "summary": "從零開始上手 Everything Claude Code！這套 GitHub 近 2 萬星的配置庫，由 Anthropic 黑客松冠軍開源，包含 Agents、Skills、Hooks 等完整工具鏈。本文提供詳細安裝步驟、第一個工作流實作、8 個常見錯誤排查，適合 Claude Code 新手與想...",
         "link": "https://medium.com/@renhehuang0723/claude-code-%E6%96%B0%E6%89%8B%E5%BF%85%E8%AE%80-everything-claude-code-%E7%9A%84-agents-skills-hooks-mcp-%E4%B8%80%E6%AC%A1%E6%90%9E%E6%87%82-%E5%90%AB%E5%B8%B8%E8%A6%8B%E8%B8%A9%E5%9D%91%E8%88%87%E8%A7%A3%E6%B3%95-b117ba6de783?source=rss-5747bd060919------2",
@@ -118,33 +146,6 @@
             "ai"
         ],
         "image": "https://cdn-images-1.medium.com/max/1024/1*0yxIiHg0_A4fCix4FGmjLw.png",
-        "readingTime": "5"
-    },
-    {
-        "id": null,
-        "title": "FastVLM : Efficient Vision Encoding for Vision Language Models",
-        "summary": "深度學習論文筆記 — FastVLM 一款能在 Iphone 上推論的視覺語言模型介紹：該模型解決了什麼？在 VLM 領域中，高解析度的圖片是最重要的課題之一，尤其是像是包含許多文字的圖像。該篇論文提出了一個混合視覺編碼器 FastVITHD ，該編碼器在設計上能夠生成更少的 visual toke...",
-        "link": "https://medium.com/@renhehuang0723/fastvlm-efficient-vision-encoding-for-vision-language-models-725d8ab85745?source=rss-5747bd060919------2",
-        "date": "2025-10-05",
-        "tags": [
-            "data",
-            "ai",
-            "llm",
-            "vlm"
-        ],
-        "image": "https://cdn-images-1.medium.com/max/1024/1*T0rxlBBGvgY911Cw83iy0w.png",
-        "readingTime": "5"
-    },
-    {
-        "id": null,
-        "title": "透過 RNN 實作類張愛玲廢文生成器 — Side Project",
-        "summary": "Side Project —透過 RNN 實作類張愛玲廢文生成器本篇文章將會透過 RNN 將張愛玲之資料集進行訓練，資料內容為張愛玲散文集《傳奇》我們先來針對資料做點簡單的分析認識此次資料集。資料清洗可以看到這邊資料內包含了 3000 多個獨一無二的字詞，因此我們可以先做點資料清洗去除小於 8 次次...",
-        "link": "https://medium.com/@renhehuang0723/%E9%80%8F%E9%81%8E-rnn-%E5%AF%A6%E4%BD%9C%E9%A1%9E%E5%BC%B5%E6%84%9B%E7%8E%B2%E5%BB%A2%E6%96%87%E7%94%9F%E6%88%90%E5%99%A8-side-project-a6c4731b0c1f?source=rss-5747bd060919------2",
-        "date": "2025-09-01",
-        "tags": [
-            "deep-learning"
-        ],
-        "image": "https://cdn-images-1.medium.com/max/978/1*-MwNOMCryiOci53tBfqIXg.png",
         "readingTime": "5"
     }
 ]
