@@ -1,0 +1,33 @@
+---
+import { otherLang, useTranslations, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+  /** Section number, shown as "01". */
+  index: number;
+  /** Mono label in the rule, e.g. "Experience". */
+  label: string;
+  /** i18n key of the title; the other language is shown as a quiet echo. */
+  titleKey: string;
+  lead?: string;
+  id?: string;
+}
+
+const { lang, index, label, titleKey, lead, id } = Astro.props;
+const alt = otherLang(lang);
+const primary = useTranslations(lang)(titleKey);
+const secondary = useTranslations(alt)(titleKey);
+const langAttr = (l: Lang) => (l === 'zh' ? 'zh-Hant' : 'en');
+---
+
+<header class="section-head" data-reveal>
+  <p class="section-head__meta">
+    <span class="section-head__index">{String(index).padStart(2, '0')}</span>
+    <span>{label}</span>
+  </p>
+  <h2 class="section-head__title" id={id}>
+    <span class="primary" lang={langAttr(lang)}>{primary}</span>
+    <span class="secondary" lang={langAttr(alt)} aria-hidden="true">{secondary}</span>
+  </h2>
+  {lead && <p class="section-head__lead">{lead}</p>}
+</header>

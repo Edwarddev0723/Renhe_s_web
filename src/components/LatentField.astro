@@ -1,0 +1,129 @@
+---
+import focus from '../data/focus.json';
+import { pick, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+  class?: string;
+}
+
+const { lang, class: className } = Astro.props;
+const zh = lang === 'zh';
+
+// Where each research area sits in the embedding (design, not data).
+const layout: Record<string, { c: [number, number, number]; s: number; n: number }> = {
+  vlm: { c: [0.58, -0.08, 0.18], s: 0.2, n: 115 },
+  rl: { c: [-0.42, -0.52, 0.36], s: 0.17, n: 80 },
+  llm: { c: [-0.08, 0.62, -0.32], s: 0.17, n: 90 },
+  'zh-nlp': { c: [-0.52, 0.3, 0.2], s: 0.19, n: 90 },
+  diffusion: { c: [0.12, -0.56, -0.5], s: 0.16, n: 65 },
+  'fair-xai': { c: [0.32, 0.5, 0.42], s: 0.14, n: 55 },
+};
+
+const clusters = focus.map((f) => ({
+  id: f.id,
+  label: pick(f.label, lang),
+  caption: pick(f.caption, lang),
+  ...layout[f.id],
+}));
+---
+
+<figure class:list={['field', className]} data-latent data-clusters={JSON.stringify(clusters)}>
+  <canvas class="field__canvas" aria-hidden="true"></canvas>
+
+  <figcaption class="field__caption">
+    <span class="fig-label">Fig. 1 — {zh ? '研究興趣的嵌入空間' : 'Research interests, embedded'}</span>
+    <span class="field__focus" data-latent-box aria-hidden="true">
+      <span class="field__label" data-latent-label>{clusters[0].label}</span>
+      <span class="field__text" data-latent-caption>{clusters[0].caption}</span>
+    </span>
+    <span class="field__hint" aria-hidden="true">{zh ? '拖曳旋轉 · 點選叢集' : 'Drag to rotate · click a cluster'}</span>
+  </figcaption>
+
+  <ul class="sr-only">
+    {clusters.map((c) => <li>{c.label}：{c.caption}</li>)}
+  </ul>
+</figure>
+
+<script>
+  import { mountLatentField } from '../scripts/latent-field';
+  document.querySelectorAll<HTMLElement>('[data-latent]').forEach(mountLatentField);
+</script>
+
+<style>
+  .field {
+    position: relative;
+    margin: 0;
+  }
+
+  .field__canvas {
+    width: 100%;
+    height: 100%;
+    cursor: grab;
+    touch-action: pan-y;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .field__canvas.is-dragging {
+    cursor: grabbing;
+  }
+
+  .field__caption {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    display: grid;
+    gap: 6px;
+    max-width: min(360px, 90%);
+    padding-left: var(--space-4);
+    border-left: 1px solid var(--line-strong);
+    pointer-events: none;
+  }
+
+  .field__focus {
+    display: grid;
+    gap: 2px;
+  }
+
+  .field__focus.is-swapping {
+    animation: caption-swap 0.6s var(--ease-out);
+  }
+
+  @keyframes caption-swap {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+  }
+
+  .field__label {
+    font-family: var(--font-display);
+    font-size: var(--fs-lg);
+    line-height: 1.2;
+    color: var(--accent-fg);
+  }
+
+  :global(:lang(zh)) .field__label {
+    font-family: var(--font-cjk);
+    font-weight: 600;
+    font-size: var(--fs-base);
+  }
+
+  .field__text {
+    font-size: var(--fs-sm);
+    line-height: 1.55;
+    color: var(--fg-2);
+  }
+
+  .field__hint {
+    font-family: var(--font-mono);
+    font-size: var(--fs-2xs);
+    color: var(--fg-3);
+  }
+
+  @media (hover: none) {
+    .field__hint {
+      display: none;
+    }
+  }
+</style>

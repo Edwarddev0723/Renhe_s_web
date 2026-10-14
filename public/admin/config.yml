@@ -36,7 +36,7 @@ collections:
               - {label: "GitHub URL", name: "github", widget: "string", required: false}
               - {label: "HuggingFace URL", name: "huggingface", widget: "string", required: false}
               - {label: "Medium URL", name: "medium", widget: "string", required: false}
-              - {label: "Image", name: "image", widget: "image"}
+              - {label: "Image", name: "image", widget: "image", required: false}
               - {label: "Featured", name: "featured", widget: "boolean", default: false}
               - label: "Metrics"
                 name: "metrics"
