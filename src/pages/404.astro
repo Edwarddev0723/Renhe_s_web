@@ -1,0 +1,87 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
+import { localePath } from '../i18n';
+---
+
+<Layout title="404 | 黃仁和 Edward Huang" description="找不到這個頁面 · Page not found" lang="zh" alternates={false}>
+  <section class="nf">
+    <span class="nf__glyph" aria-hidden="true">無</span>
+    <div class="container nf__inner">
+      <p class="kicker">Error 404 — out of distribution</p>
+      <h1 class="nf__title">
+        <span lang="zh-Hant">這一頁不在<br />訓練資料裡。</span>
+        <span class="nf__en" lang="en">This page isn't in the training data.</span>
+      </h1>
+      <p class="nf__text">
+        連結可能過期，或網址打錯了。<span lang="en">The link may be stale, or the URL mistyped.</span>
+      </p>
+      <div class="nf__actions">
+        <a class="btn btn--primary" href={localePath('zh', '')}>回到首頁<Icon name="arrow-right" size={16} class="arrow" /></a>
+        <a class="btn" href={localePath('en', '')} lang="en">English home</a>
+        <button class="btn" type="button" data-cmdk-open><Icon name="search" size={15} />⌘K</button>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .nf {
+    position: relative;
+    display: grid;
+    align-items: center;
+    min-height: 100svh;
+    padding-block: calc(var(--nav-h) + var(--space-12)) var(--space-16);
+    overflow: hidden;
+  }
+
+  .nf__glyph {
+    position: absolute;
+    right: -0.05em;
+    bottom: -0.2em;
+    font-family: var(--font-cjk);
+    font-weight: 900;
+    font-size: clamp(16rem, 45vw, 40rem);
+    line-height: 1;
+    color: transparent;
+    -webkit-text-stroke: 1px var(--line-strong);
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .nf__inner {
+    position: relative;
+    display: grid;
+    justify-items: start;
+    gap: var(--space-6);
+  }
+
+  .nf__title {
+    display: grid;
+    gap: var(--space-4);
+    font-family: var(--font-cjk);
+    font-weight: 600;
+    font-size: clamp(2.5rem, 7vw, 5.5rem);
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+  }
+
+  .nf__en {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-style: italic;
+    font-size: 0.42em;
+    letter-spacing: 0;
+    color: var(--fg-3);
+  }
+
+  .nf__text {
+    max-width: 52ch;
+  }
+
+  .nf__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+</style>

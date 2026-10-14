@@ -1,0 +1,132 @@
+---
+import { otherLang, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+  /** Mono label, e.g. "Projects". */
+  label: string;
+  title: { zh: string; en: string };
+  lead?: string;
+  /** One character drawn huge and hollow behind the header. */
+  glyph?: string;
+}
+
+const { lang, label, title, lead, glyph } = Astro.props;
+const alt = otherLang(lang);
+const langAttr = (l: Lang) => (l === 'zh' ? 'zh-Hant' : 'en');
+---
+
+<header class="page-header">
+  {glyph && <span class="page-header__glyph" aria-hidden="true">{glyph}</span>}
+  <div class="container page-header__inner">
+    <p class="kicker">{label}</p>
+    <h1 class="page-header__title">
+      <span class="primary" lang={langAttr(lang)}>{title[lang]}</span>
+      <span class="secondary" lang={langAttr(alt)} aria-hidden="true">{title[alt]}</span>
+    </h1>
+    {lead && <p class="page-header__lead">{lead}</p>}
+    <slot />
+  </div>
+</header>
+
+<style>
+  .page-header__inner {
+    position: relative;
+    display: grid;
+    gap: var(--space-5);
+    justify-items: start;
+  }
+
+  .page-header__inner > * {
+    animation: page-in 0.9s var(--ease-out) both;
+  }
+
+  .page-header__inner > :nth-child(2) {
+    animation-delay: 0.08s;
+  }
+
+  .page-header__inner > :nth-child(3) {
+    animation-delay: 0.16s;
+  }
+
+  .page-header__inner > :nth-child(n + 4) {
+    animation-delay: 0.24s;
+  }
+
+  @keyframes page-in {
+    from {
+      opacity: 0;
+      translate: 0 16px;
+    }
+  }
+
+  .page-header__title {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.1em 0.45em;
+    font-size: clamp(3rem, 8vw, 6.5rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  .primary {
+    font-family: var(--font-display);
+  }
+
+  .primary:lang(zh) {
+    font-family: var(--font-cjk);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+
+  .secondary {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 0.42em;
+    color: var(--fg-3);
+  }
+
+  .secondary:lang(zh) {
+    font-family: var(--font-cjk);
+    font-style: normal;
+    font-weight: 600;
+    font-size: 0.36em;
+    letter-spacing: 0.1em;
+  }
+
+  .page-header__lead {
+    max-width: 56ch;
+    font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+    line-height: 1.75;
+  }
+
+  .page-header__glyph {
+    position: absolute;
+    right: -0.06em;
+    bottom: -0.22em;
+    font-family: var(--font-cjk);
+    font-weight: 900;
+    font-size: clamp(14rem, 36vw, 32rem);
+    line-height: 1;
+    color: transparent;
+    -webkit-text-stroke: 1px var(--line-strong);
+    pointer-events: none;
+    user-select: none;
+    animation: glyph-in 1.6s var(--ease-out) both;
+  }
+
+  @keyframes glyph-in {
+    from {
+      opacity: 0;
+      translate: 0 40px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .page-header__glyph {
+      font-size: 13rem;
+      opacity: 0.7;
+    }
+  }
+</style>

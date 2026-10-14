@@ -1,10 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <defs>
-    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#2563eb;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:1" />
-    </linearGradient>
-  </defs>
-  <rect width="32" height="32" rx="6" fill="url(#grad)"/>
-  <text x="16" y="22" font-family="Arial, sans-serif" font-weight="bold" font-size="16" fill="white" text-anchor="middle">E</text>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="#0c0b0a"/><g stroke="#ece6da" stroke-opacity=".5" stroke-width="1.6" stroke-linecap="round"><line x1="6.5" y1="20.5" x2="12.5" y2="8.5"/><line x1="12.5" y1="8.5" x2="22.5" y2="6.5"/><line x1="22.5" y1="6.5" x2="25.5" y2="18.5"/><line x1="25.5" y1="18.5" x2="15.5" y2="25.5"/><line x1="15.5" y1="25.5" x2="6.5" y2="20.5"/><line x1="12.5" y1="8.5" x2="25.5" y2="18.5"/></g><circle cx="6.5" cy="20.5" r="2.3" fill="#ece6da"/><circle cx="12.5" cy="8.5" r="2.3" fill="#ece6da"/><circle cx="22.5" cy="6.5" r="2.3" fill="#ece6da"/><circle cx="25.5" cy="18.5" r="3.6" fill="#e5432c"/><circle cx="15.5" cy="25.5" r="2.3" fill="#ece6da"/></svg>
