@@ -1,0 +1,634 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import SectionHead from '../components/SectionHead.astro';
+import RunLog from '../components/RunLog.astro';
+import Icon from '../components/Icon.astro';
+import profile from '../data/profile.json';
+import focus from '../data/focus.json';
+import { hasResume } from '../data/assets';
+import { dot } from '../data/stats';
+import { useTranslations, getTranslationArray, pick, withBase, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const zh = lang === 'zh';
+const summary = getTranslationArray(lang, 'about.summary');
+const [ncu, ntut] = profile.education;
+
+const links = [
+  { label: 'GitHub', icon: 'github' as const, href: profile.social.github },
+  { label: 'LinkedIn', icon: 'linkedin' as const, href: profile.social.linkedin },
+  { label: 'Hugging Face', icon: 'hf' as const, href: profile.social.huggingface },
+  { label: 'Medium', icon: 'medium' as const, href: profile.social.medium },
+];
+
+const period = (p: string) => p.split(' - ').map(dot).join(' → ');
+
+const esc = (str: string) => str.replace(/[&<>"]/g, (c) => `&#${c.charCodeAt(0)};`);
+const item = (str: string) => `  - <span class="v">${esc(str)}</span>`;
+const group = (key: string, g: { label: { zh: string; en: string }; items: { zh: string[]; en: string[] } }) => [
+  `<span class="k">${key}</span>:  <span class="c"># ${esc(pick(g.label, lang))}</span>`,
+  ...g.items[lang].map(item),
+];
+const skillsYaml = [
+  ...group('training', profile.skills.training),
+  ...group('engineering', profile.skills.engineering),
+].join('\n');
+---
+
+<Layout title={`${t('about.title')} | ${profile.name[lang]}`} description={summary[0]} lang={lang}>
+  <PageHeader
+    lang={lang}
+    label="About"
+    title={{ zh: '關於我', en: 'About' }}
+    lead={t('hero.description')}
+    glyph="我"
+  />
+
+  <!-- Intro -->
+  <section class="section">
+    <div class="container intro">
+      <figure class="intro__portrait" data-reveal>
+        <div class="intro__frame media">
+          <img src={withBase('images/avatar.jpg')} alt={zh ? '黃仁和的照片' : 'Portrait of Edward Huang'} width="500" height="500" decoding="async" />
+        </div>
+      </figure>
+
+      <div class="intro__body" data-reveal>
+        <p class="intro__name">
+          <span lang="zh-Hant">{profile.name.zh}</span>
+          <span class="intro__name-en" lang="en">{profile.name.en}</span>
+        </p>
+        <p class="intro__role mono">
+          {profile.position[lang]} @ {profile.company[lang]}<br />
+          {profile.degree[lang]} @ {profile.school[lang]}
+        </p>
+        <div class="intro__text">
+          {summary.map((p) => <p>{p}</p>)}
+        </div>
+        <div class="intro__links">
+          {links.map((l) => (
+            <a class="btn btn--sm" href={l.href} target="_blank" rel="noopener noreferrer">
+              <Icon name={l.icon} size={14} />{l.label}
+            </a>
+          ))}
+          {hasResume && (
+            <a class="btn btn--sm btn--primary" href={withBase('resume.pdf')} download>
+              <Icon name="download" size={14} />{t('hero.cta.resume')}
+            </a>
+          )}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Experience -->
+  <section class="section" aria-labelledby="exp-title">
+    <div class="container">
+      <SectionHead lang={lang} index={1} label="Experience" titleKey="experience.title" lead={t('experience.lead')} id="exp-title" />
+      <div class="runs">
+        {profile.experience.map((entry, i) => <RunLog lang={lang} entry={entry} index={i} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- Education -->
+  <section class="section" aria-labelledby="edu-title">
+    <div class="container">
+      <SectionHead lang={lang} index={2} label="Education" titleKey="education.title" id="edu-title" />
+
+      <div class="schools">
+        {[ncu, ntut].map((edu, i) => (
+          <article class="school card spotlight" data-reveal style={`--i:${i}`}>
+            <p class="school__period mono">
+              {period(edu.period)}
+              {edu.current && <span class="school__now"><span class="dot dot--live"></span>{zh ? '在學中' : 'Current'}</span>}
+            </p>
+            <h3 class="school__name">{edu.school[lang]}</h3>
+            <p class="school__degree">{edu.degree[lang]}</p>
+            {edu.gpa && (
+              <p class="school__score">
+                <span class="school__gpa">{edu.gpa.split('/')[0]}</span>
+                <span class="mono muted">/ {edu.gpa.split('/')[1]} GPA</span>
+                {edu.rank && <span class="tag school__rank">{edu.rank[lang]}</span>}
+              </p>
+            )}
+            {edu.credits && <p class="school__note">{pick(edu.credits, lang)}</p>}
+            {edu.lab && (
+              <>
+                <p class="school__note">{edu.lab.full} · {pick(edu.lab.advisor, lang)}</p>
+                <a class="arrow-link" href={edu.lab.url} target="_blank" rel="noopener noreferrer">
+                  {edu.lab.name}<Icon name="arrow-up-right" size={13} />
+                </a>
+              </>
+            )}
+          </article>
+        ))}
+      </div>
+
+      {ntut.journey && (
+        <div class="journey" data-reveal>
+          <p class="fig-label">{zh ? '圖 2 — 大學四年' : 'Fig. 2 — Four years at NTUT'}</p>
+          <ol class="journey__steps">
+            {ntut.journey.map((step, i) => (
+              <li class="journey__step" data-reveal style={`--i:${i}`}>
+                <span class="journey__node" aria-hidden="true"></span>
+                <p class="journey__year mono">{pick(step.year, lang)}</p>
+                <h3 class="journey__phase">{pick(step.phase, lang)}</h3>
+                <p class="journey__text">{pick(step.text, lang)}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      )}
+    </div>
+  </section>
+
+  <!-- Skills & focus -->
+  <section class="section" aria-labelledby="skills-title">
+    <div class="container">
+      <SectionHead lang={lang} index={3} label="Skills" titleKey="skills.title" id="skills-title" />
+      <div class="skills">
+        <figure class="code card" data-reveal>
+          <figcaption class="code__bar mono"><span class="code__dot"></span>skills.yaml</figcaption>
+          <pre class="code__body"><code set:html={skillsYaml} /></pre>
+        </figure>
+
+        <div class="focus" data-reveal>
+          <p class="fig-label">{zh ? '研究興趣' : 'Research interests'}</p>
+          <ul class="focus__list">
+            {focus.map((f, i) => (
+              <li class="focus__item">
+                <span class="focus__num mono">{String(i + 1).padStart(2, '0')}</span>
+                <div>
+                  <h3 class="focus__label">{pick(f.label, lang)}</h3>
+                  <p class="focus__caption">{pick(f.caption, lang)}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Certifications -->
+  <section class="section" aria-labelledby="cert-title">
+    <div class="container">
+      <SectionHead lang={lang} index={4} label="Certifications" titleKey="certifications.title" id="cert-title" />
+      <ul class="certs">
+        {profile.certifications.map((cert, i) => (
+          <li class="cert" data-reveal style={`--i:${i}`}>
+            <span class="cert__date mono">{dot(cert.date)}</span>
+            <span class="cert__name">{pick(cert.name, lang)}</span>
+            <span class="cert__issuer">{pick(cert.issuer, lang)}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Volunteering -->
+  <section class="section" aria-labelledby="vol-title">
+    <div class="container">
+      <SectionHead lang={lang} index={5} label="Volunteering" titleKey="volunteer.title" id="vol-title" />
+      {profile.volunteer.map((v) => (
+        <article class="vol card spotlight" data-reveal>
+          <p class="vol__period mono">{period(v.period)}</p>
+          <div>
+            <h3 class="vol__role">{pick(v.role, lang)}</h3>
+            <p class="vol__org">{pick(v.org, lang)}</p>
+            <p class="vol__text">{pick(v.text, lang)}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+</Layout>
+
+<style>
+  /* Intro */
+  .intro {
+    display: grid;
+    grid-template-columns: minmax(220px, 360px) 1fr;
+    gap: clamp(var(--space-8), 6vw, var(--space-20));
+    align-items: start;
+  }
+
+  .intro__portrait {
+    position: relative;
+  }
+
+  .intro__frame {
+    aspect-ratio: 4 / 5;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--line);
+  }
+
+  .intro__frame img {
+    object-position: 50% 30%;
+  }
+
+  .intro__name {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-4);
+    font-family: var(--font-cjk);
+    font-weight: 600;
+    font-size: clamp(2.25rem, 4vw, 3.25rem);
+    letter-spacing: 0.06em;
+    line-height: 1.1;
+    color: var(--fg);
+  }
+
+  .intro__name-en {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 0.6em;
+    letter-spacing: 0;
+    color: var(--fg-2);
+  }
+
+  .intro__role {
+    margin-top: var(--space-4);
+    font-size: var(--fs-xs);
+    line-height: 1.9;
+    color: var(--accent-fg);
+  }
+
+  .intro__text {
+    display: grid;
+    gap: var(--space-4);
+    max-width: 62ch;
+    margin-top: var(--space-8);
+  }
+
+  .intro__text p {
+    line-height: 1.9;
+  }
+
+  .intro__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-top: var(--space-8);
+  }
+
+  .runs {
+    display: grid;
+    gap: clamp(14px, 2vw, 24px);
+  }
+
+  /* Education */
+  .schools {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(14px, 2vw, 24px);
+  }
+
+  .school {
+    display: grid;
+    align-content: start;
+    gap: var(--space-3);
+    padding: clamp(var(--space-6), 3vw, var(--space-10));
+  }
+
+  .school:hover {
+    border-color: var(--line-strong);
+  }
+
+  .school__period {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-4);
+    font-size: var(--fs-xs);
+    color: var(--fg-3);
+  }
+
+  .school__now {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--accent-fg);
+  }
+
+  .school__name {
+    font-family: var(--font-display);
+    font-size: clamp(1.6rem, 2.6vw, 2.1rem);
+    line-height: 1.2;
+  }
+
+  .school__name:lang(zh) {
+    font-family: var(--font-cjk);
+    font-weight: 600;
+    font-size: clamp(1.4rem, 2.2vw, 1.75rem);
+  }
+
+  .school__degree {
+    font-size: var(--fs-sm);
+  }
+
+  .school__score {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-3);
+    margin-top: var(--space-2);
+  }
+
+  .school__gpa {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 5vw, 4rem);
+    line-height: 1;
+    color: var(--fg);
+  }
+
+  .school__rank {
+    color: var(--accent-fg);
+    border-color: var(--accent-line);
+  }
+
+  .school__note {
+    font-size: var(--fs-sm);
+    line-height: 1.7;
+  }
+
+  .journey {
+    margin-top: clamp(var(--space-12), 6vw, var(--space-16));
+  }
+
+  .journey__steps {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-6);
+    margin-top: var(--space-6);
+    padding-top: var(--space-8);
+  }
+
+  .journey__steps::before {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, var(--line-strong), var(--accent) 85%);
+  }
+
+  .journey__step {
+    position: relative;
+    display: grid;
+    gap: var(--space-2);
+    align-content: start;
+  }
+
+  .journey__node {
+    position: absolute;
+    top: calc(-1 * var(--space-8));
+    left: 0;
+    width: 11px;
+    height: 11px;
+    background: var(--bg);
+    border: 1px solid var(--accent);
+    transform: rotate(45deg);
+  }
+
+  .journey__step:last-child .journey__node {
+    background: var(--accent);
+  }
+
+  .journey__year {
+    font-size: var(--fs-xs);
+    color: var(--fg-3);
+  }
+
+  .journey__phase {
+    font-family: var(--font-display);
+    font-size: var(--fs-xl);
+  }
+
+  .journey__phase:lang(zh) {
+    font-family: var(--font-cjk);
+    font-weight: 600;
+    font-size: var(--fs-lg);
+  }
+
+  .journey__text {
+    font-size: var(--fs-sm);
+    line-height: 1.75;
+  }
+
+  /* Skills */
+  .skills {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: clamp(var(--space-8), 5vw, var(--space-16));
+    align-items: start;
+  }
+
+  .code {
+    margin: 0;
+    overflow: hidden;
+  }
+
+  .code__bar {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: 10px var(--space-5);
+    font-size: var(--fs-2xs);
+    letter-spacing: 0.06em;
+    color: var(--fg-3);
+    background: var(--bg-elev);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .code__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  .code__body {
+    padding: var(--space-6);
+    font-family: var(--font-mono);
+    font-size: var(--fs-sm);
+    line-height: 1.9;
+    color: var(--fg-2);
+    overflow-x: auto;
+  }
+
+  .code__body :global(.c) {
+    color: var(--fg-3);
+  }
+
+  .code__body :global(.k) {
+    color: var(--accent-fg);
+  }
+
+  .code__body :global(.v) {
+    color: var(--fg);
+  }
+
+  .focus__list {
+    margin-top: var(--space-4);
+    border-top: 1px solid var(--line-strong);
+  }
+
+  .focus__item {
+    display: grid;
+    grid-template-columns: 36px 1fr;
+    gap: var(--space-4);
+    padding-block: var(--space-4);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .focus__num {
+    padding-top: 6px;
+    font-size: var(--fs-xs);
+    color: var(--accent-fg);
+  }
+
+  .focus__label {
+    font-family: var(--font-display);
+    font-size: var(--fs-xl);
+    line-height: 1.3;
+  }
+
+  .focus__label:lang(zh) {
+    font-family: var(--font-cjk);
+    font-weight: 600;
+    font-size: var(--fs-lg);
+  }
+
+  .focus__caption {
+    margin-top: 2px;
+    font-size: var(--fs-sm);
+    line-height: 1.65;
+  }
+
+  /* Certifications */
+  .certs {
+    border-top: 1px solid var(--line-strong);
+  }
+
+  .cert {
+    display: grid;
+    grid-template-columns: 110px 1fr auto;
+    align-items: baseline;
+    gap: var(--space-6);
+    padding: var(--space-5) var(--space-2);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .cert__date {
+    font-size: var(--fs-xs);
+    color: var(--fg-3);
+  }
+
+  .cert__name {
+    font-weight: 500;
+    color: var(--fg);
+  }
+
+  .cert__issuer {
+    font-size: var(--fs-sm);
+    color: var(--fg-3);
+    text-align: right;
+  }
+
+  /* Volunteering */
+  .vol {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: var(--space-6);
+    padding: clamp(var(--space-6), 3vw, var(--space-10));
+  }
+
+  .vol__period {
+    font-size: var(--fs-xs);
+    color: var(--fg-3);
+  }
+
+  .vol__role {
+    font-family: var(--font-display);
+    font-size: var(--fs-xl);
+  }
+
+  .vol__role:lang(zh) {
+    font-family: var(--font-cjk);
+    font-weight: 600;
+    font-size: var(--fs-lg);
+  }
+
+  .vol__org {
+    font-size: var(--fs-sm);
+    color: var(--fg-3);
+  }
+
+  .vol__text {
+    margin-top: var(--space-3);
+    max-width: 60ch;
+    line-height: 1.8;
+  }
+
+  @media (max-width: 960px) {
+    .journey__steps {
+      grid-template-columns: repeat(2, 1fr);
+      row-gap: var(--space-12);
+    }
+
+    .journey__steps::before {
+      display: none;
+    }
+
+    .journey__node {
+      top: -22px;
+    }
+  }
+
+  @media (max-width: 860px) {
+    .intro,
+    .skills {
+      grid-template-columns: 1fr;
+    }
+
+    .intro__portrait {
+      max-width: 300px;
+    }
+
+    .schools {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .journey__steps {
+      grid-template-columns: 1fr;
+    }
+
+    .cert {
+      grid-template-columns: 1fr;
+      gap: var(--space-1);
+    }
+
+    .cert__issuer {
+      text-align: left;
+    }
+
+    .vol {
+      grid-template-columns: 1fr;
+      gap: var(--space-2);
+    }
+  }
+</style>

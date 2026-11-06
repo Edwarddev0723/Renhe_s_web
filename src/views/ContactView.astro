@@ -1,0 +1,268 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Icon from '../components/Icon.astro';
+import profile from '../data/profile.json';
+import { hasResume } from '../data/assets';
+import { useTranslations, withBase, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const zh = lang === 'zh';
+
+const channels = [
+  { label: 'LinkedIn', handle: 'in/edwarddata', icon: 'linkedin' as const, href: profile.social.linkedin },
+  { label: 'GitHub', handle: 'Edwarddev0723', icon: 'github' as const, href: profile.social.github },
+  { label: 'Hugging Face', handle: 'renhehuang', icon: 'hf' as const, href: profile.social.huggingface },
+  { label: 'Medium', handle: '@renhehuang0723', icon: 'medium' as const, href: profile.social.medium },
+];
+---
+
+<Layout title={`${t('contact.title')} | ${profile.name[lang]}`} description={t('contact.description')} lang={lang}>
+  <PageHeader
+    lang={lang}
+    label="Contact"
+    title={{ zh: '聯絡方式', en: 'Contact' }}
+    lead={t('contact.description')}
+    glyph="信"
+  />
+
+  <section class="section">
+    <div class="container contact">
+      <div class="contact__main" data-reveal>
+        <p class="kicker">Email</p>
+        <a class="contact__email" href={`mailto:${profile.email}`}>{profile.email}</a>
+        <div class="contact__email-actions">
+          <button class="btn btn--sm" type="button" data-copy={profile.email} data-copied={zh ? '已複製' : 'Copied'}>
+            <Icon name="copy" size={14} /><span data-copy-label>{zh ? '複製' : 'Copy'}</span>
+          </button>
+          <a class="btn btn--sm" href={`mailto:${profile.email}`}><Icon name="mail" size={14} />{zh ? '開啟郵件' : 'Open mail app'}</a>
+        </div>
+
+        <form class="compose card" data-compose data-to={profile.email} data-subject={zh ? '來自 {name} 的訊息' : 'Hello from {name}'}>
+          <p class="compose__head mono">
+            <span>{zh ? '寫一封信' : 'Draft a message'}</span>
+            <span class="muted">{zh ? '送出後會開啟你的郵件程式' : 'Opens in your mail app'}</span>
+          </p>
+          <label class="field">
+            <span>{t('contact.name')}</span>
+            <input name="name" type="text" autocomplete="name" required />
+          </label>
+          <label class="field">
+            <span>{t('contact.message')}</span>
+            <textarea name="message" rows="5" required></textarea>
+          </label>
+          <button class="btn btn--primary" type="submit">
+            {t('contact.submit')}<Icon name="send" size={15} />
+          </button>
+        </form>
+      </div>
+
+      <aside class="contact__side" data-reveal style="--i:1">
+        <p class="kicker">{zh ? '其他聯絡方式' : 'Other ways to connect'}</p>
+        <ul class="channels">
+          {channels.map((c) => (
+            <li>
+              <a class="channel" href={c.href} target="_blank" rel="noopener noreferrer">
+                <span class="channel__icon"><Icon name={c.icon} size={18} /></span>
+                <span class="channel__text">
+                  <strong>{c.label}</strong>
+                  <span class="mono">{c.handle}</span>
+                </span>
+                <Icon name="arrow-up-right" size={16} class="channel__arrow" />
+              </a>
+            </li>
+          ))}
+        </ul>
+
+        {hasResume && (
+          <a class="btn" href={withBase('resume.pdf')} download>
+            <Icon name="file" size={16} />{zh ? '下載 PDF 履歷' : 'Download PDF Resume'}
+          </a>
+        )}
+      </aside>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  document.querySelectorAll<HTMLFormElement>('[data-compose]').forEach((form) => {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const data = new FormData(form);
+      const name = String(data.get('name') ?? '').trim();
+      const message = String(data.get('message') ?? '').trim();
+      const subject = (form.dataset.subject ?? 'Hello from {name}').replace('{name}', name);
+      const href = `mailto:${form.dataset.to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message)}`;
+      window.location.href = href;
+    });
+  });
+</script>
+
+<style>
+  .contact {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.9fr);
+    gap: clamp(var(--space-10), 6vw, var(--space-20));
+    align-items: start;
+  }
+
+  .contact__main {
+    display: grid;
+    justify-items: start;
+  }
+
+  .contact__email {
+    display: inline-block;
+    margin-top: var(--space-3);
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 4.2vw, 3.25rem);
+    line-height: 1.15;
+    word-break: break-all;
+    color: var(--fg);
+    background-image: linear-gradient(var(--accent), var(--accent));
+    background-size: 0% 2px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 0.5s var(--ease-out), color var(--dur);
+  }
+
+  .contact__email:hover {
+    color: var(--accent-fg);
+    background-size: 100% 2px;
+  }
+
+  .contact__email-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-top: var(--space-5);
+  }
+
+  .compose {
+    display: grid;
+    justify-self: stretch;
+    gap: var(--space-5);
+    margin-top: var(--space-12);
+    padding: clamp(var(--space-5), 3vw, var(--space-8));
+  }
+
+  .compose__head {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-2);
+    font-size: var(--fs-xs);
+    letter-spacing: 0.04em;
+    color: var(--fg-2);
+  }
+
+  .field {
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .field span {
+    font-family: var(--font-mono);
+    font-size: var(--fs-2xs);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--fg-3);
+  }
+
+  .field input,
+  .field textarea {
+    width: 100%;
+    padding: 12px 14px;
+    background: var(--bg);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
+    transition: border-color var(--dur), box-shadow var(--dur);
+  }
+
+  .field textarea {
+    resize: vertical;
+    min-height: 140px;
+  }
+
+  .field input:focus,
+  .field textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+  }
+
+  .compose .btn {
+    justify-self: start;
+  }
+
+  .channels {
+    margin-block: var(--space-4) var(--space-8);
+    border-top: 1px solid var(--line-strong);
+  }
+
+  .channel {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-4) var(--space-2);
+    border-bottom: 1px solid var(--line);
+    transition: background-color var(--dur), padding 0.4s var(--ease-out);
+  }
+
+  .channel:hover {
+    padding-left: var(--space-4);
+    background: var(--accent-soft);
+  }
+
+  .channel__icon {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    color: var(--fg-2);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
+    transition: color var(--dur), border-color var(--dur);
+  }
+
+  .channel:hover .channel__icon {
+    color: var(--accent-fg);
+    border-color: var(--accent-line);
+  }
+
+  .channel__text {
+    display: grid;
+    flex: 1;
+  }
+
+  .channel__text strong {
+    font-size: var(--fs-sm);
+    font-weight: 500;
+  }
+
+  .channel__text .mono {
+    font-size: var(--fs-xs);
+    color: var(--fg-3);
+  }
+
+  .channel :global(.channel__arrow) {
+    color: var(--fg-3);
+    transition: transform 0.4s var(--ease-out), color var(--dur);
+  }
+
+  .channel:hover :global(.channel__arrow) {
+    color: var(--accent-fg);
+    transform: translate(2px, -2px);
+  }
+
+  @media (max-width: 900px) {
+    .contact {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

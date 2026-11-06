@@ -1,0 +1,66 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import ArticleList from '../components/ArticleList.astro';
+import Icon from '../components/Icon.astro';
+import profile from '../data/profile.json';
+import articles from '../data/articles.json';
+import { useTranslations, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const zh = lang === 'zh';
+---
+
+<Layout title={`${t('nav.writing')} | ${profile.name[lang]}`} lang={lang}>
+  <PageHeader
+    lang={lang}
+    label={`Writing · ${articles.length}`}
+    title={{ zh: '技術文章', en: 'Writing' }}
+    lead={zh
+      ? '分享我在 AI、NLP 和深度學習領域的技術心得與實作經驗。'
+      : 'Sharing my technical insights and hands-on experience in AI, NLP, and Deep Learning.'}
+    glyph="文"
+  />
+
+  <section class="section">
+    <div class="container">
+      <ArticleList lang={lang} articles={articles} detailed />
+
+      <div class="more card spotlight" data-reveal>
+        <p class="more__text">{zh ? '更多文章請見 Medium' : 'More articles on Medium'}</p>
+        <a class="btn btn--primary" href={profile.social.medium} target="_blank" rel="noopener noreferrer">
+          <Icon name="medium" size={16} />@renhehuang0723<Icon name="arrow-up-right" size={15} />
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .more {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-6);
+    margin-top: var(--space-16);
+    padding: clamp(var(--space-6), 4vw, var(--space-10));
+  }
+
+  .more__text {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+    color: var(--fg);
+  }
+
+  .more__text:lang(zh) {
+    font-family: var(--font-cjk);
+    font-weight: 600;
+    font-size: clamp(1.25rem, 2.4vw, 1.75rem);
+  }
+</style>

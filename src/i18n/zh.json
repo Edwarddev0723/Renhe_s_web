@@ -14,8 +14,17 @@
   "hero": {
     "greeting": "你好，我是",
     "name": "黃仁和",
+    "kicker": "AI／ML 工程師 · VLM／LLM 研究",
     "tagline": "AI Engineer ∙ Researcher ∙ Open Source Contributor",
     "description": "用 AI 連結學術與產業，讓資料創造價值。",
+    "roles": [
+      "碩論：VLM 工業異常定位",
+      "台灣大哥大 AI／ML 工程實習生",
+      "中央 × 鴻海 產學研發助理",
+      "Twinkle AI 開源貢獻者",
+      "TANet 最佳論文第一作者"
+    ],
+    "now": "進行中",
     "cta": {
       "projects": "看作品",
       "contact": "聯絡我",
@@ -25,31 +34,36 @@
   "about": {
     "title": "關於我",
     "summary": [
-      "現任台灣大哥大 AI 工程師實習生，同時於國立中央大學資訊管理研究所攻讀碩士學位。",
-      "專精於自然語言處理、深度學習及繁體中文 AI 模型開發，曾獲 TANet 最佳論文獎與國科會 GenAI Stars 優選。",
-      "致力於將學術研究轉化為可落地的商業應用，積極推動台灣 AI 開源生態發展。"
+      "中央大學資管所碩士生（ADML 實驗室），碩論研究視覺語言模型的工業異常定位與可解釋推理；同時是台灣大哥大 AI／ML 工程實習生，也在中央大學 × 鴻海的產學合作擔任研發助理。",
+      "做的事從訓練一路到部署：SFT、GRPO／強化學習、對比學習、VLM／LLM 微調與蒸餾、擴散模型，再用 vLLM、llama.cpp 與量化把模型真正跑起來，包括在手機上完全離線運行的點餐助理。",
+      "曾獲 TANet 最佳論文獎（第一作者）、台灣大哥大數據競賽冠軍與國科會 GenAI Stars 優選，並在 Twinkle AI 開源社群主導 Formosa-VLM 台灣文化多模態資料集。"
     ],
     "readMore": "了解更多"
   },
   "projects": {
     "title": "精選專案",
+    "lead": "從公平性、繁中 NLP 到視覺語言資料集，挑幾個最有代表性的作品。",
     "viewAll": "探索更多",
-    "viewProject": "查看專案"
+    "viewProject": "查看專案",
+    "all": "全部"
   },
   "articles": {
     "title": "技術文章",
+    "lead": "論文筆記、實作紀錄，偶爾也寫個股研究。",
     "viewAll": "閱讀更多",
     "readArticle": "閱讀文章",
     "minRead": "分鐘閱讀"
   },
   "models": {
     "title": "AI 模型與資料集",
+    "lead": "發布在 Hugging Face 上的模型與資料集，依下載數排序。",
     "viewAll": "探索 Hugging Face",
     "downloads": "下載次數",
     "updated": "更新於"
   },
   "awards": {
-    "title": "榮譽與肯定"
+    "title": "榮譽與肯定",
+    "lead": "競賽與學術上的肯定。"
   },
   "contact": {
     "title": "聯絡方式",
@@ -74,15 +88,23 @@
     "title": "教育背景"
   },
   "experience": {
-    "title": "工作經歷"
+    "title": "工作經歷",
+    "lead": "研究、實習與產學合作，用 ML 實驗紀錄的方式呈現。"
   },
   "certifications": {
     "title": "資格認證"
+  },
+  "volunteer": {
+    "title": "志工服務"
   },
   "common": {
     "loading": "載入中...",
     "error": "發生錯誤",
     "viewMore": "查看更多",
     "backToTop": "回到頂部"
+  },
+  "faq": {
+    "title": "常見問題",
+    "stats": "數字一覽"
   }
 }

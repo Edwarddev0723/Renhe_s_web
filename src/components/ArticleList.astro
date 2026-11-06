@@ -1,0 +1,173 @@
+---
+import Icon from './Icon.astro';
+import { dot } from '../data/stats';
+import { pick, useTranslations, type Lang, type Localized } from '../i18n';
+
+interface Article {
+  title: Localized;
+  summary: Localized;
+  link: string;
+  date: string;
+  tags: string[];
+  image?: string | null;
+  readingTime?: string;
+}
+
+interface Props {
+  lang: Lang;
+  articles: Article[];
+  /** Show the excerpt under each title (writing page). */
+  detailed?: boolean;
+}
+
+const { lang, articles, detailed = false } = Astro.props;
+const t = useTranslations(lang);
+const clean = (s: string) => s.replace(/\s+/g, ' ').trim();
+---
+
+<ul class:list={['alist', { 'alist--detailed': detailed }]} data-hover-preview>
+  {articles.map((article, i) => (
+    <li data-reveal style={`--i:${i % 5}`}>
+      <a class="alist__row" href={article.link} target="_blank" rel="noopener noreferrer" data-cover={article.image ?? undefined}>
+        <time class="alist__date mono" datetime={article.date}>{dot(article.date)}</time>
+        <div class="alist__main">
+          <h3 class="alist__title">{clean(pick(article.title, lang))}</h3>
+          {detailed && <p class="alist__summary">{clean(pick(article.summary, lang))}</p>}
+          <p class="alist__meta mono">
+            {article.tags.slice(0, 3).map((tag) => <span>#{tag}</span>)}
+            {article.readingTime && <span class="alist__time">{article.readingTime} {t('articles.minRead')}</span>}
+          </p>
+        </div>
+        <span class="alist__arrow" aria-hidden="true"><Icon name="arrow-up-right" size={20} /></span>
+      </a>
+    </li>
+  ))}
+</ul>
+<img class="alist__preview" data-preview-img alt="" aria-hidden="true" />
+
+<script>
+  import { mountHoverPreview } from '../scripts/hover-preview';
+  document.querySelectorAll<HTMLElement>('[data-hover-preview]').forEach(mountHoverPreview);
+</script>
+
+<style>
+  .alist {
+    border-top: 1px solid var(--line-strong);
+  }
+
+  .alist__row {
+    display: grid;
+    grid-template-columns: 110px 1fr 40px;
+    align-items: baseline;
+    gap: var(--space-6);
+    padding: var(--space-6) var(--space-2);
+    border-bottom: 1px solid var(--line);
+    transition: background-color var(--dur), padding 0.4s var(--ease-out);
+  }
+
+  .alist__row:hover {
+    background: var(--accent-soft);
+    padding-left: var(--space-4);
+  }
+
+  .alist__date {
+    font-size: var(--fs-xs);
+    color: var(--fg-3);
+  }
+
+  .alist__title {
+    font-family: var(--font-display);
+    font-size: clamp(1.25rem, 2.2vw, 1.6rem);
+    line-height: 1.35;
+    transition: color var(--dur);
+  }
+
+  .alist__title:lang(zh) {
+    font-family: var(--font-cjk);
+    font-weight: 600;
+    font-size: clamp(1.1rem, 1.8vw, 1.3rem);
+    line-height: 1.6;
+  }
+
+  .alist__row:hover .alist__title {
+    color: var(--accent-fg);
+  }
+
+  .alist__summary {
+    margin-top: var(--space-2);
+    font-size: var(--fs-sm);
+    line-height: 1.7;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .alist__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px var(--space-3);
+    margin-top: var(--space-2);
+    font-size: var(--fs-2xs);
+    letter-spacing: 0.04em;
+    color: var(--fg-3);
+  }
+
+  .alist__time {
+    margin-left: auto;
+  }
+
+  .alist__arrow {
+    justify-self: end;
+    color: var(--fg-3);
+    transition: transform 0.4s var(--ease-out), color var(--dur);
+  }
+
+  .alist__row:hover .alist__arrow {
+    transform: translate(3px, -3px);
+    color: var(--accent-fg);
+  }
+
+  .alist__preview {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 90;
+    width: 280px;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    border-radius: var(--radius);
+    border: 1px solid var(--line-strong);
+    box-shadow: var(--shadow);
+    pointer-events: none;
+    opacity: 0;
+    scale: 0.92;
+    transition: opacity 0.25s, scale 0.35s var(--ease-out);
+  }
+
+  .alist__preview.is-shown {
+    opacity: 1;
+    scale: 1;
+  }
+
+  @media (max-width: 720px) {
+    .alist__row {
+      grid-template-columns: 1fr 24px;
+      gap: var(--space-2) var(--space-4);
+    }
+
+    .alist__date {
+      grid-column: 1 / -1;
+    }
+
+    .alist__preview {
+      display: none;
+    }
+  }
+
+  @media (hover: none) {
+    .alist__preview {
+      display: none;
+    }
+  }
+</style>

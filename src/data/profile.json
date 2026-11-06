@@ -12,8 +12,8 @@
         "en": "Taiwan Mobile"
     },
     "position": {
-        "zh": "AI 工程師實習生",
-        "en": "AI Engineering Intern"
+        "zh": "AI／ML 工程實習生",
+        "en": "AI/ML Engineering Intern"
     },
     "school": {
         "zh": "國立中央大學",
@@ -27,6 +27,10 @@
         "zh": "台灣 台北",
         "en": "Taipei, Taiwan"
     },
+    "seeking": {
+        "zh": "應徵 Research Engineer（VLM／LLM）· 2027 研發替代役",
+        "en": "Open to Research Engineer roles (VLM / LLM) · 2027 R&D Substitute Service"
+    },
     "email": "renhehuang0723@gmail.com",
     "avatar": "/images/avatar.jpg",
     "resume": "/resume.pdf",
@@ -37,28 +41,24 @@
         "huggingface": "https://huggingface.co/renhehuang"
     },
     "skills": {
-        "core": [
-            "Artificial Intelligence",
-            "Machine Learning",
-            "Deep Learning",
-            "NLP"
-        ],
-        "languages": [
-            "Python"
-        ],
-        "frameworks": [
-            "PyTorch",
-            "Hugging Face",
-            "Pandas",
-            "Scikit-learn",
-            "LoRA"
-        ]
+        "training": {
+            "label": { "zh": "模型訓練", "en": "Model training" },
+            "items": {
+                "zh": ["SFT", "GRPO／強化學習", "對比學習", "VLM／LLM 微調與蒸餾", "擴散模型"],
+                "en": ["SFT", "GRPO / reinforcement learning", "Contrastive learning", "VLM / LLM fine-tuning & distillation", "Diffusion models"]
+            }
+        },
+        "engineering": {
+            "label": { "zh": "工程與部署", "en": "Engineering & deployment" },
+            "items": {
+                "zh": ["Python", "PyTorch", "Transformers／TRL", "vLLM", "llama.cpp", "模型量化", "Linux", "Docker"],
+                "en": ["Python", "PyTorch", "Transformers / TRL", "vLLM", "llama.cpp", "Quantization", "Linux", "Docker"]
+            }
+        }
     },
     "stats": {
-        "githubRepos": 33,
-        "huggingfaceModels": 4,
-        "huggingfaceDatasets": 12,
-        "certifications": 9
+        "githubRepos": 44,
+        "financeLicenses": 9
     },
     "education": [
         {
@@ -70,8 +70,14 @@
                 "zh": "資訊管理學系 碩士",
                 "en": "Master's in Information Management"
             },
-            "period": "2025/07 - 2027/06",
-            "current": true
+            "period": "2025/09 - 2027/07",
+            "current": true,
+            "lab": {
+                "name": "ADML Lab",
+                "full": "Advanced Data Mining & Learning Laboratory",
+                "advisor": { "zh": "指導教授：陳以錚", "en": "Advisor: Prof. Y.-C. Chen (陳以錚)" },
+                "url": "https://sites.google.com/view/ycchen/members"
+            }
         },
         {
             "school": {
@@ -83,62 +89,212 @@
                 "en": "Bachelor's in Information and Finance Management"
             },
             "period": "2021/09 - 2025/06",
-            "gpa": "4.0/4.0",
+            "gpa": "3.98/4.0",
             "rank": {
                 "zh": "班級排名第一",
                 "en": "Ranked 1st in class"
-            }
+            },
+            "credits": {
+                "zh": "四年修習 150+ 學分，涵蓋 AI、數據分析、區塊鏈開發與資訊安全。",
+                "en": "150+ credits in four years across AI, data analytics, blockchain development and information security."
+            },
+            "journey": [
+                {
+                    "year": { "zh": "大一", "en": "Year 1" },
+                    "phase": { "zh": "探索期", "en": "Explore" },
+                    "text": {
+                        "zh": "廣泛修習 Coursera 與 Udemy 線上課程（如 Google Data Analyst Certification），探索興趣與方向。",
+                        "en": "Took a wide range of Coursera and Udemy courses (e.g. the Google Data Analytics certificate) to find what clicked."
+                    }
+                },
+                {
+                    "year": { "zh": "大二", "en": "Year 2" },
+                    "phase": { "zh": "深耕期", "en": "Deepen" },
+                    "text": {
+                        "zh": "深入鑽研 Data Science，獲 Kaggle Notebook Expert；因應 GenAI 浪潮，開始專注 AI 技術研究。",
+                        "en": "Went deep on data science and became a Kaggle Notebook Expert; with the GenAI wave, shifted focus to AI research."
+                    }
+                },
+                {
+                    "year": { "zh": "大三", "en": "Year 3" },
+                    "phase": { "zh": "實踐期", "en": "Apply" },
+                    "text": {
+                        "zh": "獲鴻海與城市科學實驗室 Science and AI Hackathon 亞軍；5 月進入台灣大哥大實習，把技術帶進實務。",
+                        "en": "Won 2nd prize at the Foxconn × City Science Lab AI Hackathon; joined Taiwan Mobile as an AI intern in May."
+                    }
+                },
+                {
+                    "year": { "zh": "大四", "en": "Year 4" },
+                    "phase": { "zh": "收穫期", "en": "Harvest" },
+                    "text": {
+                        "zh": "專注企業級專案，並獲國科會 GenAI Stars 優選與 2024 TANet 最佳論文獎（第一作者）。",
+                        "en": "Focused on production projects; received the NSTC GenAI Stars award and the 2024 TANet Best Paper Award as first author."
+                    }
+                }
+            ]
         }
     ],
     "experience": [
         {
+            "kind": "research",
+            "path": "ncu-adml / locate-anomaly",
+            "company": {
+                "zh": "LocateAnomaly",
+                "en": "LocateAnomaly"
+            },
+            "position": {
+                "zh": "VLM 工業異常定位與可解釋推理",
+                "en": "VLM industrial anomaly localization & explainable reasoning"
+            },
+            "note": {
+                "zh": "碩士論文研究 · Advanced Data Mining & Learning Laboratory（指導教授：陳以錚）",
+                "en": "Master's thesis · Advanced Data Mining & Learning Laboratory (advisor: Prof. Y.-C. Chen)"
+            },
+            "period": "2026/04 - Present",
+            "start": "2026-04",
+            "runs": [
+                {
+                    "tag": "SFT",
+                    "symbol": "LOCATE-3B",
+                    "title": { "zh": "SFT 定位成果", "en": "SFT localization" },
+                    "text": {
+                        "zh": "以 LocateAnything-3B 建立瑕疵定位與說明的監督式訓練流程；在固定開發集的 250 張異常影像上，整組瑕疵框匹配成功率（不漏框、不多框）由既有定位微調模型的 67.6% 提升至 74.4%。",
+                        "en": "Built a supervised pipeline on LocateAnything-3B that localizes and explains defects. On a fixed 250-image dev set, exact-match box success (no missed, no extra boxes) rose from 67.6% for the existing localization fine-tune to 74.4%."
+                    },
+                    "metric": { "from": "67.6%", "to": "74.4%" }
+                },
+                {
+                    "tag": "RL",
+                    "status": "running",
+                    "title": { "zh": "SAPG 強化學習方法", "en": "SAPG reinforcement learning" },
+                    "text": {
+                        "zh": "針對 VLM 在多瑕疵影像中提早停止、漏標瑕疵的問題，設計 SAPG：以獎勵引導停止決策，並要求瑕疵說明對應框出的證據；正以配對對照實驗驗證效益。",
+                        "en": "VLMs stop early and miss defects in multi-defect images. SAPG rewards the stopping decision and requires each explanation to point at the evidence it boxed; paired controlled experiments are under way."
+                    }
+                },
+                {
+                    "tag": "Infra",
+                    "title": { "zh": "推論工程", "en": "Inference engineering" },
+                    "text": {
+                        "zh": "整合 vLLM 前綴快取，優化強化學習軌跡生成流程。",
+                        "en": "Integrated vLLM prefix caching to speed up RL rollout generation."
+                    }
+                }
+            ]
+        },
+        {
+            "kind": "work",
+            "path": "taiwan-mobile / ai-ml-engineering-intern",
             "company": {
                 "zh": "台灣大哥大",
                 "en": "Taiwan Mobile"
             },
             "position": {
-                "zh": "AI 工程師實習生",
-                "en": "AI Engineering Intern"
+                "zh": "AI／ML 工程實習生",
+                "en": "AI/ML Engineering Intern"
             },
             "period": "2024/05 - Present",
+            "start": "2024-05",
             "location": {
                 "zh": "台北（遠端）",
                 "en": "Taipei (Remote)"
             },
-            "highlights": {
-                "zh": [
-                    "主導 AI 影像 Diffusion 模型 POC 測試與驗證",
-                    "參與 LLM 應用開發，執行 SFT 模型蒸餾與測試",
-                    "協助優化公司內部資料科學教材",
-                    "參與 Twinkle AI 繁中開源資料集計畫",
-                    "開發 CTR 點擊率預測模型"
-                ],
-                "en": [
-                    "Led POC testing for AI Diffusion models",
-                    "Developed LLM applications with SFT model distillation",
-                    "Optimized internal data science curriculum",
-                    "Contributed to Twinkle AI Traditional Chinese dataset project",
-                    "Built CTR prediction models"
-                ]
-            },
+            "runs": [
+                {
+                    "tag": "On-device",
+                    "title": { "zh": "Android 離線點餐助理", "en": "Offline ordering assistant on Android" },
+                    "text": {
+                        "zh": "微調 1.7B 與 270M 兩個小型語言模型，分別負責點餐對話與下單工具呼叫，量化後在手機上完全離線運行；模型已開源。",
+                        "en": "Fine-tuned two small language models, 1.7B for the ordering dialogue and 270M for tool calls, quantized to run fully offline on a phone. Both are open-sourced."
+                    },
+                    "metric": { "value": "1.7B + 270M" },
+                    "link": "https://huggingface.co/renhehuang/qwen3-1.7b-coffee-sft"
+                },
+                {
+                    "tag": "Diffusion",
+                    "title": { "zh": "商品場景合成 POC", "en": "Product scene composition POC" },
+                    "text": {
+                        "zh": "負責水平線估計與擺放位置演算法，產出海報用合成圖；並依論文自行實作 IMPRINT（CVPR 2024）擴散合成模型，自建 YouTube 影片資料集，以 8 張 GPU 分散式訓練完成。",
+                        "en": "Built the horizon-estimation and placement algorithms behind poster composites, and re-implemented IMPRINT (CVPR 2024) from the paper on a self-built YouTube video dataset, trained across 8 GPUs."
+                    },
+                    "metric": { "value": "8 × GPU" },
+                    "link": "https://ithelp.ithome.com.tw/users/20168901/ironman/7485"
+                },
+                {
+                    "tag": "NLP",
+                    "title": { "zh": "繁中語料用語篩選", "en": "Traditional Chinese corpus filtering" },
+                    "text": {
+                        "zh": "以 BERT 分類器辨識中國大陸用語，清理開源繁中訓練語料。",
+                        "en": "A BERT classifier that flags Mainland-Chinese usage to clean open Traditional Chinese training corpora."
+                    },
+                    "metric": { "value": "87.7% acc" },
+                    "link": "https://huggingface.co/renhehuang/bert-traditional-chinese-classifier"
+                },
+                {
+                    "tag": "LLM",
+                    "title": { "zh": "簡訊主題探勘", "en": "SMS topic mining" },
+                    "text": {
+                        "zh": "獨立完成：以 LLM 自動產生訓練資料微調語意模型，從 15 萬則簡訊歸納出主題與代表句。",
+                        "en": "Solo project: used an LLM to generate training data for a semantic model, then distilled topics and representative messages from 150K SMS."
+                    },
+                    "metric": { "value": "150K SMS" },
+                    "link": "https://github.com/Edwarddev0723/sms-contrastive-clustering"
+                }
+            ],
             "achievements": {
                 "zh": [
-                    "2025 台灣大哥大數據競賽 資料科學組 亞軍",
-                    "2024 台灣大哥大數據競賽 資料科學組 冠軍",
-                    "2025 4月 攻城精英月度榮耀獎"
+                    "內部數據競賽 2024 冠軍（流失預測）",
+                    "內部數據競賽 2025 亞軍（簡訊分類）",
+                    "2025 年 4 月 月度榮耀獎"
                 ],
                 "en": [
-                    "2nd Place - 2025 TWM Data Competition",
-                    "1st Place - 2024 TWM Data Competition",
-                    "April 2025 Elite Monthly Honor Award"
+                    "Internal data competition — Champion 2024 (churn)",
+                    "Internal data competition — 2nd place 2025 (SMS classification)",
+                    "Monthly Honor Award — April 2025"
                 ]
             }
+        },
+        {
+            "kind": "work",
+            "path": "ncu-x-foxconn / rd-assistant",
+            "company": {
+                "zh": "國立中央大學 × 鴻海科技集團",
+                "en": "NCU × Foxconn"
+            },
+            "position": {
+                "zh": "產學合作研發助理",
+                "en": "Industry–academia R&D Assistant"
+            },
+            "period": "2026/01 - Present",
+            "start": "2026-01",
+            "runs": [
+                {
+                    "tag": "NLP",
+                    "symbol": "DOC-CLS",
+                    "title": { "zh": "公文分類", "en": "Official document classification" },
+                    "text": {
+                        "zh": "以對比學習改良 BERT 微調，測試集準確率（基準：一般微調）。",
+                        "en": "Contrastive learning on top of BERT fine-tuning; test accuracy versus plain fine-tuning."
+                    },
+                    "metric": { "from": "76.9%", "to": "91.5%" }
+                },
+                {
+                    "tag": "NLP",
+                    "symbol": "SIGHAN",
+                    "title": { "zh": "公文錯字更正", "en": "Typo correction" },
+                    "text": {
+                        "zh": "參與建置約 20 萬筆合成錯字資料訓練 BERT 自動校正模型，再加入人工標註資料續訓；含錯句完整改正率（SIGHAN 開發集）。",
+                        "en": "Helped build ~200K synthetic typo pairs to train a BERT corrector, then continued training on human-labelled data; full-sentence correction rate on the SIGHAN dev set."
+                    },
+                    "metric": { "from": "7.5%", "to": "40.0%" }
+                }
+            ]
         }
     ],
     "certifications": [
         {
             "name": {
-                "zh": "iPAS AI應用規劃師 - 機器學習組 (中級)",
+                "zh": "iPAS AI 應用規劃師 - 機器學習組 (中級)",
                 "en": "iPAS AI Application Planner - ML (Intermediate)"
             },
             "issuer": {
@@ -146,6 +302,17 @@
                 "en": "Ministry of Economic Affairs"
             },
             "date": "2025/11"
+        },
+        {
+            "name": {
+                "zh": "證券商高級業務員等 9 張金融證照",
+                "en": "Senior Securities Specialist + 8 more financial licenses"
+            },
+            "issuer": {
+                "zh": "證券暨期貨市場發展基金會",
+                "en": "Securities & Futures Institute"
+            },
+            "date": "2022/11"
         },
         {
             "name": {
@@ -162,6 +329,23 @@
             },
             "issuer": "Udemy",
             "date": "2021/06"
+        }
+    ],
+    "volunteer": [
+        {
+            "role": {
+                "zh": "CybernetiX Lab 教學助理",
+                "en": "CybernetiX Lab Teaching Assistant"
+            },
+            "org": {
+                "zh": "國立臺北科技大學",
+                "en": "National Taipei University of Technology"
+            },
+            "period": "2023/01 - 2023/06",
+            "text": {
+                "zh": "指導國小到國中生從零開始做出自己的專案，用實作帶他們學程式與專案開發。",
+                "en": "Coached elementary and junior-high students to build their own projects from scratch, teaching programming by making."
+            }
         }
     ]
 }

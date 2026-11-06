@@ -1,0 +1,299 @@
+---
+import Icon from './Icon.astro';
+import profile from '../data/profile.json';
+import { localePath, otherLang, pageSlug, useTranslations, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const zh = lang === 'zh';
+const slug = pageSlug(Astro.url.pathname);
+const altHref = localePath(otherLang(lang), slug === '404' ? '' : slug);
+
+type Item = {
+  label: string;
+  icon: Parameters<typeof Icon>[0]['name'];
+  href?: string;
+  external?: boolean;
+  action?: 'theme' | 'copy';
+  value?: string;
+  hint?: string;
+  keywords?: string;
+};
+
+const groups: { id: string; label: string; items: Item[] }[] = [
+  {
+    id: 'go',
+    label: zh ? '前往' : 'Go to',
+    items: [
+      { label: t('nav.home'), icon: 'home', href: localePath(lang, ''), keywords: 'home index 首頁' },
+      { label: t('nav.about'), icon: 'user', href: localePath(lang, 'about'), keywords: 'about resume cv experience education 關於 經歷 學歷' },
+      { label: t('nav.projects'), icon: 'grid', href: localePath(lang, 'projects'), keywords: 'projects work portfolio 作品 專案' },
+      { label: t('nav.writing'), icon: 'pen', href: localePath(lang, 'writing'), keywords: 'writing blog articles medium 文章' },
+      { label: t('nav.models'), icon: 'cube', href: localePath(lang, 'models'), keywords: 'models datasets hugging face hf 模型 資料集' },
+      { label: t('nav.contact'), icon: 'send', href: localePath(lang, 'contact'), keywords: 'contact email hire 聯絡' },
+    ],
+  },
+  {
+    id: 'do',
+    label: zh ? '動作' : 'Actions',
+    items: [
+      { label: zh ? '切換深色／淺色' : 'Toggle dark / light', icon: 'contrast', action: 'theme', hint: 'T', keywords: 'theme dark light mode 主題 深色 淺色' },
+      { label: zh ? 'Switch to English' : '切換到中文', icon: 'globe', href: altHref, keywords: 'language lang english chinese 語言 中文 英文' },
+      { label: zh ? '複製 Email' : 'Copy email', icon: 'copy', action: 'copy', value: profile.email, hint: profile.email, keywords: 'email mail copy 信箱' },
+    ],
+  },
+  {
+    id: 'elsewhere',
+    label: zh ? '外部連結' : 'Elsewhere',
+    items: [
+      { label: 'GitHub', icon: 'github', href: profile.social.github, external: true, hint: 'Edwarddev0723' },
+      { label: 'LinkedIn', icon: 'linkedin', href: profile.social.linkedin, external: true, hint: 'in/edwarddata' },
+      { label: 'Hugging Face', icon: 'hf', href: profile.social.huggingface, external: true, hint: 'renhehuang' },
+      { label: 'Medium', icon: 'medium', href: profile.social.medium, external: true, hint: '@renhehuang0723' },
+    ],
+  },
+];
+
+let n = 0;
+---
+
+<dialog class="cmdk" data-cmdk aria-label={zh ? '快速指令' : 'Command palette'}>
+  <div class="cmdk__panel">
+    <div class="cmdk__search">
+      <Icon name="search" size={18} />
+      <input
+        data-cmdk-input
+        type="text"
+        role="combobox"
+        aria-expanded="true"
+        aria-controls="cmdk-list"
+        aria-autocomplete="list"
+        autocomplete="off"
+        spellcheck="false"
+        placeholder={zh ? '要去哪裡？輸入頁面、動作或連結…' : 'Where to? Type a page, action or link…'}
+      />
+      <kbd>esc</kbd>
+    </div>
+
+    <ul class="cmdk__list" id="cmdk-list" role="listbox" data-cmdk-list>
+      {groups.map((group) => (
+        <>
+          <li class="cmdk__group" role="presentation" data-group={group.id}>{group.label}</li>
+          {group.items.map((item) => (
+            <li
+              class="cmdk__item"
+              role="option"
+              aria-selected="false"
+              id={`cmdk-opt-${n++}`}
+              data-item
+              data-item-group={group.id}
+              data-href={item.href}
+              data-external={item.external ? '' : undefined}
+              data-action={item.action}
+              data-value={item.value}
+              data-keywords={item.keywords}
+            >
+              <span class="cmdk__icon"><Icon name={item.icon} size={16} /></span>
+              <span class="cmdk__label">{item.label}</span>
+              {item.hint && <span class="cmdk__hint">{item.hint}</span>}
+              {item.external && <Icon name="arrow-up-right" size={14} class="cmdk__ext" />}
+            </li>
+          ))}
+        </>
+      ))}
+    </ul>
+    <p class="cmdk__empty" data-cmdk-empty hidden>{zh ? '找不到符合的項目' : 'Nothing matches that'}</p>
+
+    <div class="cmdk__foot">
+      <span><kbd>↑</kbd><kbd>↓</kbd> {zh ? '選擇' : 'select'}</span>
+      <span><kbd>↵</kbd> {zh ? '開啟' : 'open'}</span>
+      <span class="cmdk__toast" data-cmdk-toast hidden><Icon name="check" size={14} /> {zh ? '已複製' : 'Copied'}</span>
+    </div>
+  </div>
+</dialog>
+
+<style>
+  .cmdk {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    max-height: none;
+    margin: 0;
+    padding: 12vh var(--gutter) var(--gutter);
+    background: transparent;
+    border: 0;
+    color: var(--fg);
+  }
+
+  .cmdk[open] {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .cmdk::backdrop {
+    background: color-mix(in srgb, var(--bg) 70%, transparent);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+
+  .cmdk[open] .cmdk__panel {
+    animation: cmdk-in 0.28s var(--ease-out);
+  }
+
+  @keyframes cmdk-in {
+    from {
+      opacity: 0;
+      transform: translateY(-8px) scale(0.985);
+    }
+  }
+
+  .cmdk__panel {
+    width: min(620px, 100%);
+    background: var(--bg-elev);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow), 0 0 0 1px var(--line);
+    overflow: hidden;
+  }
+
+  .cmdk__search {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-4) var(--space-5);
+    border-bottom: 1px solid var(--line);
+    color: var(--fg-3);
+  }
+
+  .cmdk__search input {
+    flex: 1;
+    min-width: 0;
+    background: none;
+    border: 0;
+    outline: none;
+    font-size: var(--fs-base);
+    color: var(--fg);
+  }
+
+  .cmdk__search input::placeholder {
+    color: var(--fg-3);
+  }
+
+  kbd {
+    display: inline-grid;
+    place-items: center;
+    min-width: 22px;
+    height: 22px;
+    padding: 0 6px;
+    font-family: var(--font-mono);
+    font-size: var(--fs-2xs);
+    color: var(--fg-3);
+    border: 1px solid var(--line-strong);
+    border-radius: 5px;
+  }
+
+  .cmdk__list {
+    max-height: min(52vh, 420px);
+    overflow-y: auto;
+    padding: var(--space-2);
+    overscroll-behavior: contain;
+  }
+
+  .cmdk__group {
+    padding: var(--space-3) var(--space-3) var(--space-1);
+    font-family: var(--font-mono);
+    font-size: var(--fs-2xs);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--fg-3);
+  }
+
+  .cmdk__item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: 10px var(--space-3);
+    border-radius: var(--radius);
+    cursor: pointer;
+    color: var(--fg-2);
+  }
+
+  .cmdk__item[aria-selected='true'] {
+    background: var(--accent-soft);
+    color: var(--fg);
+  }
+
+  .cmdk__item[aria-selected='true'] .cmdk__icon {
+    color: var(--accent-fg);
+    border-color: var(--accent-line);
+  }
+
+  .cmdk__icon {
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    flex-shrink: 0;
+  }
+
+  .cmdk__label {
+    flex: 1;
+    font-size: var(--fs-sm);
+  }
+
+  .cmdk__hint {
+    font-family: var(--font-mono);
+    font-size: var(--fs-2xs);
+    color: var(--fg-3);
+  }
+
+  .cmdk__ext {
+    color: var(--fg-3);
+  }
+
+  .cmdk__empty {
+    padding: var(--space-8);
+    text-align: center;
+    font-size: var(--fs-sm);
+  }
+
+  .cmdk__foot {
+    display: flex;
+    align-items: center;
+    gap: var(--space-5);
+    padding: var(--space-3) var(--space-5);
+    border-top: 1px solid var(--line);
+    font-size: var(--fs-xs);
+    color: var(--fg-3);
+  }
+
+  .cmdk__foot span {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .cmdk__toast {
+    margin-left: auto;
+    color: var(--accent-fg);
+  }
+
+  @media (max-width: 640px) {
+    .cmdk {
+      padding-top: 10vh;
+    }
+
+    .cmdk__foot span:not(.cmdk__toast) {
+      display: none;
+    }
+  }
+</style>

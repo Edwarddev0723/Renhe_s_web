@@ -1,176 +1,256 @@
 ---
-import { type Lang } from '../i18n';
+import Icon from './Icon.astro';
+import { pick, withBase, type Lang, type Localized } from '../i18n';
+import { dot } from '../data/stats';
 
-interface Props {
-  title: string | { zh: string; en: string };
-  summary: string | { zh: string; en: string };
+export interface Project {
+  id: string;
+  title: Localized;
+  summary: Localized;
   tags?: string[];
   date?: string;
-  link?: string;
   github?: string;
+  huggingface?: string;
+  medium?: string;
   image?: string;
-  metrics?: {
-    stars?: number;
-    downloads?: number;
-    accuracy?: string;
-  };
-  lang: Lang;
+  featured?: boolean;
+  metrics?: { stars?: number; forks?: number; downloads?: number; accuracy?: string };
 }
 
-const { title, summary, tags = [], date, link, github, image, metrics, lang } = Astro.props;
+interface Props {
+  project: Project;
+  lang: Lang;
+  index: number;
+  size?: 'lg' | 'md';
+  headingLevel?: 'h2' | 'h3';
+}
 
-const displayTitle = typeof title === 'string' ? title : title[lang];
-const displaySummary = typeof summary === 'string' ? summary : summary[lang];
+const { project, lang, index, size = 'md', headingLevel = 'h3' } = Astro.props;
+const Heading = headingLevel;
+const zh = lang === 'zh';
+const title = pick(project.title, lang);
+const summary = pick(project.summary, lang);
+const tags = project.tags ?? [];
+const primary = project.huggingface || project.github || project.medium;
+const image = project.image ? withBase(project.image) : undefined;
 
-const rawBase = import.meta.env.BASE_URL;
-const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
+const metric = project.metrics?.accuracy
+  ? `${project.metrics.accuracy} ${zh ? '準確率' : 'acc'}`
+  : project.metrics?.stars
+    ? `★ ${project.metrics.stars}`
+    : undefined;
+
+const writeup = project.medium
+  ? project.medium.includes('medium.com')
+    ? { label: 'Medium', icon: 'medium' as const }
+    : { label: zh ? '媒體報導' : 'Press', icon: 'file' as const }
+  : undefined;
 ---
 
-<article class="project-card">
+<article
+  class:list={['pcard', 'card', 'spotlight', `pcard--${size}`]}
+  data-reveal
+  data-tags={tags.join('|')}
+  style={`--i:${index % 4}`}
+>
   {image && (
-    <div class="card-image">
-      <img src={`${base}${image.startsWith('/') ? image.slice(1) : image}`} alt={displayTitle} loading="lazy" />
-    </div>
+    <a class="pcard__media media" href={primary} target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true">
+      <img src={image} alt="" width="800" height="450" loading="lazy" decoding="async" />
+      <span class="pcard__fig fig-label">Fig. P{String(index + 1).padStart(2, '0')}</span>
+    </a>
   )}
-  
-  <div class="card-content">
-    {date && <span class="card-date">{date}</span>}
-    
-    <h3 class="card-title">{displayTitle}</h3>
-    
-    <p class="card-summary">{displaySummary}</p>
-    
-    {tags.length > 0 && (
-      <div class="card-tags">
-        {tags.slice(0, 4).map((tag) => (
-          <span class="tag">{tag}</span>
-        ))}
-      </div>
-    )}
-    
-    {metrics && (
-      <div class="card-metrics">
-        {metrics.stars && <span>⭐ {metrics.stars}</span>}
-        {metrics.downloads && <span>📥 {metrics.downloads}</span>}
-        {metrics.accuracy && <span>🎯 {metrics.accuracy}</span>}
-      </div>
-    )}
-    
-    <div class="card-actions">
-      {link && (
-        <a href={link} target="_blank" rel="noopener noreferrer" class="btn btn-primary">
-          {lang === 'zh' ? '查看專案' : 'View Project'}
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="7" y1="17" x2="17" y2="7"></line>
-            <polyline points="7 7 17 7 17 17"></polyline>
-          </svg>
+  {!image && (
+    <a class="pcard__media pcard__cover" href={primary} target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true">
+      <span class="pcard__cover-text">{tags.slice(0, 2).join(' · ')}</span>
+      <span class="pcard__fig fig-label">Fig. P{String(index + 1).padStart(2, '0')}</span>
+    </a>
+  )}
+
+  <div class="pcard__body">
+    <p class="pcard__meta">
+      {project.date && <span>{dot(project.date)}</span>}
+      {metric && <span class="pcard__metric">{metric}</span>}
+    </p>
+
+    <Heading class="pcard__title">
+      {primary ? (
+        <a href={primary} target="_blank" rel="noopener noreferrer">
+          {title}<Icon name="arrow-up-right" size={18} class="pcard__arrow" />
         </a>
+      ) : (
+        title
       )}
-      {github && (
-        <a href={github} target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-          GitHub
-        </a>
+    </Heading>
+
+    <p class="pcard__summary">{summary}</p>
+
+    {tags.length > 0 && (
+      <div class="tags">
+        {tags.map((tag) => <span class="tag">{tag}</span>)}
+      </div>
+    )}
+
+    <div class="pcard__links">
+      {project.huggingface && (
+        <a href={project.huggingface} target="_blank" rel="noopener noreferrer"><Icon name="hf" size={15} />Hugging Face</a>
+      )}
+      {project.github && (
+        <a href={project.github} target="_blank" rel="noopener noreferrer"><Icon name="github" size={14} />GitHub</a>
+      )}
+      {writeup && (
+        <a href={project.medium} target="_blank" rel="noopener noreferrer"><Icon name={writeup.icon} size={15} />{writeup.label}</a>
       )}
     </div>
   </div>
 </article>
 
 <style>
-  .project-card {
-    background: var(--bg-primary);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-xl);
-    overflow: hidden;
-    transition: all var(--transition-normal);
+  .pcard {
     display: flex;
     flex-direction: column;
+    overflow: hidden;
   }
-  
-  .project-card:hover {
-    border-color: var(--color-primary-300);
-    box-shadow: var(--shadow-lg);
+
+  .pcard:hover {
+    border-color: var(--line-strong);
     transform: translateY(-4px);
+    box-shadow: var(--shadow);
   }
-  
-  .card-image {
-    height: 180px;
+
+  .pcard__media {
+    position: relative;
+    display: block;
+    aspect-ratio: 16 / 9;
+    border-bottom: 1px solid var(--line);
+  }
+
+  /* No screenshot yet: a typographic plate on a dot grid instead */
+  .pcard__cover {
+    display: grid;
+    place-items: center;
+    padding: var(--space-8);
+    background-color: var(--surface-2);
+    background-image: radial-gradient(var(--line-strong) 1px, transparent 1.4px);
+    background-size: 18px 18px;
     overflow: hidden;
-    background: linear-gradient(135deg, var(--color-primary-100), var(--color-accent-100));
   }
-  
-  [data-theme="dark"] .card-image {
-    background: linear-gradient(135deg, var(--color-primary-900), var(--color-gray-800));
+
+  .pcard__cover-text {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: clamp(1.75rem, 3.4vw, 2.75rem);
+    line-height: 1.1;
+    text-align: center;
+    color: var(--fg);
+    transition: color var(--dur), transform 0.8s var(--ease-out);
   }
-  
-  .card-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform var(--transition-slow);
+
+  .pcard:hover .pcard__cover-text {
+    color: var(--accent-fg);
+    transform: scale(1.04);
   }
-  
-  .project-card:hover .card-image img {
-    transform: scale(1.05);
+
+  .pcard__fig {
+    position: absolute;
+    left: 14px;
+    top: 12px;
+    z-index: 2;
+    padding: 3px 8px;
+    color: var(--fg);
+    background: color-mix(in srgb, var(--bg) 72%, transparent);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border-radius: var(--radius-full);
   }
-  
-  .card-content {
-    padding: var(--space-6);
+
+  .pcard__body {
     display: flex;
     flex-direction: column;
     flex: 1;
+    gap: var(--space-4);
+    padding: clamp(var(--space-5), 2.4vw, var(--space-8));
   }
-  
-  .card-date {
-    font-size: var(--text-xs);
-    color: var(--text-muted);
-    margin-bottom: var(--space-2);
+
+  .pcard__meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    color: var(--fg-3);
   }
-  
-  .card-title {
-    font-size: var(--text-lg);
+
+  .pcard__metric {
+    padding: 2px 8px;
+    color: var(--accent-fg);
+    border: 1px solid var(--accent-line);
+    border-radius: var(--radius-full);
+  }
+
+  .pcard__title {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 2.2vw, 1.85rem);
+    line-height: 1.2;
+  }
+
+  .pcard__title:lang(zh) {
+    font-family: var(--font-cjk);
     font-weight: 600;
-    color: var(--text-primary);
-    margin-bottom: var(--space-3);
-    line-height: 1.4;
+    font-size: clamp(1.25rem, 1.8vw, 1.5rem);
+    line-height: 1.45;
   }
-  
-  .card-summary {
-    font-size: var(--text-sm);
-    color: var(--text-secondary);
-    line-height: 1.6;
-    margin-bottom: var(--space-4);
-    flex: 1;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+
+  .pcard__title a {
+    transition: color var(--dur);
   }
-  
-  .card-tags {
+
+  .pcard__title a:hover {
+    color: var(--accent-fg);
+  }
+
+  .pcard__title :global(.pcard__arrow) {
+    display: inline-block;
+    margin-left: 6px;
+    vertical-align: -0.1em;
+    color: var(--fg-3);
+    transition: transform 0.4s var(--ease-out), color var(--dur);
+  }
+
+  .pcard:hover .pcard__title :global(.pcard__arrow) {
+    transform: translate(3px, -3px);
+    color: var(--accent-fg);
+  }
+
+  .pcard__summary {
+    font-size: var(--fs-sm);
+    line-height: 1.75;
+  }
+
+  .pcard__links {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-2);
-    margin-bottom: var(--space-4);
-  }
-  
-  .card-metrics {
-    display: flex;
-    gap: var(--space-4);
-    font-size: var(--text-xs);
-    color: var(--text-muted);
-    margin-bottom: var(--space-4);
-  }
-  
-  .card-actions {
-    display: flex;
-    gap: var(--space-3);
+    gap: var(--space-2) var(--space-5);
     margin-top: auto;
+    padding-top: var(--space-4);
+    border-top: 1px dashed var(--line-strong);
   }
-  
-  .card-actions .btn {
-    flex: 1;
-    font-size: var(--text-xs);
-    padding: var(--space-2) var(--space-4);
+
+  .pcard__links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    color: var(--fg-2);
+    transition: color var(--dur);
+  }
+
+  .pcard__links a:hover {
+    color: var(--accent-fg);
+  }
+
+  .pcard--lg .pcard__summary {
+    font-size: var(--fs-base);
   }
 </style>

@@ -1,0 +1,145 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import ModelTable from '../components/ModelTable.astro';
+import Icon from '../components/Icon.astro';
+import profile from '../data/profile.json';
+import { hfModels, hfDatasets, hfDownloads, hfLikes, formatNumber } from '../data/stats';
+import { useTranslations, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const zh = lang === 'zh';
+const byDownloads = <T extends { downloads: number }>(list: T[]) => [...list].sort((a, b) => b.downloads - a.downloads);
+
+const stats = [
+  { value: hfModels.length, label: zh ? '模型' : 'Models' },
+  { value: hfDatasets.length, label: zh ? '資料集' : 'Datasets' },
+  { value: hfDownloads, label: zh ? '總下載數' : 'Downloads' },
+  { value: hfLikes, label: zh ? '收藏' : 'Likes' },
+];
+---
+
+<Layout title={`${t('models.title')} | ${profile.name[lang]}`} lang={lang}>
+  <PageHeader
+    lang={lang}
+    label="Open source · Hugging Face"
+    title={{ zh: 'AI 模型與資料集', en: 'Models & Datasets' }}
+    lead={zh ? '我在 Hugging Face 上發布的 AI 模型與資料集。' : "AI models and datasets I've published on Hugging Face."}
+    glyph="模"
+  >
+    <ul class="hf-stats">
+      {stats.map((s) => (
+        <li>
+          <span class="hf-stats__value">{formatNumber(s.value)}</span>
+          <span class="hf-stats__label">{s.label}</span>
+        </li>
+      ))}
+    </ul>
+  </PageHeader>
+
+  <section class="section">
+    <div class="container stack">
+      <div>
+        <h2 class="block-title">{zh ? '模型' : 'Models'} <span class="mono muted">{hfModels.length}</span></h2>
+        <ModelTable lang={lang} items={byDownloads(hfModels)} command="hf ls models --author renhehuang --sort downloads" />
+      </div>
+      <div>
+        <h2 class="block-title">{zh ? '資料集' : 'Datasets'} <span class="mono muted">{hfDatasets.length}</span></h2>
+        <ModelTable lang={lang} items={byDownloads(hfDatasets)} command="hf ls datasets --author renhehuang --sort downloads" />
+      </div>
+
+      <div class="hf-cta card spotlight" data-reveal>
+        <div>
+          <p class="kicker">Hugging Face</p>
+          <p class="hf-cta__title">{zh ? '在 Hugging Face 上查看我所有的模型與資料集' : 'View all my models and datasets on Hugging Face'}</p>
+        </div>
+        <a class="btn btn--primary" href={profile.social.huggingface} target="_blank" rel="noopener noreferrer">
+          huggingface.co/renhehuang<Icon name="arrow-up-right" size={16} />
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .hf-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4) clamp(var(--space-8), 5vw, var(--space-16));
+    margin-top: var(--space-4);
+  }
+
+  .hf-stats li {
+    display: grid;
+  }
+
+  .hf-stats__value {
+    font-family: var(--font-display);
+    font-size: clamp(2.25rem, 4vw, 3rem);
+    line-height: 1.05;
+    color: var(--fg);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .hf-stats__label {
+    font-family: var(--font-mono);
+    font-size: var(--fs-2xs);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--fg-3);
+  }
+
+  .stack {
+    display: grid;
+    gap: clamp(var(--space-12), 6vw, var(--space-16));
+  }
+
+  .block-title {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-3);
+    margin-bottom: var(--space-5);
+    font-family: var(--font-display);
+    font-size: var(--fs-2xl);
+  }
+
+  .block-title:lang(zh) {
+    font-family: var(--font-cjk);
+    font-weight: 600;
+    font-size: var(--fs-xl);
+  }
+
+  .block-title span {
+    font-size: var(--fs-sm);
+  }
+
+  .hf-cta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-6);
+    padding: clamp(var(--space-6), 4vw, var(--space-12));
+  }
+
+  .hf-cta__title {
+    margin-top: var(--space-3);
+    max-width: 28ch;
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+    line-height: 1.25;
+    color: var(--fg);
+  }
+
+  .hf-cta__title:lang(zh) {
+    font-family: var(--font-cjk);
+    font-weight: 600;
+    font-size: clamp(1.25rem, 2.4vw, 1.75rem);
+    line-height: 1.5;
+  }
+</style>

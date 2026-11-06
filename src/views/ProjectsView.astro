@@ -1,0 +1,139 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import profile from '../data/profile.json';
+import projects from '../data/projects.json';
+import { useTranslations, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const zh = lang === 'zh';
+const list = projects.projects;
+
+// Filter chips: tags shared by more than one project, most common first.
+// "Python" is everywhere, so it doesn't help narrow anything down.
+const counts = new Map<string, number>();
+list.flatMap((p) => p.tags).forEach((tag) => counts.set(tag, (counts.get(tag) ?? 0) + 1));
+const shared = [...counts.entries()]
+  .filter(([tag, n]) => n > 1 && tag !== 'Python')
+  .sort((a, b) => b[1] - a[1])
+  .map(([tag]) => tag);
+// A bar with one or two chips is just noise; it appears once the portfolio grows.
+const filters = shared.length >= 3 ? shared : [];
+---
+
+<Layout title={`${t('nav.projects')} | ${profile.name[lang]}`} lang={lang}>
+  <PageHeader
+    lang={lang}
+    label={`Projects · ${list.length}`}
+    title={{ zh: '專案作品', en: 'Projects' }}
+    lead={zh
+      ? '這裡展示我過去的專案作品，涵蓋 NLP、深度學習與 AI 應用開發。'
+      : 'Showcasing my past projects spanning NLP, Deep Learning, and AI applications.'}
+    glyph="作"
+  />
+
+  <section class="section">
+    <div class="container">
+      {filters.length > 0 && (
+        <div class="filters" role="group" aria-label={zh ? '依標籤篩選' : 'Filter by tag'} data-filters>
+          <button type="button" class="chip" aria-pressed="true" data-filter="">{t('projects.all')} <span>{list.length}</span></button>
+          {filters.map((tag) => (
+            <button type="button" class="chip" aria-pressed="false" data-filter={tag}>
+              {tag} <span>{counts.get(tag)}</span>
+            </button>
+          ))}
+        </div>
+      )}
+
+      <div class="grid" data-project-grid>
+        {list.map((project, i) => (
+          <ProjectCard project={project} lang={lang} index={i} headingLevel="h2" />
+        ))}
+      </div>
+      <p class="empty" data-empty hidden>{zh ? '沒有符合的專案。' : 'No projects match that tag.'}</p>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  const bar = document.querySelector<HTMLElement>('[data-filters]');
+  const cards = [...document.querySelectorAll<HTMLElement>('[data-project-grid] > [data-tags]')];
+  const empty = document.querySelector<HTMLElement>('[data-empty]');
+
+  bar?.addEventListener('click', (e) => {
+    const chip = (e.target as HTMLElement).closest<HTMLButtonElement>('[data-filter]');
+    if (!chip) return;
+    const tag = chip.dataset.filter ?? '';
+    bar.querySelectorAll('[data-filter]').forEach((c) => c.setAttribute('aria-pressed', String(c === chip)));
+    let shown = 0;
+    for (const card of cards) {
+      const match = !tag || (card.dataset.tags ?? '').split('|').includes(tag);
+      card.hidden = !match;
+      if (match) {
+        shown++;
+        card.classList.add('is-visible'); // skip the scroll reveal for re-shown cards
+      }
+    }
+    if (empty) empty.hidden = shown > 0;
+  });
+</script>
+
+<style>
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-bottom: var(--space-10);
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    height: 34px;
+    padding: 0 var(--space-4);
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    color: var(--fg-2);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-full);
+    transition: color var(--dur), border-color var(--dur), background-color var(--dur);
+  }
+
+  .chip span {
+    color: var(--fg-3);
+  }
+
+  .chip:hover {
+    color: var(--fg);
+    border-color: var(--fg-3);
+  }
+
+  .chip[aria-pressed='true'] {
+    color: var(--on-accent);
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .chip[aria-pressed='true'] span {
+    color: inherit;
+    opacity: 0.75;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 360px), 1fr));
+    gap: clamp(14px, 2vw, 24px);
+  }
+
+  .empty {
+    padding: var(--space-16) 0;
+    text-align: center;
+  }
+</style>

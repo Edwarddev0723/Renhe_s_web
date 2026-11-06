@@ -1,6 +1,7 @@
 ---
-import { useTranslations, type Lang } from '../i18n';
+import Icon from './Icon.astro';
 import profile from '../data/profile.json';
+import { useTranslations, localePath, type Lang } from '../i18n';
 
 interface Props {
   lang: Lang;
@@ -8,163 +9,249 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = useTranslations(lang);
+const zh = lang === 'zh';
 const currentYear = new Date().getFullYear();
-const rawBase = import.meta.env.BASE_URL;
-const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
+
+const pages = [
+  { slug: 'about', label: t('nav.about') },
+  { slug: 'projects', label: t('nav.projects') },
+  { slug: 'writing', label: t('nav.writing') },
+  { slug: 'models', label: t('nav.models') },
+  { slug: 'contact', label: t('nav.contact') },
+];
+
+const elsewhere = [
+  { label: 'GitHub', href: profile.social.github },
+  { label: 'LinkedIn', href: profile.social.linkedin },
+  { label: 'Hugging Face', href: profile.social.huggingface },
+  { label: 'Medium', href: profile.social.medium },
+];
 ---
 
 <footer class="footer">
   <div class="container">
-    <div class="footer-grid">
-      <!-- Brand -->
-      <div class="footer-brand">
-        <h4 class="footer-logo">{profile.name[lang]}</h4>
-        <p class="footer-description">{t('footer.description')}</p>
-        <div class="footer-stats">
-          <span>📊 {profile.stats.huggingfaceDatasets} Datasets</span>
-          <span>🤖 {profile.stats.huggingfaceModels} Models</span>
-          <span>💻 {profile.stats.githubRepos} Repos</span>
-        </div>
+    <div class="footer__grid">
+      <div class="footer__intro">
+        <p class="footer__tagline">{t('footer.description')}</p>
+        <a class="footer__mail link" href={`mailto:${profile.email}`}>{profile.email}</a>
       </div>
-      
-      <!-- Quick Links -->
-      <div class="footer-section">
-        <h5 class="footer-title">{t('footer.quickLinks')}</h5>
-        <nav class="footer-links">
-          <a href={lang === 'zh' ? `${base}about` : `${base}${lang}/about`}>{t('nav.about')}</a>
-          <a href={lang === 'zh' ? `${base}projects` : `${base}${lang}/projects`}>{t('nav.projects')}</a>
-          <a href={lang === 'zh' ? `${base}writing` : `${base}${lang}/writing`}>{t('nav.writing')}</a>
-          <a href={lang === 'zh' ? `${base}models` : `${base}${lang}/models`}>{t('nav.models')}</a>
-          <a href={lang === 'zh' ? `${base}contact` : `${base}${lang}/contact`}>{t('nav.contact')}</a>
-        </nav>
-      </div>
-      
-      <!-- Social -->
-      <div class="footer-section">
-        <h5 class="footer-title">{t('footer.social')}</h5>
-        <nav class="footer-links">
-          <a href={profile.social.github} target="_blank" rel="noopener noreferrer">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-            GitHub
+
+      <nav class="footer__col" aria-label={zh ? '網站頁面' : 'Pages'}>
+        <h2 class="footer__title">{zh ? '頁面' : 'Pages'}</h2>
+        {pages.map((p) => <a href={localePath(lang, p.slug)}>{p.label}</a>)}
+      </nav>
+
+      <nav class="footer__col" aria-label={t('footer.social')}>
+        <h2 class="footer__title">{zh ? '其他地方' : 'Elsewhere'}</h2>
+        {elsewhere.map((e) => (
+          <a href={e.href} target="_blank" rel="noopener noreferrer">
+            {e.label}<Icon name="arrow-up-right" size={12} />
           </a>
-          <a href={profile.social.linkedin} target="_blank" rel="noopener noreferrer">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-            LinkedIn
-          </a>
-          <a href={profile.social.medium} target="_blank" rel="noopener noreferrer">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M0 0v24h24v-24h-24zm19.938 5.686l-1.369 1.313c-.117.09-.175.238-.153.389v9.732c-.022.151.036.299.153.389l1.337 1.313v.289h-6.72v-.289l1.384-1.345c.136-.136.136-.175.136-.389v-7.863l-3.85 9.787h-.52l-4.481-9.787v6.563c-.037.279.059.559.261.759l1.898 2.302v.289h-5.381v-.289l1.898-2.302c.201-.2.287-.486.231-.759v-7.583c.03-.214-.054-.431-.229-.586l-1.687-2.032v-.289h5.232l4.043 8.866 3.554-8.859h4.99v.288z"/></svg>
-            Medium
-          </a>
-          <a href={profile.social.huggingface} target="_blank" rel="noopener noreferrer">
-            🤗 Hugging Face
-          </a>
-        </nav>
+        ))}
+      </nav>
+
+      <div class="footer__col footer__colophon">
+        <h2 class="footer__title">{zh ? '版面說明' : 'Colophon'}</h2>
+        <p>
+          {zh
+            ? '字體：Instrument Serif、思源宋體與 JetBrains Mono。以 Astro 打造。'
+            : 'Set in Instrument Serif, Noto Serif TC and JetBrains Mono. Built with Astro.'}
+        </p>
+        <p>
+          <span class="up">▲</span>
+          {zh ? '紅色代表上漲 —— 台股慣例。' : 'Red means up — Taiwan market convention.'}
+        </p>
       </div>
     </div>
-    
-    <!-- Copyright -->
-    <div class="footer-bottom">
-      <p>© {currentYear} {profile.name[lang]}. {t('footer.copyright')}.</p>
+
+    <div class="footer__signature" aria-hidden="true">
+      <span class="footer__wordmark" lang={zh ? 'zh-Hant' : 'en'}>{profile.name[lang]}</span>
+    </div>
+
+    <div class="footer__bottom">
+      <p>© {currentYear} {profile.name[lang]} · {t('footer.copyright')}</p>
+      <p class="footer__hint">
+        <button type="button" data-cmdk-open class="footer__hint-btn">
+          {zh ? '按' : 'Press'} <kbd data-cmdk-key>⌘K</kbd> {zh ? '快速前往' : 'to jump anywhere'}
+        </button>
+        <a href="#main" class="footer__top">{t('common.backToTop')} <Icon name="arrow-up" size={13} /></a>
+      </p>
     </div>
   </div>
 </footer>
 
 <style>
   .footer {
-    background: var(--bg-secondary);
-    border-top: 1px solid var(--border-color);
-    padding: var(--space-16) 0 var(--space-8);
-    margin-top: var(--space-20);
+    position: relative;
+    margin-top: var(--space-16);
+    padding-top: var(--space-16);
+    border-top: 1px solid var(--line);
+    overflow: hidden;
   }
-  
-  .footer-grid {
+
+  .footer__grid {
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
-    gap: var(--space-12);
+    grid-template-columns: 1.6fr 1fr 1fr 1.3fr;
+    gap: var(--space-10);
   }
-  
-  .footer-brand {
-    max-width: 320px;
-  }
-  
-  .footer-logo {
-    font-size: var(--text-xl);
-    background: linear-gradient(135deg, var(--color-primary-500), var(--color-accent-500));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+
+  .footer__tagline {
+    max-width: 30ch;
     margin-bottom: var(--space-4);
+    font-family: var(--font-display);
+    font-size: var(--fs-xl);
+    line-height: 1.35;
+    color: var(--fg);
   }
-  
-  .footer-description {
-    font-size: var(--text-sm);
-    color: var(--text-secondary);
+
+  .footer__tagline:lang(zh) {
+    font-family: var(--font-cjk);
+    font-weight: 600;
+    font-size: var(--fs-lg);
     line-height: 1.6;
-    margin-bottom: var(--space-4);
   }
-  
-  .footer-stats {
+
+  .footer__mail {
+    font-family: var(--font-mono);
+    font-size: var(--fs-sm);
+  }
+
+  .footer__col {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .footer__title {
+    margin-bottom: var(--space-2);
+    font-family: var(--font-mono);
+    font-size: var(--fs-2xs);
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--fg-3);
+  }
+
+  .footer__col a {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    width: fit-content;
+    font-size: var(--fs-sm);
+    color: var(--fg-2);
+    transition: color var(--dur);
+  }
+
+  .footer__col a:hover {
+    color: var(--accent-fg);
+  }
+
+  .footer__colophon p {
+    font-size: var(--fs-sm);
+    line-height: 1.6;
+  }
+
+  .up {
+    color: var(--accent-fg);
+    font-size: 0.8em;
+  }
+
+  .footer__signature {
+    display: flex;
+    align-items: flex-end;
+    gap: clamp(12px, 2vw, 28px);
+    margin-top: clamp(var(--space-12), 8vw, var(--space-20));
+    margin-bottom: var(--space-6);
+  }
+
+  .footer__wordmark {
+    font-family: var(--font-display);
+    font-size: clamp(3.5rem, 14vw, 13rem);
+    line-height: 0.8;
+    letter-spacing: -0.03em;
+    color: var(--fg);
+    white-space: nowrap;
+  }
+
+  .footer__wordmark:lang(zh) {
+    font-family: var(--font-cjk);
+    font-weight: 900;
+    font-size: clamp(4rem, 17vw, 15rem);
+    letter-spacing: 0.04em;
+    line-height: 0.92;
+  }
+
+  .footer__bottom {
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-between;
     gap: var(--space-3);
-    font-size: var(--text-xs);
-    color: var(--text-muted);
+    padding-block: var(--space-6) var(--space-8);
+    border-top: 1px solid var(--line);
   }
-  
-  .footer-section {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-4);
-  }
-  
-  .footer-title {
-    font-size: var(--text-sm);
-    font-weight: 600;
-    color: var(--text-primary);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-  
-  .footer-links {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-3);
-  }
-  
-  .footer-links a {
+
+  .footer__bottom p {
     display: flex;
     align-items: center;
-    gap: var(--space-2);
-    font-size: var(--text-sm);
-    color: var(--text-secondary);
-    text-decoration: none;
-    transition: color var(--transition-fast);
+    gap: var(--space-5);
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    color: var(--fg-3);
   }
-  
-  .footer-links a:hover {
-    color: var(--color-primary-500);
+
+  .footer__hint-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--fg-3);
+    transition: color var(--dur);
   }
-  
-  .footer-bottom {
-    margin-top: var(--space-12);
-    padding-top: var(--space-6);
-    border-top: 1px solid var(--border-color);
-    text-align: center;
+
+  .footer__hint-btn:hover {
+    color: var(--fg);
   }
-  
-  .footer-bottom p {
-    font-size: var(--text-sm);
-    color: var(--text-muted);
+
+  .footer__hint-btn kbd {
+    padding: 1px 6px;
+    font-family: var(--font-mono);
+    font-size: var(--fs-2xs);
+    border: 1px solid var(--line-strong);
+    border-radius: 5px;
   }
-  
-  @media (max-width: 768px) {
-    .footer-grid {
-      grid-template-columns: 1fr;
-      gap: var(--space-8);
+
+  .footer__top {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    transition: color var(--dur);
+  }
+
+  .footer__top:hover {
+    color: var(--accent-fg);
+  }
+
+  @media (max-width: 960px) {
+    .footer__grid {
+      grid-template-columns: 1fr 1fr;
     }
-    
-    .footer-brand {
-      max-width: 100%;
+
+    .footer__intro {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .footer__grid {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-8) var(--space-6);
+    }
+
+    .footer__colophon {
+      grid-column: 1 / -1;
+    }
+
+    .footer__hint-btn {
+      display: none;
     }
   }
 </style>

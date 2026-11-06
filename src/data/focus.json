@@ -1,0 +1,50 @@
+[
+    {
+        "id": "vlm",
+        "label": { "zh": "視覺語言模型", "en": "Vision-Language" },
+        "caption": {
+            "zh": "碩論 LocateAnomaly：VLM 工業瑕疵定位 67.6% → 74.4% · Formosa-VLM 多模態資料集",
+            "en": "Thesis, LocateAnomaly: VLM defect localization 67.6% → 74.4% · Formosa-VLM multimodal dataset"
+        }
+    },
+    {
+        "id": "rl",
+        "label": { "zh": "強化學習", "en": "Reinforcement Learning" },
+        "caption": {
+            "zh": "SAPG 獎勵引導停止決策（進行中）· GRPO · TANet 最佳論文：多代理人交易",
+            "en": "SAPG reward-guided stopping (in progress) · GRPO · TANet Best Paper: multi-agent trading"
+        }
+    },
+    {
+        "id": "llm",
+        "label": { "zh": "LLM 微調與部署", "en": "LLM Tuning & Deploy" },
+        "caption": {
+            "zh": "1.7B／270M 手機離線點餐助理 · vLLM 前綴快取 · llama.cpp 量化",
+            "en": "1.7B / 270M offline ordering assistant on Android · vLLM prefix caching · llama.cpp quantization"
+        }
+    },
+    {
+        "id": "zh-nlp",
+        "label": { "zh": "繁中 NLP", "en": "Trad. Chinese NLP" },
+        "caption": {
+            "zh": "公文分類 76.9% → 91.5% · 公文錯字更正 · 繁中用語篩選 87.7%",
+            "en": "Document classification 76.9% → 91.5% · typo correction · zh-TW usage filter at 87.7%"
+        }
+    },
+    {
+        "id": "diffusion",
+        "label": { "zh": "擴散模型", "en": "Diffusion" },
+        "caption": {
+            "zh": "依論文實作 IMPRINT（CVPR 2024）商品場景合成 · 8 GPU 分散式訓練",
+            "en": "Re-implemented IMPRINT (CVPR 2024) for product scene composition · 8-GPU distributed training"
+        }
+    },
+    {
+        "id": "fair-xai",
+        "label": { "zh": "公平 × 可解釋", "en": "Fair & Explainable" },
+        "caption": {
+            "zh": "公平履歷配對：LoRA 微調 + 對抗去偏 + LLM XAI 決策透明化",
+            "en": "Fair resume matching: LoRA + adversarial debiasing + LLM-based XAI"
+        }
+    }
+]

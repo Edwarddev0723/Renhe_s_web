@@ -1,0 +1,328 @@
+---
+import Icon from './Icon.astro';
+import profile from '../data/profile.json';
+import { formatTenure, dot } from '../data/stats';
+import { pick, type Lang } from '../i18n';
+
+type Entry = (typeof profile.experience)[number];
+type Run = Entry['runs'][number] & {
+  status?: string;
+  symbol?: string;
+  link?: string;
+  metric?: { from?: string; to?: string; value?: string };
+};
+
+interface Props {
+  lang: Lang;
+  entry: Entry;
+  index?: number;
+}
+
+const { lang, entry, index = 0 } = Astro.props;
+const zh = lang === 'zh';
+const runs = entry.runs as Run[];
+const [from] = entry.period.split(' - ');
+const tenure = formatTenure(entry.start, lang);
+const subtitle = [pick(entry.position, lang), 'location' in entry && entry.location ? pick(entry.location, lang) : null]
+  .filter(Boolean)
+  .join(' · ');
+const note = 'note' in entry && entry.note ? pick(entry.note, lang) : undefined;
+const achievements = 'achievements' in entry && entry.achievements ? entry.achievements[lang] : [];
+
+/** "67.6%" → "74.4%"  ⇒  "+6.8 pt" */
+const delta = (a: string, b: string) => {
+  const d = parseFloat(b) - parseFloat(a);
+  return `${d >= 0 ? '+' : '−'}${Math.abs(d).toFixed(1)} pt`;
+};
+---
+
+<article class="runlog card" data-reveal style={`--i:${index}`}>
+  <header class="runlog__head">
+    <div class="runlog__path mono" aria-hidden="true">
+      <span class="runlog__dots"><i></i><i></i><i></i></span>
+      {entry.path}
+      <span class="runlog__kind">{entry.kind === 'research' ? (zh ? '研究' : 'research') : (zh ? '工作' : 'work')}</span>
+    </div>
+    <div class="runlog__job">
+      <div>
+        <h3 class="runlog__company">{pick(entry.company, lang)}</h3>
+        <p class="runlog__role">{subtitle}</p>
+        {note && <p class="runlog__note">{note}</p>}
+      </div>
+      <p class="runlog__period mono">
+        <span><span class="dot dot--live"></span>{dot(from)} → {zh ? '現在' : 'now'}</span>
+        <span class="muted">{tenure}</span>
+      </p>
+    </div>
+  </header>
+
+  <ol class="runlog__runs">
+    {runs.map((run) => (
+      <li class="runlog__row">
+        <span class="runlog__tag"><span class="tag">{run.tag}</span></span>
+        <div class="runlog__body">
+          <h4 class="runlog__title">
+            {run.link ? (
+              <a href={run.link} target="_blank" rel="noopener noreferrer">
+                {pick(run.title, lang)}<Icon name="arrow-up-right" size={13} />
+              </a>
+            ) : (
+              pick(run.title, lang)
+            )}
+            {run.status === 'running' && (
+              <span class="runlog__running"><span class="dot dot--live"></span>{zh ? '進行中' : 'running'}</span>
+            )}
+          </h4>
+          <p class="runlog__text">{pick(run.text, lang)}</p>
+        </div>
+        <span class="runlog__metric mono">
+          {run.metric?.from && run.metric?.to ? (
+            <>
+              <span class="runlog__fromto"><span class="muted">{run.metric.from}</span> → {run.metric.to}</span>
+              <span class="runlog__delta">▲ {delta(run.metric.from, run.metric.to)}</span>
+            </>
+          ) : (
+            run.metric?.value && <span class="runlog__value">{run.metric.value}</span>
+          )}
+        </span>
+      </li>
+    ))}
+  </ol>
+
+  {achievements.length > 0 && (
+    <footer class="runlog__foot">
+      <ul class="runlog__wins">
+        {achievements.map((a) => (
+          <li><span class="runlog__trophy" aria-hidden="true">▲</span>{a}</li>
+        ))}
+      </ul>
+    </footer>
+  )}
+</article>
+
+<style>
+  .runlog {
+    overflow: hidden;
+  }
+
+  .runlog__head {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .runlog__path {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    padding: 10px var(--space-6);
+    font-size: var(--fs-2xs);
+    letter-spacing: 0.06em;
+    color: var(--fg-3);
+    background: var(--bg-elev);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .runlog__dots {
+    display: inline-flex;
+    gap: 6px;
+  }
+
+  .runlog__dots i {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: 1px solid var(--line-strong);
+  }
+
+  .runlog__dots i:first-child {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .runlog__kind {
+    margin-left: auto;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+  }
+
+  .runlog__job {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: var(--space-6);
+    padding: var(--space-6);
+  }
+
+  .runlog__company {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
+  }
+
+  .runlog__company:lang(zh) {
+    font-family: var(--font-cjk);
+    font-weight: 600;
+    font-size: clamp(1.5rem, 2.6vw, 1.9rem);
+  }
+
+  .runlog__role {
+    margin-top: var(--space-1);
+    font-size: var(--fs-sm);
+    color: var(--fg);
+  }
+
+  .runlog__note {
+    margin-top: 2px;
+    font-size: var(--fs-xs);
+    color: var(--fg-3);
+  }
+
+  .runlog__period {
+    display: grid;
+    justify-items: end;
+    gap: 2px;
+    font-size: var(--fs-xs);
+    color: var(--fg-2);
+    white-space: nowrap;
+  }
+
+  .runlog__period > span:first-child {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .runlog__row {
+    display: grid;
+    grid-template-columns: 96px minmax(0, 1fr) 170px;
+    align-items: baseline;
+    gap: var(--space-5);
+    padding: var(--space-5) var(--space-6);
+    border-bottom: 1px solid var(--line);
+    transition: background-color var(--dur);
+  }
+
+  .runlog__row:last-child {
+    border-bottom: 0;
+  }
+
+  .runlog__row:hover {
+    background: var(--accent-soft);
+  }
+
+  .runlog__title {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px var(--space-3);
+    font-family: var(--font-sans);
+    font-size: var(--fs-base);
+    font-weight: 600;
+    line-height: 1.5;
+  }
+
+  .runlog__title a {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    transition: color var(--dur);
+  }
+
+  .runlog__title a:hover {
+    color: var(--accent-fg);
+  }
+
+  .runlog__title a :global(svg) {
+    color: var(--fg-3);
+  }
+
+  .runlog__running {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: var(--fs-2xs);
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    color: var(--accent-fg);
+  }
+
+  .runlog__running .dot {
+    width: 6px;
+    height: 6px;
+  }
+
+  .runlog__text {
+    margin-top: 4px;
+    font-size: var(--fs-sm);
+    line-height: 1.75;
+  }
+
+  .runlog__metric {
+    display: grid;
+    justify-items: end;
+    gap: 2px;
+    text-align: right;
+    font-size: var(--fs-sm);
+    color: var(--fg);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .runlog__delta {
+    font-size: var(--fs-xs);
+    color: var(--accent-fg);
+  }
+
+  .runlog__value {
+    color: var(--fg-2);
+  }
+
+  .runlog__foot {
+    padding: var(--space-5) var(--space-6) var(--space-6);
+    border-top: 1px solid var(--line);
+  }
+
+  .runlog__wins {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-6);
+    font-size: var(--fs-sm);
+    color: var(--fg-2);
+  }
+
+  .runlog__wins li {
+    display: inline-flex;
+    align-items: baseline;
+    gap: var(--space-2);
+  }
+
+  .runlog__trophy {
+    font-size: 0.7em;
+    color: var(--accent-fg);
+  }
+
+  @media (max-width: 760px) {
+    .runlog__job {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .runlog__period {
+      justify-items: start;
+    }
+
+    .runlog__row {
+      grid-template-columns: 1fr auto;
+      gap: var(--space-2) var(--space-4);
+      padding-inline: var(--space-5);
+    }
+
+    .runlog__body {
+      grid-column: 1 / -1;
+      grid-row: 2;
+    }
+
+    .runlog__metric {
+      grid-row: 1;
+      grid-column: 2;
+    }
+  }
+</style>

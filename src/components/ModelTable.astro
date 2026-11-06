@@ -1,0 +1,253 @@
+---
+import Icon from './Icon.astro';
+import { dot, formatNumber } from '../data/stats';
+import { type Lang } from '../i18n';
+
+interface Item {
+  id: string;
+  name: string;
+  type: string;
+  task?: string;
+  downloads: number;
+  likes?: number;
+  link: string;
+  lastUpdated: string;
+}
+
+interface Props {
+  lang: Lang;
+  items: Item[];
+  /** Shell command shown above the rows. */
+  command: string;
+  caption?: string;
+}
+
+const { lang, items, command, caption } = Astro.props;
+const zh = lang === 'zh';
+const max = Math.max(...items.map((m) => m.downloads), 1);
+---
+
+<div class="term card" data-reveal>
+  <div class="term__bar">
+    <span class="term__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="term__title mono">~/huggingface/renhehuang</span>
+    {caption && <span class="term__caption mono">{caption}</span>}
+  </div>
+  <p class="term__cmd mono"><span class="accent">$</span> {command}</p>
+
+  <ul class="term__table" aria-label={zh ? 'Hugging Face 模型與資料集' : 'Hugging Face models and datasets'}>
+    <li class="term__row term__row--head" aria-hidden="true">
+      <span>{zh ? '類型' : 'Type'}</span>
+      <span>{zh ? '名稱' : 'Name'}</span>
+      <span class="term__task">{zh ? '任務' : 'Task'}</span>
+      <span class="term__num">{zh ? '下載' : 'Downloads'}</span>
+      <span class="term__date">{zh ? '更新' : 'Updated'}</span>
+    </li>
+    {items.map((item) => (
+      <li>
+        <a class="term__row" href={item.link} target="_blank" rel="noopener noreferrer">
+          <span><span class:list={['term__type', `is-${item.type}`]}>{item.type}</span></span>
+          <span class="term__name">
+            {item.name}
+            <Icon name="arrow-up-right" size={13} class="term__ext" />
+          </span>
+          <span class="term__task">{item.task && item.task !== 'Other' ? item.task : '—'}</span>
+          <span class="term__num">
+            <span class="term__bar-viz" style={`--w:${(item.downloads / max) * 100}%`} aria-hidden="true"></span>
+            {formatNumber(item.downloads)}<span class="sr-only">{zh ? ' 次下載' : ' downloads'}</span>
+          </span>
+          <span class="term__date">{dot(item.lastUpdated).slice(0, 7)}</span>
+        </a>
+      </li>
+    ))}
+  </ul>
+</div>
+
+<style>
+  .term {
+    overflow: hidden;
+    font-size: var(--fs-sm);
+  }
+
+  .term__bar {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    padding: 10px var(--space-5);
+    background: var(--bg-elev);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .term__dots {
+    display: inline-flex;
+    gap: 6px;
+  }
+
+  .term__dots i {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: 1px solid var(--line-strong);
+  }
+
+  .term__dots i:first-child {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .term__title,
+  .term__caption {
+    font-size: var(--fs-2xs);
+    letter-spacing: 0.06em;
+    color: var(--fg-3);
+  }
+
+  .term__caption {
+    margin-left: auto;
+  }
+
+  .term__cmd {
+    padding: var(--space-4) var(--space-5) var(--space-3);
+    font-size: var(--fs-xs);
+    color: var(--fg-2);
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: none;
+  }
+
+  .term__cmd::-webkit-scrollbar {
+    display: none;
+  }
+
+  .term__row {
+    display: grid;
+    grid-template-columns: 82px minmax(0, 1fr) 150px 120px 76px;
+    align-items: center;
+    gap: var(--space-4);
+    padding: 11px var(--space-5);
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    color: var(--fg-2);
+    border-top: 1px solid var(--line);
+    transition: background-color var(--dur), color var(--dur);
+  }
+
+  .term__row--head {
+    font-size: var(--fs-2xs);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--fg-3);
+  }
+
+  a.term__row:hover {
+    background: var(--accent-soft);
+    color: var(--fg);
+  }
+
+  .term__type {
+    display: inline-block;
+    padding: 1px 7px;
+    font-size: var(--fs-2xs);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-sm);
+  }
+
+  .term__type.is-model {
+    color: var(--accent-fg);
+    border-color: var(--accent-line);
+  }
+
+  .term__name {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+    color: var(--fg);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .term__name :global(.term__ext) {
+    flex-shrink: 0;
+    opacity: 0;
+    color: var(--accent-fg);
+    transition: opacity var(--dur), transform 0.35s var(--ease-out);
+  }
+
+  a.term__row:hover .term__name :global(.term__ext) {
+    opacity: 1;
+    transform: translate(2px, -2px);
+  }
+
+  .term__task {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .term__num {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--space-3);
+    font-variant-numeric: tabular-nums;
+    color: var(--fg);
+  }
+
+  .term__row--head .term__num {
+    color: var(--fg-3);
+  }
+
+  .term__bar-viz {
+    width: 56px;
+    height: 3px;
+    background: var(--line);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .term__bar-viz::after {
+    content: '';
+    display: block;
+    width: var(--w);
+    height: 100%;
+    background: var(--accent);
+  }
+
+  .term__date {
+    text-align: right;
+    color: var(--fg-3);
+  }
+
+  @media (max-width: 800px) {
+    .term__row {
+      grid-template-columns: 74px minmax(0, 1fr) 90px;
+    }
+
+    .term__task,
+    .term__date {
+      display: none;
+    }
+
+    .term__bar-viz {
+      display: none;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .term__row {
+      grid-template-columns: minmax(0, 1fr) 56px;
+      gap: var(--space-1) var(--space-3);
+    }
+
+    .term__row > :first-child {
+      display: none;
+    }
+
+    .term__caption {
+      display: none;
+    }
+  }
+</style>

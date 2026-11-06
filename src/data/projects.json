@@ -1,6 +1,48 @@
 {
     "projects": [
         {
+            "id": "formosa-vision",
+            "title": {
+                "zh": "Formosa-VLM：台灣文化多模態資料集",
+                "en": "Formosa-VLM: Taiwanese Cultural Multimodal Dataset"
+            },
+            "summary": {
+                "zh": "在 Twinkle AI 開源社群主導影像、文化、圖表三類資料架構，獨力建構 8 萬筆圖像描述與 15.7 萬筆合成圖文問答資料並全數公開，讓 VLM 更懂台灣的地標、歷史與文化。",
+                "en": "Led the image, culture and chart data architecture in the Twinkle AI community, single-handedly building 80K image captions and 157K synthetic VQA pairs, all public, to teach VLMs Taiwan's landmarks, history and culture."
+            },
+            "tags": [
+                "VLM",
+                "Dataset",
+                "Taiwan",
+                "Twinkle AI"
+            ],
+            "date": "2025-09",
+            "huggingface": "https://huggingface.co/datasets/renhehuang/formosa-vlm-caption-v1",
+            "medium": "https://www.ithome.com.tw/pr/172192",
+            "image": "/images/projects/formosa-vision.png",
+            "featured": true
+        },
+        {
+            "id": "offline-ordering-assistant",
+            "title": {
+                "zh": "Android 離線點餐助理",
+                "en": "Offline Ordering Assistant for Android"
+            },
+            "summary": {
+                "zh": "微調 1.7B 與 270M 兩個小型語言模型，一個負責點餐對話、一個負責下單工具呼叫，量化後在手機上完全離線運行；模型與資料集皆已開源。",
+                "en": "Two fine-tuned small language models, 1.7B for the ordering dialogue and 270M for tool calls, quantized to run fully offline on a phone. Models and datasets are open-sourced."
+            },
+            "tags": [
+                "LLM",
+                "On-device",
+                "Tool calling",
+                "Quantization"
+            ],
+            "date": "2026-01",
+            "huggingface": "https://huggingface.co/renhehuang/qwen3-1.7b-coffee-sft",
+            "featured": true
+        },
+        {
             "id": "bert-traditional-classifier",
             "title": {
                 "zh": "BERT 繁簡中文分類器",
@@ -24,28 +66,6 @@
             "metrics": {
                 "accuracy": "87.71%"
             }
-        },
-        {
-            "id": "formosa-vision",
-            "title": {
-                "zh": "Formosa Vision: 台灣開源影像資料集",
-                "en": "Formosa Vision: Open-Source Taiwanese Image Dataset"
-            },
-            "summary": {
-                "zh": "使用國家文化記憶庫 2.0 影像建立「Formosa Vision 對話語料庫」，增強 VLM 對台灣地標、歷史與文化的理解。",
-                "en": "Established the 'Formosa Vision Dialogue Corpus' using images from National Cultural Memory Bank 2.0 to enhance VLM's understanding of Taiwan's landmarks, history, and culture."
-            },
-            "tags": [
-                "VLM",
-                "Dataset",
-                "Taiwan",
-                "Cultural AI"
-            ],
-            "date": "2025-09",
-            "huggingface": "https://huggingface.co/datasets/twinkle-ai/Formosa-Vision",
-            "medium": "https://www.ithome.com.tw/pr/172192",
-            "image": "/images/projects/formosa-vision.png",
-            "featured": true
         },
         {
             "id": "fair-resume-matcher",

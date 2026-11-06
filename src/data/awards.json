@@ -5,12 +5,21 @@
             "zh": "2025 台灣大哥大數據競賽 資料科學組 - 亞軍",
             "en": "2025 TWM Data Competition - 2nd Place"
         },
+        "result": {
+            "zh": "亞軍",
+            "en": "2nd Place"
+        },
+        "symbol": "TWM'25",
         "organization": {
             "zh": "台灣大哥大",
             "en": "Taiwan Mobile"
         },
         "date": "2025-09",
-        "category": "competition"
+        "category": "competition",
+        "highlight": {
+            "zh": "簡訊分類",
+            "en": "SMS classification"
+        }
     },
     {
         "id": "twm-2024",
@@ -18,12 +27,21 @@
             "zh": "2024 台灣大哥大數據競賽 資料科學組 - 冠軍",
             "en": "2024 TWM Data Competition - Champion"
         },
+        "result": {
+            "zh": "冠軍",
+            "en": "Champion"
+        },
+        "symbol": "TWM'24",
         "organization": {
             "zh": "台灣大哥大",
             "en": "Taiwan Mobile"
         },
         "date": "2024-09",
         "category": "competition",
+        "highlight": {
+            "zh": "數百萬筆客戶資料 · 流失預測",
+            "en": "Millions of records · churn prediction"
+        },
         "description": {
             "zh": "利用數百萬筆客戶資料預測潛在流失客戶，負責資料探勘、清洗以及模型建立。",
             "en": "Predicted customer churn using millions of records, responsible for data mining, cleaning, and model building."
@@ -32,15 +50,24 @@
     {
         "id": "tanet-2024",
         "title": {
-            "zh": "2024 TANet 最佳論文獎",
+            "zh": "2024 TANet 臺灣網際網路研討會 最佳論文獎",
             "en": "2024 TANet Best Paper Award"
         },
+        "result": {
+            "zh": "最佳論文",
+            "en": "Best Paper"
+        },
+        "symbol": "TANET'24",
         "organization": "TANet",
         "date": "2024-09",
         "category": "academic",
+        "highlight": {
+            "zh": "第一作者 · 1,700 萬筆逐筆交易 · 月報酬幾何平均 4.63%",
+            "en": "First author · 17M TSMC ticks · 4.63% geometric-mean monthly return"
+        },
         "description": {
-            "zh": "論文：基於多代理人系統的股票交易架構。使用台積電一年約 1700 萬筆逐筆交易資料，系統月報酬幾何平均數達 4.63%。",
-            "en": "Paper: Multi-Agent Stock Trading System. Used 17M TSMC trade records, achieving 4.63% geometric mean monthly return."
+            "zh": "論文：應用盤中逐筆資料建立多重股票交易代理人之研究－以台積電股票為例（第一作者）。以強化學習與多代理人投票，使用台積電一年約 1,700 萬筆逐筆交易資料，回測月報酬幾何平均數達 4.63%。",
+            "en": "Paper (first author): a multi-agent stock-trading framework built on intraday tick data, with TSMC as the case study. Reinforcement learning with multi-agent voting on ~17M TSMC trades reached a 4.63% geometric-mean monthly return in backtests."
         }
     },
     {
@@ -49,12 +76,21 @@
             "zh": "2024 GenAI Stars 生成式 AI 應用選拔 - 優選",
             "en": "2024 GenAI Stars - Selected Project"
         },
+        "result": {
+            "zh": "優選",
+            "en": "Excellence"
+        },
+        "symbol": "GENAI★",
         "organization": {
             "zh": "國科會",
             "en": "National Science and Technology Council"
         },
         "date": "2024-09",
         "category": "competition",
+        "highlight": {
+            "zh": "數位發展部點子松獎 · TIE 展出",
+            "en": "MODA Ideathon award · exhibited at TIE"
+        },
         "description": {
             "zh": "專案：AI 旅遊行程生成助手。從全國 3000 組專案中入選前 100 強，並於 TIE 台灣創新技術博覽會展出。",
             "en": "Project: AI Trip Planner. Selected from 3000+ teams to top 100, exhibited at TIE Taiwan Innovation Expo."
@@ -66,6 +102,11 @@
             "zh": "2025 台北科技大學 資財之星專題競賽 - 第三名",
             "en": "2025 NTUT Project Competition - 3rd Place"
         },
+        "result": {
+            "zh": "第三名",
+            "en": "3rd Place"
+        },
+        "symbol": "NTUT'25",
         "organization": {
             "zh": "國立臺北科技大學",
             "en": "National Taipei University of Technology"
@@ -79,12 +120,21 @@
             "zh": "2023 Science and AI Hackathon - 第二名",
             "en": "2023 Science and AI Hackathon - 2nd Prize"
         },
+        "result": {
+            "zh": "亞軍",
+            "en": "2nd Prize"
+        },
+        "symbol": "HACK'23",
         "organization": {
             "zh": "鴻海集團 & 城市科學實驗室",
             "en": "Foxconn & City Science Lab"
         },
         "date": "2023-09",
         "category": "competition",
+        "highlight": {
+            "zh": "36 小時 · 車禍偵測與通報",
+            "en": "36 hours · crash detection & alerting"
+        },
         "description": {
             "zh": "36 小時內開發考量資安之 AI 影像系統，可自動偵測車禍並通報警務系統。",
             "en": "Developed an AI image system with security considerations in 36 hours, capable of detecting accidents and alerting authorities."

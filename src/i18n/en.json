@@ -14,8 +14,17 @@
     "hero": {
         "greeting": "Hi, I'm",
         "name": "Edward Huang",
+        "kicker": "AI / ML Engineer · VLM / LLM Research",
         "tagline": "AI Engineer ∙ Researcher ∙ Open Source Contributor",
-        "description": "Bridging Academia and Industry through AI-Powered Data Solutions.",
+        "description": "Bridging academia and industry through AI-powered data solutions.",
+        "roles": [
+            "Thesis: VLM anomaly localization",
+            "AI/ML Engineering Intern @ Taiwan Mobile",
+            "R&D Assistant @ NCU × Foxconn",
+            "Open source @ Twinkle AI",
+            "TANet Best Paper, first author"
+        ],
+        "now": "Now running",
         "cta": {
             "projects": "View Projects",
             "contact": "Contact Me",
@@ -25,31 +34,36 @@
     "about": {
         "title": "About Me",
         "summary": [
-            "AI Engineering Intern at Taiwan Mobile and Master's student in Information Management at National Central University.",
-            "Specialized in NLP, Deep Learning, and Traditional Chinese AI models, awarded TANet Best Paper and GenAI Stars.",
-            "Passionate about transforming academic research into practical business solutions and advancing Taiwan's AI open-source ecosystem."
+            "M.S. student in Information Management at National Central University (ADML Lab), with a thesis on VLM-based industrial anomaly localization and explainable reasoning. Also an AI/ML Engineering Intern at Taiwan Mobile and an R&D assistant on an NCU × Foxconn industry project.",
+            "My work runs from training to deployment: SFT, GRPO / reinforcement learning, contrastive learning, VLM / LLM fine-tuning and distillation, and diffusion models, then vLLM, llama.cpp and quantization to make them actually run, including an ordering assistant that works fully offline on a phone.",
+            "TANet Best Paper Award (first author), Taiwan Mobile data competition champion and NSTC GenAI Stars awardee; I also lead the Formosa-VLM Taiwanese cultural multimodal dataset in the Twinkle AI community."
         ],
         "readMore": "Learn More"
     },
     "projects": {
-        "title": "Featured Projects",
+        "title": "Selected Work",
+        "lead": "From fairness and Traditional Chinese NLP to vision-language datasets — a few representative pieces.",
         "viewAll": "Explore More",
-        "viewProject": "View Project"
+        "viewProject": "View Project",
+        "all": "All"
     },
     "articles": {
-        "title": "Technical Articles",
+        "title": "Writing",
+        "lead": "Paper notes, build logs, and the occasional equity deep-dive.",
         "viewAll": "Read More",
         "readArticle": "Read Article",
         "minRead": "min read"
     },
     "models": {
-        "title": "AI Models & Datasets",
+        "title": "Models & Datasets",
+        "lead": "Models and datasets I've published on Hugging Face, ranked by downloads.",
         "viewAll": "Explore Hugging Face",
         "downloads": "Downloads",
         "updated": "Updated"
     },
     "awards": {
-        "title": "Awards & Recognition"
+        "title": "Awards & Recognition",
+        "lead": "Competitions and academic recognition."
     },
     "contact": {
         "title": "Contact",
@@ -62,7 +76,7 @@
         "error": "Failed to send. Please try again later."
     },
     "footer": {
-        "description": "Bridging Academia and Industry through AI-Powered Data Solutions.",
+        "description": "Bridging academia and industry through AI-powered data solutions.",
         "quickLinks": "Quick Links",
         "social": "Social",
         "copyright": "All rights reserved"
@@ -74,15 +88,23 @@
         "title": "Education"
     },
     "experience": {
-        "title": "Experience"
+        "title": "Experience",
+        "lead": "Research, internship and industry work, logged the way I'd track ML runs."
     },
     "certifications": {
         "title": "Certifications"
+    },
+    "volunteer": {
+        "title": "Volunteering"
     },
     "common": {
         "loading": "Loading...",
         "error": "An error occurred",
         "viewMore": "View More",
         "backToTop": "Back to Top"
+    },
+    "faq": {
+        "title": "Frequently Asked Questions",
+        "stats": "At a Glance"
     }
 }

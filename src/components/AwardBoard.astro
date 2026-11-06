@@ -1,0 +1,153 @@
+---
+import awards from '../data/awards.json';
+import { pick, type Lang } from '../i18n';
+import { dot } from '../data/stats';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+
+// Keep the order curated in awards.json.
+const rows = awards.map((award) => ({
+  id: award.id,
+  // the result is shown in its own column, so drop the " - 冠軍" suffix
+  title: pick(award.title, lang).replace(/\s+-\s+[^-]+$/, ''),
+  result: pick(award.result, lang),
+  org: pick(award.organization, lang),
+  highlight: award.highlight ? pick(award.highlight, lang) : undefined,
+  date: dot(award.date),
+}));
+---
+
+<ol class="board">
+  {rows.map((row, i) => (
+    <li class="board__row" data-reveal style={`--i:${i}`}>
+      <span class="board__rank mono" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+      <span class="board__result">{row.result}</span>
+      <div class="board__main">
+        <h3 class="board__title">{row.title}</h3>
+        <p class="board__sub">
+          <span>{row.org}</span>
+          {row.highlight && <span class="board__hl">{row.highlight}</span>}
+        </p>
+      </div>
+      <time class="board__date mono" datetime={row.date.replace('.', '-')}>{row.date}</time>
+    </li>
+  ))}
+</ol>
+
+<style>
+  .board {
+    border-top: 1px solid var(--line-strong);
+  }
+
+  .board__row {
+    position: relative;
+    display: grid;
+    grid-template-columns: 44px minmax(120px, 0.6fr) 2fr auto;
+    align-items: baseline;
+    gap: var(--space-6);
+    padding: var(--space-6) var(--space-2);
+    border-bottom: 1px solid var(--line);
+    transition: background-color var(--dur);
+  }
+
+  .board__row::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: -1px;
+    bottom: -1px;
+    width: 2px;
+    background: var(--accent);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.45s var(--ease-out);
+  }
+
+  .board__row:hover {
+    background: linear-gradient(90deg, var(--accent-soft), transparent 70%);
+  }
+
+  .board__row:hover::before {
+    transform: none;
+  }
+
+  .board__rank {
+    font-size: var(--fs-xs);
+    color: var(--fg-3);
+  }
+
+  .board__result {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 2.6vw, 2.1rem);
+    line-height: 1.1;
+    color: var(--fg);
+    transition: color var(--dur);
+  }
+
+  .board__result:lang(zh) {
+    font-family: var(--font-cjk);
+    font-weight: 600;
+    font-size: clamp(1.35rem, 2.2vw, 1.75rem);
+    letter-spacing: 0.04em;
+  }
+
+  .board__row:hover .board__result {
+    color: var(--accent-fg);
+  }
+
+  .board__title {
+    font-family: var(--font-sans);
+    font-size: var(--fs-base);
+    font-weight: 500;
+    line-height: 1.5;
+  }
+
+  .board__sub {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px var(--space-3);
+    margin-top: 4px;
+    font-size: var(--fs-sm);
+    color: var(--fg-3);
+  }
+
+  .board__hl {
+    color: var(--fg-2);
+  }
+
+  .board__hl::before {
+    content: '·';
+    margin-right: var(--space-3);
+    color: var(--fg-3);
+  }
+
+  .board__date {
+    font-size: var(--fs-xs);
+    color: var(--fg-3);
+  }
+
+  @media (max-width: 720px) {
+    .board__row {
+      grid-template-columns: 1fr auto;
+      gap: var(--space-2) var(--space-4);
+      padding-inline: var(--space-3);
+    }
+
+    .board__rank {
+      display: none;
+    }
+
+    .board__main {
+      grid-column: 1 / -1;
+    }
+
+    .board__date {
+      grid-row: 1;
+      grid-column: 2;
+    }
+  }
+</style>

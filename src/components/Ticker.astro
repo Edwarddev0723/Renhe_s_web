@@ -1,0 +1,165 @@
+---
+import awards from '../data/awards.json';
+import profile from '../data/profile.json';
+import { hfDownloads, formatNumber } from '../data/stats';
+import { pick, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const zh = lang === 'zh';
+const award = (id: string) => {
+  const a = awards.find((x) => x.id === id)!;
+  return { sym: a.symbol, val: pick(a.result, lang) };
+};
+
+// Before → after results from the experience log, quoted like stocks: last price, change.
+type Metric = { symbol?: string; metric?: { from?: string; to?: string } };
+const quotes = profile.experience
+  .flatMap((entry) => entry.runs as Metric[])
+  .filter((run) => run.symbol && run.metric?.from && run.metric?.to)
+  .map((run) => {
+    const change = parseFloat(run.metric!.to!) - parseFloat(run.metric!.from!);
+    return { sym: run.symbol!, val: run.metric!.to!, chg: `+${change.toFixed(1)}` };
+  });
+
+const items: { sym: string; val: string; chg?: string }[] = [
+  quotes[0],
+  award('tanet-2024'),
+  award('twm-2024'),
+  quotes[1],
+  { sym: 'ON-DEVICE', val: '1.7B + 270M' },
+  award('twm-2025'),
+  quotes[2],
+  { sym: 'FORMOSA-VLM', val: zh ? '8 萬描述 · 15.7 萬問答' : '80K captions · 157K VQA' },
+  award('genai-stars-2024'),
+  { sym: 'HF ↓', val: zh ? `${formatNumber(hfDownloads)} 次下載` : `${formatNumber(hfDownloads)} downloads` },
+  { sym: 'GPA', val: profile.education[1].gpa!.split('/')[0] },
+  award('hackathon-2023'),
+].filter(Boolean);
+---
+
+<div class="ticker" aria-hidden="true">
+  <div class="ticker__badge">
+    <span class="dot dot--live"></span>
+    {zh ? '成就看板' : 'Highlights'}
+  </div>
+  <div class="ticker__viewport">
+    <div class="ticker__track">
+      {[0, 1].map(() => (
+        <ul class="ticker__list">
+          {items.map((item) => (
+            <li class="tk">
+              <span class="tk__sym">{item.sym}</span>
+              <span class="tk__val">{item.val}</span>
+              <span class="tk__up">▲{item.chg && ` ${item.chg}`}</span>
+            </li>
+          ))}
+        </ul>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style>
+  .ticker {
+    display: flex;
+    align-items: stretch;
+    height: 46px;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    background: color-mix(in srgb, var(--bg) 82%, transparent);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    overflow: hidden;
+  }
+
+  .ticker__badge {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding-inline: var(--gutter) var(--space-5);
+    font-family: var(--font-mono);
+    font-size: var(--fs-2xs);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--fg);
+    border-right: 1px solid var(--line);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .ticker__viewport {
+    flex: 1;
+    overflow: hidden;
+    mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  }
+
+  .ticker__track {
+    display: flex;
+    width: max-content;
+    height: 100%;
+    animation: tape 70s linear infinite;
+  }
+
+  .ticker:hover .ticker__track {
+    animation-play-state: paused;
+  }
+
+  @keyframes tape {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  .ticker__list {
+    display: flex;
+    align-items: center;
+  }
+
+  .tk {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 10px;
+    padding-inline: 26px;
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    white-space: nowrap;
+    border-right: 1px solid var(--line);
+    line-height: 1;
+  }
+
+  .tk__sym {
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    color: var(--fg);
+  }
+
+  .tk__val {
+    color: var(--fg-2);
+  }
+
+  .tk__up {
+    font-size: 0.75em;
+    color: var(--accent-fg);
+  }
+
+  @media (max-width: 640px) {
+    .ticker__badge {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ticker__track {
+      animation: none;
+    }
+
+    .ticker__viewport {
+      overflow-x: auto;
+    }
+  }
+</style>
